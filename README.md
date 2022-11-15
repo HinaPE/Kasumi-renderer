@@ -1,4 +1,4 @@
-# Kasumi Renderer: Illumine the Endless Night.
+# Kasumi: Illumine the Endless Night.
 
 [![Ubuntu Build](https://github.com/HinaPE/Kasumi-renderer/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/HinaPE/Kasumi-renderer/actions/workflows/ubuntu.yml)
 [![macOS Build](https://github.com/HinaPE/Kasumi-renderer/actions/workflows/macos.yml/badge.svg)](https://github.com/HinaPE/Kasumi-renderer/actions/workflows/macos.yml)
