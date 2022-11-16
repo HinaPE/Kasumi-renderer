@@ -1,6 +1,6 @@
 #include "platform.h"
 
-#include "../../render-engine/platform/font.dat"
+#include "font.dat"
 #include <glad/glad.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_opengl3.h>

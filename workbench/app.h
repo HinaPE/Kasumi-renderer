@@ -1,7 +1,7 @@
 #ifndef HINAPE_RENDER_ENGINE_PRO_APP_H
 #define HINAPE_RENDER_ENGINE_PRO_APP_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 namespace HinaPE::RenderEngine::Workbench
 {

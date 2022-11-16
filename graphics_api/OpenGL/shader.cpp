@@ -6,18 +6,18 @@
 HinaPE::RenderEngine::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path) : Shader(vertex_path, fragment_path, "") {}
 HinaPE::RenderEngine::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path, const std::string &geometry_path)
 {
-    std::ifstream vertex_shader_stream(HINAPE_SHADER_DIR + vertex_path);
+    std::ifstream vertex_shader_stream(KASUMI_SHADER_DIR + vertex_path);
     std::string vertex_shader_src((std::istreambuf_iterator<char>(vertex_shader_stream)), std::istreambuf_iterator<char>());
     const char *vertex_shader_source = vertex_shader_src.c_str();
 
-    std::ifstream fragment_shader_stream(HINAPE_SHADER_DIR + fragment_path);
+    std::ifstream fragment_shader_stream(KASUMI_SHADER_DIR + fragment_path);
     std::string fragment_shader_src((std::istreambuf_iterator<char>(fragment_shader_stream)), std::istreambuf_iterator<char>());
     const char *fragment_shader_source = fragment_shader_src.c_str();
 
     // TODO: enable geometry shader
     if (!geometry_path.empty())
     {
-        std::ifstream geometry_shader_stream(HINAPE_SHADER_DIR + geometry_path);
+        std::ifstream geometry_shader_stream(KASUMI_SHADER_DIR + geometry_path);
         std::string geometry_shader_src((std::istreambuf_iterator<char>(geometry_shader_stream)), std::istreambuf_iterator<char>());
         const char *geometry_shader_source = geometry_shader_src.c_str();
     }
