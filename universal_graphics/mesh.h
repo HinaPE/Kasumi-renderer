@@ -22,6 +22,7 @@ public:
     };
 
 public:
+    TexturedMesh() = default;
     TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices);
     TexturedMesh(const std::string &path);
     TexturedMesh(const TexturedMesh &src) = delete;

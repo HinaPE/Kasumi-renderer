@@ -25,6 +25,8 @@ public:
     auto operator=(Model &&) -> Model & = delete;
 
 private:
+
+private:
     const std::string _path;
     std::map<std::string, TexturedMesh> _meshes;
     std::map<std::string, Texture> _textures;

@@ -2,6 +2,7 @@
 #define KASUMI_APP_H
 
 #include "platform.h"
+#include "model.h"
 #include "scene/scene.h"
 #include "scene/undo.h"
 #include "gui/manager.h"
