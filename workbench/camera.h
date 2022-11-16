@@ -15,12 +15,17 @@ public:
 
 private:
     void reset();
-    void look_at(mVector3 eye, mVector3 center, mVector3 up);
+    void update();
+    auto front() -> mVector3;
+    auto distance() -> real;
+    void loot_at(const mVector3& center, const mVector3& pos);
+
+    bool _orbit_flip_vertical = false;
 
 private:
     mVector3 _position, _look_at;
-    real _vertical_fov, _aspect_ratio;
     mQuaternion _rotation;
+    real _vertical_fov, _aspect_ratio, _near_plane, _radius, _orbit_sens, _move_sens, _radius_sens, _aperture, _focal_dist;
     mMatrix4x4 view, iview;
 };
 using CameraPtr = std::shared_ptr<Camera>;
