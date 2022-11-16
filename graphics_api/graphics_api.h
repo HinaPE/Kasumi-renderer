@@ -1,7 +1,7 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_GRAPHICS_API_H
-#define HINAPE_RENDER_ENGINE_PRO_GRAPHICS_API_H
+#ifndef KASUMI_RENDERER_GRAPHICS_API_H
+#define KASUMI_RENDERER_GRAPHICS_API_H
 
-namespace HinaPE::RenderEngine
+namespace Kasumi
 {
 class GraphicsAPI
 {
@@ -17,4 +17,4 @@ public:
 };
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_GRAPHICS_API_H
+#endif //KASUMI_RENDERER_GRAPHICS_API_H

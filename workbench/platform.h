@@ -1,5 +1,5 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_PLATFORM_H
-#define HINAPE_RENDER_ENGINE_PRO_PLATFORM_H
+#ifndef KASUMI_RENDERER_PLATFORM_H
+#define KASUMI_RENDERER_PLATFORM_H
 
 #include <SDL.h>
 
@@ -7,7 +7,7 @@
 
 #include <utility>
 
-namespace HinaPE::RenderEngine::Workbench
+namespace Kasumi::Workbench
 {
 class Platform final
 {
@@ -49,4 +49,4 @@ private:
 };
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_PLATFORM_H
+#endif //KASUMI_RENDERER_PLATFORM_H

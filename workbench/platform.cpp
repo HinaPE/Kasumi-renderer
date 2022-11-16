@@ -7,7 +7,7 @@
 #include <imgui/imgui_impl_sdl.h>
 
 #ifdef _WIN32
-#include <ConsoleApi.h>
+#include <consoleapi.h>
 #include <ShellScalingApi.h>
 extern "C" {
 __declspec(dllexport) bool NvOptimusEnablement = true;
@@ -20,7 +20,7 @@ __declspec(dllexport) bool AmdPowerXpressRequestHighPerformance = true;
 #include "graphics_api/graphics_api.h"
 #include <iostream>
 
-HinaPE::RenderEngine::Workbench::Platform::Platform(int width, int height)
+Kasumi::Workbench::Platform::Platform(int width, int height)
 {
 #ifdef _WIN32
     if (SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE) != S_OK)
@@ -76,7 +76,7 @@ HinaPE::RenderEngine::Workbench::Platform::Platform(int width, int height)
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
     ImGui_ImplOpenGL3_Init();
 }
-HinaPE::RenderEngine::Workbench::Platform::~Platform()
+Kasumi::Workbench::Platform::~Platform()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
@@ -89,7 +89,7 @@ HinaPE::RenderEngine::Workbench::Platform::~Platform()
     gl_context = nullptr;
     SDL_Quit();
 }
-void HinaPE::RenderEngine::Workbench::Platform::update(App &app)
+void Kasumi::Workbench::Platform::update(App &app)
 {
     bool running = true;
     while (running)
@@ -118,7 +118,7 @@ void HinaPE::RenderEngine::Workbench::Platform::update(App &app)
         complete_frame();
     }
 }
-void HinaPE::RenderEngine::Workbench::Platform::set_dpi()
+void Kasumi::Workbench::Platform::set_dpi()
 {
     float dpi;
     int index = SDL_GetWindowDisplayIndex(window);
@@ -161,13 +161,13 @@ void HinaPE::RenderEngine::Workbench::Platform::set_dpi()
     prev_dpi = dpi;
     prev_scale = scale;
 }
-void HinaPE::RenderEngine::Workbench::Platform::remove_console()
+void Kasumi::Workbench::Platform::remove_console()
 {
 #ifdef _WIN32
     FreeConsole();
 #endif
 }
-auto HinaPE::RenderEngine::Workbench::Platform::console_width() -> int
+auto Kasumi::Workbench::Platform::console_width() -> int
 {
     int cols = 0;
 #ifdef _WIN32
@@ -181,7 +181,7 @@ auto HinaPE::RenderEngine::Workbench::Platform::console_width() -> int
 #endif
     return cols;
 }
-void HinaPE::RenderEngine::Workbench::Platform::strcpy(char *dest, const char *src, size_t limit)
+void Kasumi::Workbench::Platform::strcpy(char *dest, const char *src, size_t limit)
 {
 #ifdef _WIN32
     strncpy_s(dest, limit, src, limit - 1);
@@ -190,51 +190,51 @@ void HinaPE::RenderEngine::Workbench::Platform::strcpy(char *dest, const char *s
     dest[limit - 1] = '\0';
 #endif
 }
-auto HinaPE::RenderEngine::Workbench::Platform::window_draw() -> std::pair<float, float>
+auto Kasumi::Workbench::Platform::window_draw() -> std::pair<float, float>
 {
     int w, h;
     SDL_GL_GetDrawableSize(window, &w, &h);
     return {static_cast<float>(w), static_cast<float>(h)};
 }
-auto HinaPE::RenderEngine::Workbench::Platform::window_size() -> std::pair<float, float>
+auto Kasumi::Workbench::Platform::window_size() -> std::pair<float, float>
 {
     int w, h;
     SDL_GetWindowSize(window, &w, &h);
     return {static_cast<float>(w), static_cast<float>(h)};
 }
-auto HinaPE::RenderEngine::Workbench::Platform::scale(std::pair<float, float> pt) -> std::pair<float, float>
+auto Kasumi::Workbench::Platform::scale(std::pair<float, float> pt) -> std::pair<float, float>
 {
     auto draw = window_draw();
     auto size = window_size();
     return {pt.first * draw.first / size.first, pt.second * draw.second / size.second};
 }
-void HinaPE::RenderEngine::Workbench::Platform::capture_mouse()
+void Kasumi::Workbench::Platform::capture_mouse()
 {
     SDL_CaptureMouse(SDL_TRUE);
     SDL_SetRelativeMouseMode(SDL_TRUE);
 }
-void HinaPE::RenderEngine::Workbench::Platform::release_mouse()
+void Kasumi::Workbench::Platform::release_mouse()
 {
     SDL_CaptureMouse(SDL_FALSE);
     SDL_SetRelativeMouseMode(SDL_FALSE);
 }
-void HinaPE::RenderEngine::Workbench::Platform::grab_mouse() { SDL_SetWindowGrab(window, SDL_TRUE); }
-void HinaPE::RenderEngine::Workbench::Platform::ungrab_mouse() { SDL_SetWindowGrab(window, SDL_FALSE); }
-void HinaPE::RenderEngine::Workbench::Platform::set_mouse(std::pair<float, float> pt) { SDL_WarpMouseInWindow(window, (int) pt.first, (int) pt.second); }
-auto HinaPE::RenderEngine::Workbench::Platform::get_mouse() -> std::pair<float, float>
+void Kasumi::Workbench::Platform::grab_mouse() { SDL_SetWindowGrab(window, SDL_TRUE); }
+void Kasumi::Workbench::Platform::ungrab_mouse() { SDL_SetWindowGrab(window, SDL_FALSE); }
+void Kasumi::Workbench::Platform::set_mouse(std::pair<float, float> pt) { SDL_WarpMouseInWindow(window, (int) pt.first, (int) pt.second); }
+auto Kasumi::Workbench::Platform::get_mouse() -> std::pair<float, float>
 {
     int x, y;
     SDL_GetMouseState(&x, &y);
     return {static_cast<float>(x), static_cast<float>(y)};
 }
-auto HinaPE::RenderEngine::Workbench::Platform::is_down(SDL_Scancode key) -> bool { return keybuf[key]; }
-void HinaPE::RenderEngine::Workbench::Platform::begin_frame()
+auto Kasumi::Workbench::Platform::is_down(SDL_Scancode key) -> bool { return keybuf[key]; }
+void Kasumi::Workbench::Platform::begin_frame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(window);
     ImGui::NewFrame();
 }
-void HinaPE::RenderEngine::Workbench::Platform::complete_frame()
+void Kasumi::Workbench::Platform::complete_frame()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     ImGui::Render();

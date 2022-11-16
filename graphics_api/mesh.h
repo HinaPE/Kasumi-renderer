@@ -1,9 +1,9 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_MESH_H
-#define HINAPE_RENDER_ENGINE_PRO_MESH_H
+#ifndef KASUMI_RENDERER_MESH_H
+#define KASUMI_RENDERER_MESH_H
 
 #include "math_api.h"
 
-namespace HinaPE::RenderEngine
+namespace Kasumi
 {
 class Texture
 {
@@ -24,7 +24,8 @@ private:
 };
 using TexturePtr = std::shared_ptr<Texture>;
 
-class ColoredMesh final {};
+class ColoredMesh final {}; // TODO:
+using ColoredMeshPtr = std::shared_ptr<ColoredMesh>;
 
 class TexturedMesh final
 {
@@ -65,4 +66,4 @@ private:
 using TexturedMeshPtr = std::shared_ptr<TexturedMesh>;
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_MESH_H
+#endif //KASUMI_RENDERER_MESH_H

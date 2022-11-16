@@ -1,12 +1,12 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_RENDERER_H
-#define HINAPE_RENDER_ENGINE_PRO_RENDERER_H
+#ifndef KASUMI_RENDERER_RENDERER_H
+#define KASUMI_RENDERER_RENDERER_H
 
 #include "graphics_api/mesh.h"
 #include "graphics_api/shader.h"
 #include "graphics_api/framebuffer.h"
 #include "graphics_api/graphics_api.h"
 
-namespace HinaPE::RenderEngine::Workbench
+namespace Kasumi::Workbench
 {
 class Renderer final
 {
@@ -40,4 +40,4 @@ private:
 using RendererPtr = std::shared_ptr<Renderer>;
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_RENDERER_H
+#endif //KASUMI_RENDERER_RENDERER_H

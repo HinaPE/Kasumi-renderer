@@ -79,7 +79,7 @@ static void debug_proc(GLenum glsource, GLenum gltype, GLuint, GLenum severity, 
             break;
     }
 }
-void HinaPE::RenderEngine::GraphicsAPI::setup()
+void Kasumi::GraphicsAPI::setup()
 {
     static bool is_gl45 = false;
     static bool is_gl41 = false;
@@ -99,11 +99,11 @@ void HinaPE::RenderEngine::GraphicsAPI::setup()
 
     // TODO: Effect init
 }
-void HinaPE::RenderEngine::GraphicsAPI::shutdown()
+void Kasumi::GraphicsAPI::shutdown()
 {
     // TODO: Effect shutdown
 }
-void HinaPE::RenderEngine::GraphicsAPI::wireframe_mode(bool enable)
+void Kasumi::GraphicsAPI::wireframe_mode(bool enable)
 {
     if (enable)
     {
@@ -115,21 +115,21 @@ void HinaPE::RenderEngine::GraphicsAPI::wireframe_mode(bool enable)
         glDisable(GL_POLYGON_OFFSET_LINE);
     }
 }
-void HinaPE::RenderEngine::GraphicsAPI::offset(bool enable)
+void Kasumi::GraphicsAPI::offset(bool enable)
 {
     if (enable)
         glEnable(GL_POLYGON_OFFSET_FILL);
     else
         glDisable(GL_POLYGON_OFFSET_FILL);
 }
-void HinaPE::RenderEngine::GraphicsAPI::culling(bool enable)
+void Kasumi::GraphicsAPI::culling(bool enable)
 {
     if (enable)
         glEnable(GL_CULL_FACE);
     else
         glDisable(GL_CULL_FACE);
 }
-void HinaPE::RenderEngine::GraphicsAPI::depth_write(bool enable)
+void Kasumi::GraphicsAPI::depth_write(bool enable)
 {
     if (enable)
         glDepthMask(GL_TRUE);

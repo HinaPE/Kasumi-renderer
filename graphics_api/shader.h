@@ -1,12 +1,12 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_SHADER_H
-#define HINAPE_RENDER_ENGINE_PRO_SHADER_H
+#ifndef KASUMI_RENDERER_SHADER_H
+#define KASUMI_RENDERER_SHADER_H
 
 #include "math_api.h"
 
 #include <vector>
 #include <string>
 
-namespace HinaPE::RenderEngine
+namespace Kasumi
 {
 class Shader final
 {
@@ -40,4 +40,4 @@ private:
 using ShaderPtr = std::shared_ptr<Shader>;
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_SHADER_H
+#endif //KASUMI_RENDERER_SHADER_H

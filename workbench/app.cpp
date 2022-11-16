@@ -1,13 +1,13 @@
 #include "app.h"
-void HinaPE::RenderEngine::Workbench::App::render()
+void Kasumi::Workbench::App::render()
 {
 
 }
-void HinaPE::RenderEngine::Workbench::App::event(SDL_Event e)
+void Kasumi::Workbench::App::event(SDL_Event e)
 {
 
 }
-auto HinaPE::RenderEngine::Workbench::App::quit() -> bool
+auto Kasumi::Workbench::App::quit() -> bool
 {
     return false;
 }

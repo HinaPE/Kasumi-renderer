@@ -3,8 +3,8 @@
 #include <glad/glad.h>
 #include <fstream>
 
-HinaPE::RenderEngine::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path) : Shader(vertex_path, fragment_path, "") {}
-HinaPE::RenderEngine::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path, const std::string &geometry_path)
+Kasumi::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path) : Shader(vertex_path, fragment_path, "") {}
+Kasumi::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path, const std::string &geometry_path)
 {
     std::ifstream vertex_shader_stream(KASUMI_SHADER_DIR + vertex_path);
     std::string vertex_shader_src((std::istreambuf_iterator<char>(vertex_shader_stream)), std::istreambuf_iterator<char>());
@@ -44,16 +44,16 @@ HinaPE::RenderEngine::Shader::Shader(const std::string &vertex_path, const std::
     glDeleteShader(v);
     glDeleteShader(f);
 }
-HinaPE::RenderEngine::Shader::~Shader()
+Kasumi::Shader::~Shader()
 {
     glUseProgram(0);
     glDeleteProgram(ID);
 }
-void HinaPE::RenderEngine::Shader::bind() const
+void Kasumi::Shader::bind() const
 {
     glUseProgram(ID);
 }
-auto HinaPE::RenderEngine::Shader::validate(unsigned int id) -> bool
+auto Kasumi::Shader::validate(unsigned int id) -> bool
 {
     GLint compiled = 0;
     glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
@@ -72,12 +72,12 @@ auto HinaPE::RenderEngine::Shader::validate(unsigned int id) -> bool
     }
     return true;
 }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, bool value) const { glUniform1i(glGetUniformLocation(ID, name.c_str()), static_cast<int>(value)); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, int value) const { glUniform1i(glGetUniformLocation(ID, name.c_str()), value); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, unsigned int value) const { glUniform1ui(glGetUniformLocation(ID, name.c_str()), value); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, float value) const { glUniform1f(glGetUniformLocation(ID, name.c_str()), value); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, const HinaPE::RenderEngine::mVector2& value) const { glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, const HinaPE::RenderEngine::mVector3& value) const { glUniform3f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, const HinaPE::RenderEngine::mVector4& value) const { glUniform4f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z, value.w); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, HinaPE::RenderEngine::mMatrix3x3 value) const { glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }
-void HinaPE::RenderEngine::Shader::uniform(const std::string &name, HinaPE::RenderEngine::mMatrix4x4 value) const { glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }
+void Kasumi::Shader::uniform(const std::string &name, bool value) const { glUniform1i(glGetUniformLocation(ID, name.c_str()), static_cast<int>(value)); }
+void Kasumi::Shader::uniform(const std::string &name, int value) const { glUniform1i(glGetUniformLocation(ID, name.c_str()), value); }
+void Kasumi::Shader::uniform(const std::string &name, unsigned int value) const { glUniform1ui(glGetUniformLocation(ID, name.c_str()), value); }
+void Kasumi::Shader::uniform(const std::string &name, float value) const { glUniform1f(glGetUniformLocation(ID, name.c_str()), value); }
+void Kasumi::Shader::uniform(const std::string &name, const mVector2& value) const { glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y); }
+void Kasumi::Shader::uniform(const std::string &name, const mVector3& value) const { glUniform3f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z); }
+void Kasumi::Shader::uniform(const std::string &name, const mVector4& value) const { glUniform4f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z, value.w); }
+void Kasumi::Shader::uniform(const std::string &name, mMatrix3x3 value) const { glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }
+void Kasumi::Shader::uniform(const std::string &name, mMatrix4x4 value) const { glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }

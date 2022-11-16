@@ -1,7 +1,7 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_RENDERER_H
-#define HINAPE_RENDER_ENGINE_PRO_RENDERER_H
+#ifndef KASUMI_RENDERER_RENDERER_H
+#define KASUMI_RENDERER_RENDERER_H
 
-namespace HinaPE::RenderEngine::Pathtracer
+namespace Kasumi::Pathtracer
 {
 class Renderer
 {
@@ -9,4 +9,4 @@ class Renderer
 };
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_RENDERER_H
+#endif //KASUMI_RENDERER_RENDERER_H

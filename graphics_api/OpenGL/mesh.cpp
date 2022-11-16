@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "sf_libs/stb_image.h"
 
-HinaPE::RenderEngine::Texture::Texture(const std::string &path)
+Kasumi::Texture::Texture(const std::string &path)
 {
     ID = width = height = nr_channels = 0;
     unsigned char *data = stbi_load(path.c_str(), &width, &height, &nr_channels, 0);
@@ -21,13 +21,13 @@ HinaPE::RenderEngine::Texture::Texture(const std::string &path)
     stbi_image_free(data);
 }
 
-void HinaPE::RenderEngine::Texture::bind(int texture_idx) const
+void Kasumi::Texture::bind(int texture_idx) const
 {
     glActiveTexture(GL_TEXTURE0 + texture_idx);
     glBindTexture(GL_TEXTURE_2D, ID);
 }
 
-HinaPE::RenderEngine::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices) : _verts(std::move(vertices)), _idxs(std::move(indices))
+Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices) : _verts(std::move(vertices)), _idxs(std::move(indices))
 {
     VAO = VBO = EBO = 0;
 
@@ -61,12 +61,12 @@ HinaPE::RenderEngine::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices,
     dirty = true;
 }
 
-HinaPE::RenderEngine::TexturedMesh::TexturedMesh(const std::string &path)
+Kasumi::TexturedMesh::TexturedMesh(const std::string &path)
 {
 
 }
 
-HinaPE::RenderEngine::TexturedMesh::~TexturedMesh()
+Kasumi::TexturedMesh::~TexturedMesh()
 {
     glDeleteBuffers(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -74,7 +74,7 @@ HinaPE::RenderEngine::TexturedMesh::~TexturedMesh()
     VAO = VBO = EBO = 0;
 }
 
-void HinaPE::RenderEngine::TexturedMesh::render()
+void Kasumi::TexturedMesh::render()
 {
     if (dirty)
         update();
@@ -84,7 +84,7 @@ void HinaPE::RenderEngine::TexturedMesh::render()
     glBindVertexArray(0);
 }
 
-void HinaPE::RenderEngine::TexturedMesh::update()
+void Kasumi::TexturedMesh::update()
 {
     glBindVertexArray(VAO);
 
@@ -99,4 +99,4 @@ void HinaPE::RenderEngine::TexturedMesh::update()
     dirty = false;
 }
 
-void HinaPE::RenderEngine::TexturedMesh::attach_texture(const HinaPE::RenderEngine::TexturePtr &texture) { _textures.emplace_back(texture); }
+void Kasumi::TexturedMesh::attach_texture(const Kasumi::TexturePtr &texture) { _textures.emplace_back(texture); }

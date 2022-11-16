@@ -1,9 +1,9 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_APP_H
-#define HINAPE_RENDER_ENGINE_PRO_APP_H
+#ifndef KASUMI_RENDERER_APP_H
+#define KASUMI_RENDERER_APP_H
 
 #include <SDL.h>
 
-namespace HinaPE::RenderEngine::Workbench
+namespace Kasumi::Workbench
 {
 class App
 {
@@ -14,4 +14,4 @@ public:
 };
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_APP_H
+#endif //KASUMI_RENDERER_APP_H

@@ -1,9 +1,9 @@
-#ifndef HINAPE_RENDER_ENGINE_PRO_FRAMEBUFFER_H
-#define HINAPE_RENDER_ENGINE_PRO_FRAMEBUFFER_H
+#ifndef KASUMI_RENDERER_FRAMEBUFFER_H
+#define KASUMI_RENDERER_FRAMEBUFFER_H
 
 #include <memory>
 
-namespace HinaPE::RenderEngine
+namespace Kasumi
 {
 class Framebuffer
 {
@@ -16,4 +16,4 @@ private:
 using FramebufferPtr = std::shared_ptr<Framebuffer>;
 }
 
-#endif //HINAPE_RENDER_ENGINE_PRO_FRAMEBUFFER_H
+#endif //KASUMI_RENDERER_FRAMEBUFFER_H
