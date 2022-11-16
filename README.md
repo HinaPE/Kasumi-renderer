@@ -6,11 +6,11 @@
 
 ## Introduction
 
-1. HinaPE is a cross-platform, light and easy-to-use research-oriented multi-backend renderer, including a workbench renderer, a software rasterizer and a pathtracer.  
+1. Kasumi is a cross-platform, light and easy-to-use research-oriented multi-backend renderer, including a workbench renderer, a software rasterizer and a pathtracer.  
 
 ## Build Instruction
 
-As a cross-platform project, [Clion](https://www.jetbrains.com/clion/) is highly recommanded to build HinaPE.
+As a cross-platform project, [Clion](https://www.jetbrains.com/clion/) is highly recommanded to build Kasumi.
 
 ### Prerequisites
 
