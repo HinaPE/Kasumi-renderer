@@ -1,7 +1,5 @@
 #include "../graphics_api.h"
 
-#include <glad/glad.h>
-
 #include <iostream>
 #include <string>
 

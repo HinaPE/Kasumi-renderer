@@ -1,6 +1,5 @@
 #include "../shader.h"
 
-#include <glad/glad.h>
 #include <fstream>
 
 Kasumi::Shader::Shader(const std::string &vertex_path, const std::string &fragment_path) : Shader(vertex_path, fragment_path, "") {}

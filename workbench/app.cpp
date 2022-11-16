@@ -3,7 +3,7 @@ void Kasumi::Workbench::App::render()
 {
 
 }
-void Kasumi::Workbench::App::event(SDL_Event e)
+void Kasumi::Workbench::App::event()
 {
 
 }

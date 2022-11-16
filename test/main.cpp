@@ -1,9 +1,8 @@
-#include "../workbench/platform.h"
+#include "../graphics_api/platform_glfw.h"
 
-auto main(int argc, char **argv) -> int
+auto main() -> int
 {
-    Kasumi::Workbench::Platform plt(800, 600);
-    Kasumi::Workbench::App app;
-    plt.update(app);
+    Kasumi::GLFW::Platform platform(1024, 768);
+    platform.launch();
     return 0;
 }

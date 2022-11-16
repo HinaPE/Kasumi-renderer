@@ -15,8 +15,8 @@ file(GLOB_RECURSE KASUMI_PATHTRACER "pathtracer/*.cpp" "pathtracer/*.h")
 set(KASUMI_OpenGL
         "deps/imgui/imgui_impl_opengl3.cpp"
         "deps/imgui/imgui_impl_opengl3.h"
-        "deps/imgui/imgui_impl_sdl.cpp"
-        "deps/imgui/imgui_impl_sdl.h"
+        "deps/imgui/imgui_impl_glfw.cpp"
+        "deps/imgui/imgui_impl_glfw.h"
         )
 
 set(KASUMI_SRC
@@ -88,7 +88,7 @@ endif ()
 target_include_directories(Kasumi_Renderer PUBLIC ${ASSIMP_INCLUDE_DIRS})
 
 # define include paths
-target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include" "deps/SDL/include")
+target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include" "deps/SDL/include" "deps/glfw3/include")
 target_include_directories(Kasumi_Renderer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(Kasumi_Renderer PUBLIC "${KASUMI_COMMON_DIR}")
 

@@ -3,6 +3,8 @@
 
 #include "math_api.h"
 
+#include <glad/glad.h>
+
 #include <vector>
 #include <string>
 

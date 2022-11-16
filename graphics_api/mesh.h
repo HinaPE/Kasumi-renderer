@@ -2,6 +2,7 @@
 #define KASUMI_MESH_H
 
 #include "math_api.h"
+#include <glad/glad.h>
 
 namespace Kasumi
 {
