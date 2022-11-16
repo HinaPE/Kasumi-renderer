@@ -12,11 +12,21 @@ file(GLOB_RECURSE KASUMI_WORKBENCH "workbench/*.cpp" "workbench/*.h")
 file(GLOB_RECURSE KASUMI_RASTERIZER "rasterizer/*.cpp" "rasterizer/*.h")
 file(GLOB_RECURSE KASUMI_PATHTRACER "pathtracer/*.cpp" "pathtracer/*.h")
 
-set(KASUMI_OpenGL
-        "deps/imgui/imgui_impl_opengl3.cpp"
-        "deps/imgui/imgui_impl_opengl3.h"
-        "deps/imgui/imgui_impl_glfw.cpp"
-        "deps/imgui/imgui_impl_glfw.h"
+set(KASUMI_Imgui_OpenGL
+        "deps/imgui/imgui.h"
+        "deps/imgui/imgui.cpp"
+        "deps/imgui/imgui_draw.cpp"
+        "deps/imgui/imgui_widgets.cpp"
+        "deps/imgui/imgui_tables.cpp"
+        "deps/imgui/imconfig.h"
+        "deps/imgui/imgui_internal.h"
+        "deps/imgui/imstb_rectpack.h"
+        "deps/imgui/imstb_textedit.h"
+        "deps/imgui/imstb_truetype.h"
+        "deps/imgui/backends/imgui_impl_opengl3.cpp"
+        "deps/imgui/backends/imgui_impl_opengl3.h"
+        "deps/imgui/backends/imgui_impl_glfw.cpp"
+        "deps/imgui/backends/imgui_impl_glfw.h"
         )
 
 set(KASUMI_SRC
@@ -24,7 +34,7 @@ set(KASUMI_SRC
         ${KASUMI_WORKBENCH}
         ${KASUMI_RASTERIZER}
         ${KASUMI_PATHTRACER}
-        ${KASUMI_OpenGL}
+        ${KASUMI_Imgui_OpenGL}
         )
 
 add_library(Kasumi_Renderer ${KASUMI_SRC} math_api.h)
@@ -52,10 +62,6 @@ find_package(Threads REQUIRED)
 target_link_libraries(Kasumi_Renderer PUBLIC Threads::Threads) # std::thread need pthread lib to be linked
 if (NOT TARGET SDL2)
     add_subdirectory("deps/SDL" "${CMAKE_CURRENT_BINARY_DIR}/SDL")
-endif ()
-if (NOT TARGET imgui)
-    add_subdirectory("deps/imgui/" "${CMAKE_CURRENT_BINARY_DIR}/imgui")
-    target_include_directories(imgui PUBLIC ../render-engine/ ./common)
 endif ()
 if (NOT TARGET glad)
     add_subdirectory("deps/glad/" "${CMAKE_CURRENT_BINARY_DIR}/glad")
@@ -85,10 +91,9 @@ endif ()
 if (NOT TARGET glfw)
     add_subdirectory("deps/glfw3" "${CMAKE_CURRENT_BINARY_DIR}/glfw3")
 endif ()
-target_include_directories(Kasumi_Renderer PUBLIC ${ASSIMP_INCLUDE_DIRS})
 
 # define include paths
-target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include" "deps/SDL/include" "deps/glfw3/include")
+target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include" "deps/SDL/include" "deps/glfw3/include" "deps/imgui")
 target_include_directories(Kasumi_Renderer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(Kasumi_Renderer PUBLIC "${KASUMI_COMMON_DIR}")
 
@@ -106,7 +111,6 @@ target_link_libraries(Kasumi_Renderer PUBLIC SDL2::SDL2main)
 target_link_libraries(Kasumi_Renderer PUBLIC assimp)
 target_link_libraries(Kasumi_Renderer PUBLIC nfd)
 target_link_libraries(Kasumi_Renderer PUBLIC sf_libs)
-target_link_libraries(Kasumi_Renderer PUBLIC imgui)
 target_link_libraries(Kasumi_Renderer PUBLIC glad)
 target_link_libraries(Kasumi_Renderer PUBLIC glfw)
 
