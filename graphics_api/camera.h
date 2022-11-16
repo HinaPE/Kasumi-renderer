@@ -8,10 +8,12 @@ namespace Kasumi
 class Camera final
 {
 public:
-    Camera(mVector2 dim);
+    Camera(const mVector2& dim);
 
 public:
     static auto project(float fov, float aspect_ratio, float near) -> mMatrix4x4;
+    auto get_projection() const -> mMatrix4x4;
+    auto get_view() const -> mMatrix4x4;
 
 private:
     void reset();

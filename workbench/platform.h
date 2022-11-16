@@ -49,4 +49,4 @@ private:
 };
 }
 
-#endif //KASUMI_RENDERER_PLATFORM_H
+#endif //KASUMI_PLATFORM_H

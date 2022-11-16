@@ -17,4 +17,4 @@ public:
 };
 }
 
-#endif //KASUMI_RENDERER_GRAPHICS_API_H
+#endif //KASUMI_GRAPHICS_API_H

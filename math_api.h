@@ -29,4 +29,4 @@ using mQuaternion = HinaPE::Quaternion<real>;
 using mBBox = HinaPE::BoundingBox<real, 3>;
 }
 
-#endif //KASUMI_RENDERER_MATH_API_H
+#endif //KASUMI_MATH_API_H

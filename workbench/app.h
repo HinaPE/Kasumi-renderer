@@ -14,4 +14,4 @@ public:
 };
 }
 
-#endif //KASUMI_RENDERER_APP_H
+#endif //KASUMI_APP_H

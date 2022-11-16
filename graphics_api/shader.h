@@ -40,4 +40,4 @@ private:
 using ShaderPtr = std::shared_ptr<Shader>;
 }
 
-#endif //KASUMI_RENDERER_SHADER_H
+#endif //KASUMI_SHADER_H

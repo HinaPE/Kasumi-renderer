@@ -1,8 +1,19 @@
-#include "camera.h"
-Kasumi::Camera::Camera(Kasumi::mVector2 dim)
+#include "../camera.h"
+
+Kasumi::Camera::Camera(const Kasumi::mVector2& dim)
 {
     reset();
     _aspect_ratio = dim.x / dim.y;
+}
+
+auto Kasumi::Camera::get_projection() const -> Kasumi::mMatrix4x4
+{
+    return Camera::project(_vertical_fov, _aspect_ratio, _near_plane);
+}
+
+auto Kasumi::Camera::get_view() const -> Kasumi::mMatrix4x4
+{
+    return view;
 }
 
 void Kasumi::Camera::reset()

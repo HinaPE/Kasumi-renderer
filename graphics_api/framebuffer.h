@@ -16,4 +16,4 @@ private:
 using FramebufferPtr = std::shared_ptr<Framebuffer>;
 }
 
-#endif //KASUMI_RENDERER_FRAMEBUFFER_H
+#endif //KASUMI_FRAMEBUFFER_H

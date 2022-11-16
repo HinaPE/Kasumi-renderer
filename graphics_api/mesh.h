@@ -66,4 +66,4 @@ private:
 using TexturedMeshPtr = std::shared_ptr<TexturedMesh>;
 }
 
-#endif //KASUMI_RENDERER_MESH_H
+#endif //KASUMI_MESH_H
