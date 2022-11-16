@@ -28,7 +28,6 @@ git clone --recursive https://github.com/Xayah-Hina/Kasumi-renderer.git
 ```shell
 cmake -S . -B Build
 cmake --build Build --config Release
-./Build/HinaPE
 ```
 
 ### Ubuntu
@@ -36,7 +35,6 @@ cmake --build Build --config Release
 ```shell
 cmake -S . -B Build
 cmake --build Build --config Release
-./Build/HinaPE
 ```
 
 ### Windows
@@ -44,5 +42,4 @@ cmake --build Build --config Release
 ```shell
 cmake -S . -B Build
 cmake --build Build --config Release
-.\Build\Release\HinaPE.exe
 ```
