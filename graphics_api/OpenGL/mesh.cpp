@@ -1,7 +1,7 @@
 #include "../mesh.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "sf_libs/stb_image.h"
+#include "stb_image.h"
 
 Kasumi::Texture::Texture(const std::string &path)
 {

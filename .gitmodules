@@ -13,3 +13,6 @@
 [submodule "deps/imgui"]
 	path = deps/imgui
 	url = https://github.com/Xayah-Hina/Kasumi_imgui.git
+[submodule "deps/stb"]
+	path = deps/stb
+	url = https://github.com/BFU-Graphics/Hina_stb.git
