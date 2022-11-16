@@ -4,6 +4,7 @@ project(Kasumi VERSION 1.1.2 DESCRIPTION "Kasumi: Illumine the Endless Night." L
 if (NOT TARGET Kasumi_backend)
     add_subdirectory(universal_graphics Kasumi_backend)
 endif ()
+add_subdirectory(workbench)
 
 #file(GLOB_RECURSE KASUMI_GRAPHICS_API "universal_graphics/*.cpp" "universal_graphics/*.h")
 #file(GLOB_RECURSE KASUMI_WORKBENCH "workbench/*.cpp" "workbench/*.h")

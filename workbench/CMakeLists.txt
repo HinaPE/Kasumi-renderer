@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.16)
+project(Kasumi_workbench VERSION 1.0.0 DESCRIPTION "Kasumi Workbench Renderer" LANGUAGES CXX)
+
+if (NOT TARGET Kasumi_backend)
+    return()
+endif ()
+
+file(GLOB WORKBENCH_FILES
+        app.h app.cpp
+        )
+
+add_executable(Kasumi_workbench test/main.cpp ${WORKBENCH_FILES})
+set_target_properties(Kasumi_workbench PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
+target_include_directories(Kasumi_workbench PUBLIC ../universal_graphics)
+target_link_libraries(Kasumi_workbench PUBLIC Kasumi_backend)

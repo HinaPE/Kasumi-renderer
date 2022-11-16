@@ -14,6 +14,7 @@ file(GLOB UNIVERSE_FILES
         shader.h
         mesh.h
         texture.h
+        model.h
         framebuffer.h
         )
 
@@ -24,6 +25,7 @@ if (OpenGL)
             backends/OpenGL/mesh.cpp
             backends/OpenGL/texture.cpp
             backends/OpenGL/framebuffer.cpp
+            backends/OpenGL/model.cpp
             )
     if (NOT TARGET glad)
         add_subdirectory(deps/glad)

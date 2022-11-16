@@ -1,5 +1,5 @@
-#ifndef KASUMI_TESTURE_H
-#define KASUMI_TESTURE_H
+#ifndef KASUMI_TEXTURE_H
+#define KASUMI_TEXTURE_H
 
 #include <string>
 #include <memory>
@@ -26,4 +26,4 @@ private:
 using TexturePtr = std::shared_ptr<Texture>;
 }
 
-#endif //KASUMI_TESTURE_H
+#endif //KASUMI_TEXTURE_H
