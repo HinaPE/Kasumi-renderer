@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(Kasumi VERSION 1.1.2 DESCRIPTION "Kasumi: Illumine the Endless Night." LANGUAGES CXX)
 
-set(KASUMI_DEPS_DIR "./deps")
 set(KASUMI_COMMON_DIR "./common")
 
 if (NOT TARGET HinaPE_Common)
@@ -14,10 +13,10 @@ file(GLOB_RECURSE KASUMI_RASTERIZER "rasterizer/*.cpp" "rasterizer/*.h")
 file(GLOB_RECURSE KASUMI_PATHTRACER "pathtracer/*.cpp" "pathtracer/*.h")
 
 set(KASUMI_OpenGL
-        "${KASUMI_DEPS_DIR}/imgui/imgui_impl_opengl3.cpp"
-        "${KASUMI_DEPS_DIR}/imgui/imgui_impl_opengl3.h"
-        "${KASUMI_DEPS_DIR}/imgui/imgui_impl_sdl.cpp"
-        "${KASUMI_DEPS_DIR}/imgui/imgui_impl_sdl.h"
+        "deps/imgui/imgui_impl_opengl3.cpp"
+        "deps/imgui/imgui_impl_opengl3.h"
+        "deps/imgui/imgui_impl_sdl.cpp"
+        "deps/imgui/imgui_impl_sdl.h"
         )
 
 set(KASUMI_SRC
@@ -39,23 +38,8 @@ target_compile_definitions(
         KASUMI_MODEL_DIR="${CMAKE_CURRENT_SOURCE_DIR}/builtin_models/"
 )
 # setup OS-specific options
-if (UNIX AND NOT APPLE)
-    set(LINUX TRUE)
-endif ()
 if (APPLE)
     set(CMAKE_EXE_LINKER_FLAGS "-framework AppKit")
-    find_package(SDL2 REQUIRED)
-    target_include_directories(Kasumi_Renderer PUBLIC ${SDL2_INCLUDE_DIRS}/..)
-    target_include_directories(Kasumi_Renderer PUBLIC ${SDL2_INCLUDE_DIRS})
-    target_link_directories(Kasumi_Renderer PUBLIC ${SDL2_LIBRARY_DIRS})
-    add_definitions(${SDL2_CFLAGS_OTHER})
-endif ()
-if (LINUX)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(SDL2 REQUIRED sdl2)
-    target_include_directories(Kasumi_Renderer PUBLIC ${SDL2_INCLUDE_DIRS})
-    target_link_directories(Kasumi_Renderer PUBLIC ${SDL2_LIBRARY_DIRS})
-    add_definitions(${SDL2_CFLAGS_OTHER})
 endif ()
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(Kasumi_Renderer PUBLIC -fno-omit-frame-pointer)
@@ -66,6 +50,9 @@ endif ()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(Kasumi_Renderer PUBLIC Threads::Threads) # std::thread need pthread lib to be linked
+if (NOT TARGET SDL2)
+    add_subdirectory("deps/SDL" "${CMAKE_CURRENT_BINARY_DIR}/SDL")
+endif ()
 if (NOT TARGET imgui)
     add_subdirectory("deps/imgui/" "${CMAKE_CURRENT_BINARY_DIR}/imgui")
     target_include_directories(imgui PUBLIC ../render-engine/)
@@ -98,28 +85,21 @@ endif ()
 target_include_directories(Kasumi_Renderer PUBLIC ${ASSIMP_INCLUDE_DIRS})
 
 # define include paths
-target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include")
+target_include_directories(Kasumi_Renderer PUBLIC "deps" "deps/assimp/include" "deps/SDL/include")
 target_include_directories(Kasumi_Renderer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
-target_include_directories(Kasumi_Renderer PUBLIC "${KASUMI_COMMON_DIRF}")
+target_include_directories(Kasumi_Renderer PUBLIC "${KASUMI_COMMON_DIR}")
 
 
 # link libraries
 if (WIN32)
-    target_include_directories(Kasumi_Renderer PUBLIC "deps/win")
     add_definitions(-DWIN32_LEAN_AND_MEAN)
-    target_link_libraries(Kasumi_Renderer PUBLIC deps/win/SDL2/SDL2main)
-    target_link_libraries(Kasumi_Renderer PUBLIC deps/win/SDL2/SDL2)
     target_link_libraries(Kasumi_Renderer PUBLIC Winmm)
     target_link_libraries(Kasumi_Renderer PUBLIC Version)
     target_link_libraries(Kasumi_Renderer PUBLIC Setupapi)
     target_link_libraries(Kasumi_Renderer PUBLIC Shcore)
 endif ()
-if (LINUX)
-    target_link_libraries(Kasumi_Renderer PUBLIC SDL2)
-endif ()
-if (APPLE)
-    target_link_libraries(Kasumi_Renderer PUBLIC ${SDL2_LIBRARIES})
-endif ()
+target_link_libraries(Kasumi_Renderer PUBLIC SDL2::SDL2-static)
+target_link_libraries(Kasumi_Renderer PUBLIC SDL2::SDL2main)
 target_link_libraries(Kasumi_Renderer PUBLIC assimp)
 target_link_libraries(Kasumi_Renderer PUBLIC nfd)
 target_link_libraries(Kasumi_Renderer PUBLIC sf_libs)
