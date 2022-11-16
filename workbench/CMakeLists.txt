@@ -5,8 +5,10 @@ if (NOT TARGET Kasumi_backend)
     return()
 endif ()
 
-file(GLOB WORKBENCH_FILES
+file(GLOB_RECURSE WORKBENCH_FILES
         app.h app.cpp
+        scene/*h scene/*.cpp
+        gui/*h gui/*.cpp
         )
 
 add_executable(Kasumi_workbench test/main.cpp ${WORKBENCH_FILES})

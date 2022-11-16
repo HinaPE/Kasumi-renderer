@@ -17,8 +17,8 @@ class App
 {
 public:
     virtual void render() = 0;
-    virtual void event(GLFWwindow *) {};
-    virtual void quit() {};
+    virtual void event(GLFWwindow *) {}; // Deal with keyboard and mouse event
+    virtual auto quit() -> bool { return false; };
 };
 class Platform
 {
