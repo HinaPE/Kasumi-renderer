@@ -49,6 +49,8 @@ private:
     void rendering_loop(const std::shared_ptr<App> &app);
     void clear_window();
     void process_input();
+    void begin_frame();
+    void end_frame();
 
 private:
     bool _inited;

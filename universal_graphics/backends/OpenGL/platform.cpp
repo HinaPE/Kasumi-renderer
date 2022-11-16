@@ -1,6 +1,10 @@
 #include "glad/glad.h" // include glad before glfw
 #include "../../platform.h"
 
+#include "imgui.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
+
 Kasumi::Platform::Platform(int width, int height) : _inited(false), _current_window(nullptr)
 {
     add_new_window(width, height, "Kasumi: illumine the endless night", {1.f, 1.f, 1.f});
@@ -46,22 +50,22 @@ void Kasumi::Platform::add_new_window(int width, int height, const std::string &
     {
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
             std::cerr << "Failed to initialize GLAD" << std::endl;
+        ImGui::CreateContext();
+        ImGui_ImplGlfw_InitForOpenGL(_current_window, true); // TODO: install callbacks?
+        ImGui_ImplOpenGL3_Init();
         _inited = true;
     }
 }
 
 void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
 {
-    while (!glfwWindowShouldClose(_current_window))
+    while (!glfwWindowShouldClose(_current_window) || app->quit())
     {
-        clear_window();
-        process_input();
+        begin_frame();
         app->event(_current_window);
         app->render();
-        glfwSwapBuffers(_current_window);
-        glfwPollEvents();
+        end_frame();
     }
-    app->quit();
 }
 
 void Kasumi::Platform::clear_window()
@@ -84,4 +88,21 @@ void Kasumi::Platform::process_input()
         callback();
     for (auto &&callback: _mouse_callbacks)
         callback();
+}
+
+void Kasumi::Platform::begin_frame()
+{
+    clear_window();
+    process_input();
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
+void Kasumi::Platform::end_frame()
+{
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    glfwSwapBuffers(_current_window);
+    glfwPollEvents();
 }

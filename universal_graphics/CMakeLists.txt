@@ -29,6 +29,22 @@ if (OpenGL)
             backends/OpenGL/model.cpp
             backends/OpenGL/camera.cpp
             )
+    set(Imgui_OpenGL
+            "deps/imgui/imgui.h"
+            "deps/imgui/imgui.cpp"
+            "deps/imgui/imgui_draw.cpp"
+            "deps/imgui/imgui_widgets.cpp"
+            "deps/imgui/imgui_tables.cpp"
+            "deps/imgui/imconfig.h"
+            "deps/imgui/imgui_internal.h"
+            "deps/imgui/imstb_rectpack.h"
+            "deps/imgui/imstb_textedit.h"
+            "deps/imgui/imstb_truetype.h"
+            "deps/imgui/backends/imgui_impl_opengl3.cpp"
+            "deps/imgui/backends/imgui_impl_opengl3.h"
+            "deps/imgui/backends/imgui_impl_glfw.cpp"
+            "deps/imgui/backends/imgui_impl_glfw.h"
+            )
     if (NOT TARGET glad)
         add_subdirectory(deps/glad)
         target_include_directories(glad PUBLIC deps)
@@ -51,7 +67,7 @@ if (OpenGL)
             target_compile_options(assimp PUBLIC -Wno-error)
         endif ()
     endif ()
-    add_library(Kasumi_backend ${UNIVERSE_FILES} ${OPENGL_IMPL})
+    add_library(Kasumi_backend ${UNIVERSE_FILES} ${OPENGL_IMPL} ${Imgui_OpenGL})
     set_target_properties(Kasumi_backend PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
     target_include_directories(Kasumi_backend PUBLIC ${KASUMI_COMMON_DIR} deps deps/assimp/include deps/glfw3/include deps/imgui deps/stb)
     target_link_libraries(Kasumi_backend PUBLIC assimp)
