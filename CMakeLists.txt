@@ -82,6 +82,9 @@ if (NOT TARGET assimp)
         target_compile_options(assimp PUBLIC -Wno-error)
     endif ()
 endif ()
+if (NOT TARGET glfw)
+    add_subdirectory("deps/glfw3" "${CMAKE_CURRENT_BINARY_DIR}/glfw3")
+endif ()
 target_include_directories(Kasumi_Renderer PUBLIC ${ASSIMP_INCLUDE_DIRS})
 
 # define include paths
@@ -105,3 +108,8 @@ target_link_libraries(Kasumi_Renderer PUBLIC nfd)
 target_link_libraries(Kasumi_Renderer PUBLIC sf_libs)
 target_link_libraries(Kasumi_Renderer PUBLIC imgui)
 target_link_libraries(Kasumi_Renderer PUBLIC glad)
+target_link_libraries(Kasumi_Renderer PUBLIC glfw)
+
+add_executable(test test/main.cpp)
+set_target_properties(test PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
+target_link_libraries(test PUBLIC Kasumi_Renderer)
