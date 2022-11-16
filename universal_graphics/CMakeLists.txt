@@ -13,6 +13,8 @@ file(GLOB UNIVERSE_FILES
         platform.h
         shader.h
         mesh.h
+        texture.h
+        framebuffer.h
         )
 
 if (OpenGL)
@@ -20,6 +22,8 @@ if (OpenGL)
             backends/OpenGL/shader.cpp
             backends/OpenGL/platform.cpp
             backends/OpenGL/mesh.cpp
+            backends/OpenGL/texture.cpp
+            backends/OpenGL/framebuffer.cpp
             )
     if (NOT TARGET glad)
         add_subdirectory(deps/glad)
