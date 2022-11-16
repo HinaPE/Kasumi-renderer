@@ -1,5 +1,5 @@
-#ifndef KASUMI_PLATFORM_GLFW_H
-#define KASUMI_PLATFORM_GLFW_H
+#ifndef KASUMI_PLATFORM_H
+#define KASUMI_PLATFORM_H
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -10,13 +10,21 @@
 #include <functional>
 #include <memory>
 #include <tuple>
+#include <iostream>
 
-namespace Kasumi::GLFW
+namespace Kasumi
 {
+class App
+{
+public:
+    virtual void event() = 0;
+    virtual void render() = 0;
+    virtual void quit() = 0;
+};
 class Platform
 {
 public:
-    void launch();
+    void launch(const std::shared_ptr<App> &app);
     void add_key_callback(std::function<void()> &&callback);
     void add_mouse_callback(std::function<void()> &&callback);
 
@@ -39,10 +47,9 @@ public:
 
 private:
     void add_new_window(int width, int height, const std::string &title, const std::tuple<float, float, float> &clear_color);
-    void rendering_loop();
+    void rendering_loop(const std::shared_ptr<App> &app);
     void clear_window();
     void process_input();
-    void draw_call();
 
 private:
     bool _inited;
@@ -53,6 +60,7 @@ private:
     std::vector<std::function<void()>> _key_callbacks;
     std::vector<std::function<void()>> _mouse_callbacks;
 };
+using PlatformPtr = std::shared_ptr<Platform>;
 }
 
-#endif //KASUMI_PLATFORM_GLFW_H
+#endif //KASUMI_PLATFORM_H

@@ -1,18 +1,18 @@
 [submodule "common"]
 	path = common
 	url = https://github.com/HinaPE/common.git
-[submodule "deps/glad"]
-	path = deps/glad
-	url = https://github.com/BFU-Graphics/Hina_glad.git
-[submodule "deps/assimp"]
-	path = deps/assimp
+[submodule "universal_graphics/deps/assimp"]
+	path = universal_graphics/deps/assimp
 	url = https://github.com/BFU-Graphics/Hina_assimp.git
-[submodule "deps/glfw3"]
-	path = deps/glfw3
+[submodule "universal_graphics/deps/glfw3"]
+	path = universal_graphics/deps/glfw3
 	url = https://github.com/BFU-Graphics/Hina_glfw3.git
-[submodule "deps/imgui"]
-	path = deps/imgui
-	url = https://github.com/Xayah-Hina/Kasumi_imgui.git
-[submodule "deps/stb"]
-	path = deps/stb
+[submodule "universal_graphics/deps/imgui"]
+	path = universal_graphics/deps/imgui
+	url = https://github.com/HinaPE/Kasumi_imgui.git
+[submodule "universal_graphics/deps/stb"]
+	path = universal_graphics/deps/stb
 	url = https://github.com/BFU-Graphics/Hina_stb.git
+[submodule "universal_graphics/deps/glad"]
+	path = universal_graphics/deps/glad
+	url = https://github.com/BFU-Graphics/Hina_glad.git

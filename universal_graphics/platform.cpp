@@ -1,8 +1,6 @@
-#include "platform_glfw.h"
+#include "platform.h"
 
-#include <iostream>
-
-Kasumi::GLFW::Platform::Platform(int width, int height) : _inited(false), _current_window(nullptr)
+Kasumi::Platform::Platform(int width, int height) : _inited(false), _current_window(nullptr)
 {
     add_new_window(width, height, "Kasumi: illumine the endless night", {1.f, 1.f, 1.f});
     add_key_callback([&]()
@@ -12,11 +10,12 @@ Kasumi::GLFW::Platform::Platform(int width, int height) : _inited(false), _curre
                      });
 }
 
-void Kasumi::GLFW::Platform::launch() { rendering_loop(); }
-void Kasumi::GLFW::Platform::add_key_callback(std::function<void()> &&callback) { _key_callbacks.emplace_back(std::move(callback)); }
-void Kasumi::GLFW::Platform::add_mouse_callback(std::function<void()> &&callback) { _mouse_callbacks.emplace_back(std::move(callback)); }
+void Kasumi::Platform::launch(const std::shared_ptr<App> &app) { rendering_loop(app); }
+void Kasumi::Platform::add_key_callback(std::function<void()> &&callback) { _key_callbacks.emplace_back(std::move(callback)); }
+void Kasumi::Platform::add_mouse_callback(std::function<void()> &&callback) { _mouse_callbacks.emplace_back(std::move(callback)); }
 
-void Kasumi::GLFW::Platform::add_new_window(int width, int height, const std::string &title, const std::tuple<float, float, float> &clear_color)
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); }
+void Kasumi::Platform::add_new_window(int width, int height, const std::string &title, const std::tuple<float, float, float> &clear_color)
 {
     if (!_inited)
     {
@@ -28,6 +27,7 @@ void Kasumi::GLFW::Platform::add_new_window(int width, int height, const std::st
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
     }
+
     _current_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     _current_window_name = title;
     _windows[title] = _current_window;
@@ -38,7 +38,9 @@ void Kasumi::GLFW::Platform::add_new_window(int width, int height, const std::st
         glfwTerminate();
         return;
     }
-    glfwMakeContextCurrent(_windows[title]);
+    glfwMakeContextCurrent(_current_window);
+    glfwSetFramebufferSizeCallback(_current_window, framebuffer_size_callback);
+
     if (!_inited)
     {
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
@@ -47,19 +49,20 @@ void Kasumi::GLFW::Platform::add_new_window(int width, int height, const std::st
     }
 }
 
-void Kasumi::GLFW::Platform::rendering_loop()
+void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
 {
     while (!glfwWindowShouldClose(_current_window))
     {
         clear_window();
         process_input();
-        draw_call();
+        app->render();
         glfwSwapBuffers(_current_window);
         glfwPollEvents();
     }
+    app->quit();
 }
 
-void Kasumi::GLFW::Platform::clear_window()
+void Kasumi::Platform::clear_window()
 {
     if (opt.clear_color)
     {
@@ -73,15 +76,10 @@ void Kasumi::GLFW::Platform::clear_window()
         glClear(GL_STENCIL_BUFFER_BIT);
 }
 
-void Kasumi::GLFW::Platform::process_input()
+void Kasumi::Platform::process_input()
 {
     for (auto &&callback: _key_callbacks)
         callback();
     for (auto &&callback: _mouse_callbacks)
         callback();
-}
-
-void Kasumi::GLFW::Platform::draw_call()
-{
-
 }
