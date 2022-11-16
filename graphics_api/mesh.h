@@ -1,5 +1,5 @@
-#ifndef KASUMI_RENDERER_MESH_H
-#define KASUMI_RENDERER_MESH_H
+#ifndef KASUMI_MESH_H
+#define KASUMI_MESH_H
 
 #include "math_api.h"
 

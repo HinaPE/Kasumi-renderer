@@ -1,5 +1,5 @@
-#ifndef KASUMI_RENDERER_RENDERER_H
-#define KASUMI_RENDERER_RENDERER_H
+#ifndef KASUMI_RENDERER_H
+#define KASUMI_RENDERER_H
 
 #include "graphics_api/mesh.h"
 #include "graphics_api/shader.h"

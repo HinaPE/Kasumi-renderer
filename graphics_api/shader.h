@@ -1,5 +1,5 @@
-#ifndef KASUMI_RENDERER_SHADER_H
-#define KASUMI_RENDERER_SHADER_H
+#ifndef KASUMI_SHADER_H
+#define KASUMI_SHADER_H
 
 #include "math_api.h"
 

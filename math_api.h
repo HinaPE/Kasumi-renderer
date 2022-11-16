@@ -1,5 +1,5 @@
-#ifndef KASUMI_RENDERER_MATH_API_H
-#define KASUMI_RENDERER_MATH_API_H
+#ifndef KASUMI_MATH_API_H
+#define KASUMI_MATH_API_H
 
 #include "math/vector2.h"
 #include "math/vector3.h"
@@ -8,6 +8,8 @@
 #include "math/matrix4x4.h"
 #include "math/quaternion.h"
 #include "geometry/bounding_box3.h"
+
+#include <memory>
 
 namespace Kasumi
 {
@@ -23,7 +25,8 @@ using mVector3ui = HinaPE::Vector3<unsigned int>;
 using mVector4ui = HinaPE::Vector4<unsigned int>;
 using mMatrix3x3 = HinaPE::Matrix3x3<real>;
 using mMatrix4x4 = HinaPE::Matrix4x4<real>;
-using mBBox = HinaPE::BoundingBox3F;
+using mQuaternion = HinaPE::Quaternion<real>;
+using mBBox = HinaPE::BoundingBox<real, 3>;
 }
 
 #endif //KASUMI_RENDERER_MATH_API_H

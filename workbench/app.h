@@ -1,5 +1,5 @@
-#ifndef KASUMI_RENDERER_APP_H
-#define KASUMI_RENDERER_APP_H
+#ifndef KASUMI_APP_H
+#define KASUMI_APP_H
 
 #include <SDL.h>
 
