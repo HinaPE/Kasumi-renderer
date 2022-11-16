@@ -1,4 +1,4 @@
-#include "../camera.h"
+#include "../../camera.h"
 
 Kasumi::Camera::Camera(const Kasumi::mVector2& dim)
 {

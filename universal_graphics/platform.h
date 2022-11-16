@@ -1,7 +1,6 @@
 #ifndef KASUMI_PLATFORM_H
 #define KASUMI_PLATFORM_H
 
-#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 #include <string>
@@ -17,9 +16,9 @@ namespace Kasumi
 class App
 {
 public:
-    virtual void event() = 0;
     virtual void render() = 0;
-    virtual void quit() = 0;
+    virtual void event(GLFWwindow *) {};
+    virtual void quit() {};
 };
 class Platform
 {

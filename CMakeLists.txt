@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(Kasumi VERSION 1.1.2 DESCRIPTION "Kasumi: Illumine the Endless Night." LANGUAGES CXX)
 
-set(KASUMI_COMMON_DIR "./common")
-
-if (NOT TARGET HinaPE_Common)
-    add_subdirectory(${KASUMI_COMMON_DIR} HinaPE_Common)
-endif ()
-
 if (NOT TARGET Kasumi_backend)
     add_subdirectory(universal_graphics Kasumi_backend)
 endif ()

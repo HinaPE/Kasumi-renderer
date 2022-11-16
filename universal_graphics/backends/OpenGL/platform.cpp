@@ -1,4 +1,5 @@
-#include "platform.h"
+#include "glad/glad.h" // include glad before glfw
+#include "../../platform.h"
 
 Kasumi::Platform::Platform(int width, int height) : _inited(false), _current_window(nullptr)
 {
@@ -55,6 +56,7 @@ void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
     {
         clear_window();
         process_input();
+        app->event(_current_window);
         app->render();
         glfwSwapBuffers(_current_window);
         glfwPollEvents();

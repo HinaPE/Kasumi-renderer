@@ -3,8 +3,6 @@
 
 #include "math_api.h"
 
-#include <glad/glad.h>
-
 #include <vector>
 #include <string>
 
@@ -30,9 +28,9 @@ public:
     void uniform(const std::string &name, int value) const;
     void uniform(const std::string &name, unsigned int value) const;
     void uniform(const std::string &name, float value) const;
-    void uniform(const std::string &name, const mVector2& value) const;
-    void uniform(const std::string &name, const mVector3& value) const;
-    void uniform(const std::string &name, const mVector4& value) const;
+    void uniform(const std::string &name, const mVector2 &value) const;
+    void uniform(const std::string &name, const mVector3 &value) const;
+    void uniform(const std::string &name, const mVector4 &value) const;
     void uniform(const std::string &name, mMatrix3x3 value) const;
     void uniform(const std::string &name, mMatrix4x4 value) const;
 

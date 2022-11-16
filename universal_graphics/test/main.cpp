@@ -3,17 +3,12 @@
 class MyApp : public Kasumi::App
 {
 public:
-    void event() override
+    void render() final {}
+    void event(GLFWwindow *window) override
     {
-
-    }
-    void render() override
-    {
-
-    }
-    void quit() override
-    {
-
+        App::event(window);
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            std::cout << "Hello Kasumi" << std::endl;
     }
 };
 

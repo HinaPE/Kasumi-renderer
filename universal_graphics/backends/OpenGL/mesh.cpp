@@ -1,4 +1,6 @@
-#include "../mesh.h"
+#include "../../mesh.h"
+
+#include <glad/glad.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
