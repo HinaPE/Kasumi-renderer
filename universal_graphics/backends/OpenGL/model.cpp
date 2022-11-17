@@ -62,7 +62,7 @@ static void process_node(aiNode *node, const aiScene *scene, std::map<std::strin
     for (int i = 0; i < node->mNumMeshes; ++i)
     {
         auto *mesh = scene->mMeshes[node->mMeshes[i]];
-        _meshes[std::string(mesh->mName.C_Str())] = process_mesh(mesh, scene);
+        _meshes.emplace(std::string(mesh->mName.C_Str()), std::move(process_mesh(mesh, scene)));
     }
     for (unsigned int i = 0; i < node->mNumChildren; i++)
         process_node(node->mChildren[i], scene, _meshes);
