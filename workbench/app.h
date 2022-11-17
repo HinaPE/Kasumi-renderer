@@ -3,6 +3,7 @@
 
 #include "platform.h"
 #include "model.h"
+#include "shader.h"
 #include "scene/scene.h"
 #include "scene/undo.h"
 #include "gui/manager.h"
@@ -12,8 +13,10 @@ namespace Kasumi::Workbench
 class App : public Kasumi::App
 {
 public:
+    void prepare() final;
     void render() final;
     void event(GLFWwindow *window) final; // keyboard event and mouse event
+    auto get_scene() -> ScenePtr { return _scene; }
 
 public:
     App();
@@ -24,9 +27,9 @@ public:
     auto operator=(App &&) -> App & = delete;
 
 private:
-    ManagerPtr manager;
-    ScenePtr scene;
-    UndoPtr undo;
+    ManagerPtr _manager;
+    ScenePtr _scene;
+    UndoPtr _undo;
 };
 }
 

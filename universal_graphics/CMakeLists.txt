@@ -77,7 +77,3 @@ if (OpenGL)
     target_link_libraries(Kasumi_backend PUBLIC glfw)
     target_link_libraries(Kasumi_backend PUBLIC HinaPE_Common)
 endif ()
-
-add_executable(test test/main.cpp)
-set_target_properties(test PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
-target_link_libraries(test PUBLIC Kasumi_backend)

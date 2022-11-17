@@ -13,11 +13,13 @@ namespace Kasumi::Workbench
 class Scene
 {
 public:
+    template<typename T>
+    auto add(T &&underlying) -> unsigned int;
     auto add(SceneObjectPtr &&ptr) -> unsigned int;
     void erase(unsigned int id);
     void restore(unsigned int id);
-    void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
     void render();
+    void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:
     Scene() = default;
@@ -33,5 +35,8 @@ private:
     std::map<unsigned int, CameraPtr> _scene_cameras;
 };
 using ScenePtr = std::shared_ptr<Scene>;
+
+template<typename T>
+auto Kasumi::Workbench::Scene::add(T &&underlying) -> unsigned int { return add(std::move(std::make_shared<SceneObject>(std::forward<T>(underlying)))); }
 }
 #endif //KASUMI_SCENE_H

@@ -6,7 +6,7 @@
 
 #include <map>
 
-Kasumi::Model::Model(const std::string &path) : _path(path) { load(path); }
+Kasumi::Model::Model(const std::string &path) : _path(path), _shader(nullptr) { load(path); }
 
 static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::TexturedMesh
 {
@@ -81,7 +81,17 @@ auto Kasumi::Model::load(const std::string &path) -> bool
     return true;
 }
 
+void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
+{
+    _shader = shader;
+}
+
 void Kasumi::Model::render()
 {
+    if (!_shader)
+        return;
 
+    _shader->bind();
+    for (auto &mesh: _meshes)
+        mesh.second.render();
 }

@@ -14,7 +14,8 @@ public:
     void render();
 
 public:
-    SceneObject() = default;
+    template<typename T>
+    explicit SceneObject(T &&underlying) : _underlying(std::forward<T>(underlying)) {}
     SceneObject(const SceneObject &) = delete;
     SceneObject(SceneObject &&) = delete;
     ~SceneObject() = default;
@@ -23,7 +24,7 @@ public:
 
 private:
     Pose pose;
-    std::variant<Model> _underlying;
+    std::variant<Model, TexturedMesh> _underlying;
 };
 using SceneObjectPtr = std::shared_ptr<SceneObject>;
 }

@@ -17,7 +17,11 @@ Kasumi::Platform::Platform(int width, int height) : _inited(false), _current_win
                      });
 }
 
-void Kasumi::Platform::launch(const std::shared_ptr<App> &app) { rendering_loop(app); }
+void Kasumi::Platform::launch(const std::shared_ptr<App> &app)
+{
+    app->prepare();
+    rendering_loop(app);
+}
 void Kasumi::Platform::add_key_callback(std::function<void()> &&callback) { _key_callbacks.emplace_back(std::move(callback)); }
 void Kasumi::Platform::add_mouse_callback(std::function<void()> &&callback) { _mouse_callbacks.emplace_back(std::move(callback)); }
 

@@ -1,11 +1,19 @@
 #include "app.h"
 
-Kasumi::Workbench::App::App() : scene(std::move(std::make_shared<Scene>())), manager(std::move(std::make_shared<Manager>())), undo(std::move(std::make_shared<Undo>())) {}
+Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())) {}
+
+void Kasumi::Workbench::App::prepare()
+{
+    auto shader = std::make_shared<Shader>(std::string(ShaderDir) + "default_shader_vertex.glsl", std::string(ShaderDir) + "default_shader_fragment.glsl");
+    Model ayaka("F:/Projects/Kasumi-renderer/models/ayaka_uniform/ayaka.pmx");
+    ayaka.use_shader(shader);
+    _scene->add(std::move(ayaka));
+}
 
 void Kasumi::Workbench::App::render()
 {
-    scene->render();
-    manager->render();
+    _scene->render();
+    _manager->render();
 }
 
 void Kasumi::Workbench::App::event(GLFWwindow *window)
@@ -13,5 +21,5 @@ void Kasumi::Workbench::App::event(GLFWwindow *window)
     Kasumi::App::event(window);
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
         std::cout << "Hello Kasumi" << std::endl;
-    manager->event(window);
+    _manager->event(window);
 }

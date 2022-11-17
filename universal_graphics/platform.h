@@ -16,6 +16,7 @@ namespace Kasumi
 class App
 {
 public:
+    virtual void prepare() = 0;
     virtual void render() = 0;
     virtual void event(GLFWwindow *) {}; // Deal with keyboard and mouse event
     virtual auto quit() -> bool { return false; };

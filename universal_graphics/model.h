@@ -3,6 +3,7 @@
 
 #include "texture.h"
 #include "mesh.h"
+#include "shader.h"
 
 #include <map>
 #include <string>
@@ -14,22 +15,24 @@ class Model
 {
 public:
     auto load(const std::string &path) -> bool;
+    void use_shader(const ShaderPtr &shader);
     void render();
 
 public:
     Model() = default;
     Model(const std::string &path);
     Model(const Model &) = delete;
-    Model(Model &&) = delete;
+    Model(Model &&) = default;
     ~Model() = default;
     auto operator=(const Model &) -> Model & = delete;
-    auto operator=(Model &&) -> Model & = delete;
+    auto operator=(Model &&) -> Model & = default;
 
 private:
 
 private:
-    const std::string _path;
+    std::string _path;
     std::map<std::string, TexturedMesh> _meshes;
+    ShaderPtr _shader;
 };
 using ModelPtr = std::shared_ptr<Model>;
 }

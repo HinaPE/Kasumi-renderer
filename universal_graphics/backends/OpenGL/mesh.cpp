@@ -36,11 +36,7 @@ Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<I
     for (auto &v: _verts)
         _bbox.merge(v.position);
     dirty = true;
-}
-
-Kasumi::TexturedMesh::TexturedMesh(const std::string &path)
-{
-
+    is_inited = true;
 }
 
 Kasumi::TexturedMesh::~TexturedMesh()

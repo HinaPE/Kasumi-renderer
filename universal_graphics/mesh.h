@@ -29,7 +29,6 @@ public:
     TexturedMesh() = default;
     TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, Texture> &&diffuse_textures, std::map<std::string, Texture> &&specular_textures, std::map<std::string, Texture> &&normal_textures,
                  std::map<std::string, Texture> &&height_textures);
-    TexturedMesh(const std::string &path);
     TexturedMesh(const TexturedMesh &src) = delete;
     TexturedMesh(TexturedMesh &&src) noexcept = default;
     ~TexturedMesh();
@@ -41,6 +40,7 @@ public:
     void update();
 
 private:
+    bool is_inited;
     bool dirty;
     unsigned int VAO, VBO, EBO;
     size_t n_elem;
