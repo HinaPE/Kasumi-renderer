@@ -63,7 +63,7 @@ void Kasumi::Platform::add_new_window(int width, int height, const std::string &
 
 void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
 {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(_current_window) || app->quit())
     {
         begin_frame();

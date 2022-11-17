@@ -4,7 +4,7 @@
 
 Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, TexturePtr> &&diffuse_textures, std::map<std::string, TexturePtr> &&specular_textures, std::map<std::string, TexturePtr> &&normal_textures,
                                    std::map<std::string, TexturePtr> &&height_textures) : _verts(std::move(vertices)), _idxs(std::move(indices)), _diffuse_textures(std::move(diffuse_textures)), _specular_textures(std::move(specular_textures)),
-                                                                                       _normal_textures(std::move(normal_textures)), _height_textures(std::move(height_textures)), _shader(nullptr)
+                                                                                          _normal_textures(std::move(normal_textures)), _height_textures(std::move(height_textures)), _shader(nullptr)
 {
     VAO = VBO = EBO = 0;
 
@@ -47,7 +47,7 @@ Kasumi::TexturedMesh::~TexturedMesh()
     glDeleteVertexArrays(1, &EBO);
     VAO = VBO = EBO = 0;
 
-    std::cout << "DELETED!!! "<< std::endl;
+    std::cout << "DELETED!!! " << std::endl;
 }
 
 void Kasumi::TexturedMesh::render()
@@ -55,7 +55,35 @@ void Kasumi::TexturedMesh::render()
     if (dirty)
         update();
 
-    _shader->bind();
+    _shader->use();
+    if (!_diffuse_textures.empty())
+    {
+        _diffuse_textures.begin()->second->bind(0);
+        _shader->uniform("texture_diffuse", 0);
+        _shader->uniform("has_diffuse_texture", true);
+    } else
+        _shader->uniform("has_diffuse_texture", false);
+    if (!_specular_textures.empty())
+    {
+        _specular_textures.begin()->second->bind(1);
+        _shader->uniform("texture_specular", 1);
+        _shader->uniform("has_specular_texture", true);
+    } else
+        _shader->uniform("has_specular_texture", false);
+    if (!_normal_textures.empty())
+    {
+        _normal_textures.begin()->second->bind(2);
+        _shader->uniform("texture_normal", 2);
+        _shader->uniform("has_normal_texture", true);
+    } else
+        _shader->uniform("has_normal_texture", false);
+    if (!_height_textures.empty())
+    {
+        _height_textures.begin()->second->bind(3);
+        _shader->uniform("texture_height", 3);
+        _shader->uniform("has_height_texture", true);
+    } else
+        _shader->uniform("has_height_texture", false);
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, (GLuint) n_elem, GL_UNSIGNED_INT, nullptr);

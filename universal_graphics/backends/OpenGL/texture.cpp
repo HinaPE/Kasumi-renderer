@@ -31,6 +31,25 @@ Kasumi::Texture::~Texture()
 
 void Kasumi::Texture::bind(int texture_idx) const
 {
-    glActiveTexture(GL_TEXTURE0 + texture_idx);
+    switch (texture_idx)
+    {
+        case 0:
+            glActiveTexture(GL_TEXTURE0);
+            break;
+        case 1:
+            glActiveTexture(GL_TEXTURE1);
+            break;
+        case 2:
+            glActiveTexture(GL_TEXTURE2);
+            break;
+        case 3:
+            glActiveTexture(GL_TEXTURE3);
+            break;
+        case 4:
+            glActiveTexture(GL_TEXTURE4);
+            break;
+        default: // TOO MUCH TEXTURES
+            break;
+    }
     glBindTexture(GL_TEXTURE_2D, ID);
 }

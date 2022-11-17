@@ -23,7 +23,7 @@ public:
     auto operator=(Shader &&src) noexcept -> Shader & = default;
 
 public:
-    void bind() const;
+    void use() const;
     void uniform(const std::string &name, bool value) const;
     void uniform(const std::string &name, int value) const;
     void uniform(const std::string &name, unsigned int value) const;

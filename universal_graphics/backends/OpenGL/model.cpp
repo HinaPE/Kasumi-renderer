@@ -54,8 +54,7 @@ static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::Textured
             materials->GetTexture(type, i, &path);
             std::string cpp_path, cpp_name;
             cpp_path = std::string(path.C_Str());
-            auto temp = std::make_shared<Kasumi::Texture>(cpp_path);
-            res.emplace(std::move(cpp_name), std::move(temp));
+            res.emplace(std::move(cpp_name), std::move(std::make_shared<Kasumi::Texture>(cpp_path)));
         }
         return res;
     };
@@ -101,7 +100,7 @@ void Kasumi::Model::render()
     if (!_shader)
         return;
 
-    _shader->bind();
+    _shader->use();
     for (auto &mesh: _meshes)
         mesh.second->render();
 }

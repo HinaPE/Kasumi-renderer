@@ -51,7 +51,7 @@ Kasumi::Shader::~Shader()
 
     std::cout << "delete shader " << std::endl;
 }
-void Kasumi::Shader::bind() const
+void Kasumi::Shader::use() const
 {
     glUseProgram(ID);
 }
