@@ -13,7 +13,7 @@ class App : public Kasumi::App
 {
 public:
     void render() final;
-    void event(GLFWwindow *window) final;
+    void event(GLFWwindow *window) final; // keyboard event and mouse event
 
 public:
     App();
@@ -24,8 +24,8 @@ public:
     auto operator=(App &&) -> App & = delete;
 
 private:
-    ScenePtr scene;
     ManagerPtr manager;
+    ScenePtr scene;
     UndoPtr undo;
 };
 }

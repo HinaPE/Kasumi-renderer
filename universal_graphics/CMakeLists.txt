@@ -17,6 +17,7 @@ file(GLOB UNIVERSE_FILES
         model.h
         framebuffer.h
         camera.h
+        pose.h pose.cpp
         )
 
 if (OpenGL)

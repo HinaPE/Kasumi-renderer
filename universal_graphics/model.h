@@ -17,6 +17,7 @@ public:
     void render();
 
 public:
+    Model() = default;
     Model(const std::string &path);
     Model(const Model &) = delete;
     Model(Model &&) = delete;

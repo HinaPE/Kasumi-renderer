@@ -1,11 +1,18 @@
 #include "manager.h"
 
-void Kasumi::Workbench::Manager::render_3d(Kasumi::Workbench::ScenePtr &scene, Kasumi::Workbench::UndoPtr &undo)
+Kasumi::Workbench::Manager::Manager()
 {
-
+    _gui.emplace("Simulate", std::move(std::make_shared<Simulate>()));
 }
 
-void Kasumi::Workbench::Manager::render_gui(Kasumi::Workbench::ScenePtr &scene, Kasumi::Workbench::UndoPtr &undo)
+void Kasumi::Workbench::Manager::render()
 {
+    for (auto &gui: _gui)
+        gui.second->render();
+}
 
+void Kasumi::Workbench::Manager::event(GLFWwindow *window)
+{
+    for (auto &gui: _gui)
+        gui.second->event(window);
 }

@@ -32,12 +32,11 @@ void Kasumi::Workbench::Scene::restore(unsigned int id)
 void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {
     for (auto &obj: _scene_objects)
-    {
         func(obj.second);
-    }
 }
 
 void Kasumi::Workbench::Scene::render()
 {
-
+    for (auto &obj: _scene_objects)
+        obj.second->render();
 }
