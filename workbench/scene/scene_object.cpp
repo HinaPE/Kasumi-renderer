@@ -2,5 +2,5 @@
 
 void Kasumi::Workbench::SceneObject::render()
 {
-    std::visit([](auto &&renderable) { renderable.render(); }, _underlying);
+    std::visit([](auto &&renderable) { renderable->render(); }, _underlying);
 }

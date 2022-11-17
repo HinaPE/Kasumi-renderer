@@ -43,10 +43,13 @@ Kasumi::Shader::Shader(const std::string &vertex_path, const std::string &fragme
     glDeleteShader(v);
     glDeleteShader(f);
 }
+#include <iostream>
 Kasumi::Shader::~Shader()
 {
     glUseProgram(0);
     glDeleteProgram(ID);
+
+    std::cout << "delete shader " << std::endl;
 }
 void Kasumi::Shader::bind() const
 {

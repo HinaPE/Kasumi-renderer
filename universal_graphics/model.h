@@ -23,7 +23,7 @@ public:
     Model(const std::string &path);
     Model(const Model &) = delete;
     Model(Model &&) = default;
-    ~Model() = default;
+    ~Model();
     auto operator=(const Model &) -> Model & = delete;
     auto operator=(Model &&) -> Model & = default;
 
@@ -31,7 +31,7 @@ private:
 
 private:
     std::string _path;
-    std::map<std::string, TexturedMesh> _meshes;
+    std::map<std::string, TexturedMeshPtr> _meshes;
     ShaderPtr _shader;
 };
 using ModelPtr = std::shared_ptr<Model>;

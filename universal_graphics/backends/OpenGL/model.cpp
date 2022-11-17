@@ -8,7 +8,13 @@
 
 Kasumi::Model::Model(const std::string &path) : _path(path), _shader(nullptr) { load(path); }
 
-static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::TexturedMesh
+#include <iostream>
+Kasumi::Model::~Model()
+{
+    std::cout << "delete model: " << _path << std::endl;
+}
+
+static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::TexturedMeshPtr
 {
     std::vector<Kasumi::TexturedMesh::Vertex> vertices;
     std::vector<Kasumi::TexturedMesh::Index> indices;
@@ -39,25 +45,26 @@ static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::Textured
 
     // Load materials
     auto *materials = scene->mMaterials[mesh->mMaterialIndex];
-    auto load_material = [&](aiTextureType type) -> std::map<std::string, Kasumi::Texture>
+    auto load_material = [&](aiTextureType type) -> std::map<std::string, Kasumi::TexturePtr>
     {
-        std::map<std::string, Kasumi::Texture> res;
+        std::map<std::string, Kasumi::TexturePtr> res;
         for (int i = 0; i < materials->GetTextureCount(type); ++i)
         {
             aiString path, name;
             materials->GetTexture(type, i, &path);
             std::string cpp_path, cpp_name;
             cpp_path = std::string(path.C_Str());
-            Kasumi::Texture temp(cpp_path);
+            auto temp = std::make_shared<Kasumi::Texture>(cpp_path);
             res.emplace(std::move(cpp_name), std::move(temp));
         }
         return res;
     };
 
-    return {std::move(vertices), std::move(indices), std::move(load_material(aiTextureType_DIFFUSE)), std::move(load_material(aiTextureType_SPECULAR)), std::move(load_material(aiTextureType_HEIGHT)), std::move(load_material(aiTextureType_AMBIENT))};
+    return std::make_shared<Kasumi::TexturedMesh>(std::move(vertices), std::move(indices), std::move(load_material(aiTextureType_DIFFUSE)), std::move(load_material(aiTextureType_SPECULAR)), std::move(load_material(aiTextureType_HEIGHT)),
+                                                  std::move(load_material(aiTextureType_AMBIENT)));
 }
 
-static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMesh> &_meshes)
+static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMeshPtr> &_meshes)
 {
     for (int i = 0; i < node->mNumMeshes; ++i)
     {
@@ -76,6 +83,7 @@ auto Kasumi::Model::load(const std::string &path) -> bool
         return false;
 
     const std::string directory = path.substr(0, path.find_last_of('/'));
+    _path = path;
 
     process_node(scene->mRootNode, scene, _meshes);
     return true;
@@ -84,6 +92,8 @@ auto Kasumi::Model::load(const std::string &path) -> bool
 void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
 {
     _shader = shader;
+    for (auto &mesh: _meshes)
+        mesh.second->use_shader(shader);
 }
 
 void Kasumi::Model::render()
@@ -93,5 +103,5 @@ void Kasumi::Model::render()
 
     _shader->bind();
     for (auto &mesh: _meshes)
-        mesh.second.render();
+        mesh.second->render();
 }
