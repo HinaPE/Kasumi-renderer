@@ -63,7 +63,7 @@ void Kasumi::Platform::add_new_window(int width, int height, const std::string &
 
 void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
 {
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     while (!glfwWindowShouldClose(_current_window) || app->quit())
     {
         begin_frame();
@@ -82,7 +82,10 @@ void Kasumi::Platform::clear_window()
         glClear(GL_COLOR_BUFFER_BIT);
     }
     if (opt.clear_depth)
+    {
+        glEnable(GL_DEPTH_TEST);
         glClear(GL_DEPTH_BUFFER_BIT);
+    }
     if (opt.clear_stencil)
         glClear(GL_STENCIL_BUFFER_BIT);
 }

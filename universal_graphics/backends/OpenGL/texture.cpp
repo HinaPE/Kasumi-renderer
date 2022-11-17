@@ -12,9 +12,20 @@ Kasumi::Texture::Texture(const std::string &path) : _path(std::move(path))
     ID = _width = _height = _nr_channels = 0;
     unsigned char *data = stbi_load(path.c_str(), &_width, &_height, &_nr_channels, 0);
 
+    if (!data)
+        return;
+
+    auto format = GL_RED;
+    if (_nr_channels == 1)
+        format = GL_RED;
+    else if (_nr_channels == 3)
+        format = GL_RGB;
+    else if (_nr_channels == 4)
+        format = GL_RGBA;
+
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, _width, _height, 0, format, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

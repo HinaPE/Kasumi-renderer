@@ -14,7 +14,7 @@ Kasumi::Model::~Model()
     std::cout << "delete model: " << _path << std::endl;
 }
 
-static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::TexturedMeshPtr
+static auto process_mesh(aiMesh *mesh, const aiScene *scene, const std::string& directory) -> Kasumi::TexturedMeshPtr
 {
     std::vector<Kasumi::TexturedMesh::Vertex> vertices;
     std::vector<Kasumi::TexturedMesh::Index> indices;
@@ -53,7 +53,7 @@ static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::Textured
             aiString path, name;
             materials->GetTexture(type, i, &path);
             std::string cpp_path, cpp_name;
-            cpp_path = std::string(path.C_Str());
+            cpp_path = directory + "/" + std::string(path.C_Str());
             res.emplace(std::move(cpp_name), std::move(std::make_shared<Kasumi::Texture>(cpp_path)));
         }
         return res;
@@ -63,15 +63,15 @@ static auto process_mesh(aiMesh *mesh, const aiScene *scene) -> Kasumi::Textured
                                                   std::move(load_material(aiTextureType_AMBIENT)));
 }
 
-static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMeshPtr> &_meshes)
+static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMeshPtr> &_meshes, const std::string& directory)
 {
     for (int i = 0; i < node->mNumMeshes; ++i)
     {
         auto *mesh = scene->mMeshes[node->mMeshes[i]];
-        _meshes.emplace(std::string(mesh->mName.C_Str()), std::move(process_mesh(mesh, scene)));
+        _meshes.emplace(std::string(mesh->mName.C_Str()), std::move(process_mesh(mesh, scene, directory)));
     }
     for (unsigned int i = 0; i < node->mNumChildren; i++)
-        process_node(node->mChildren[i], scene, _meshes);
+        process_node(node->mChildren[i], scene, _meshes, directory);
 }
 
 auto Kasumi::Model::load(const std::string &path) -> bool
@@ -84,7 +84,7 @@ auto Kasumi::Model::load(const std::string &path) -> bool
     const std::string directory = path.substr(0, path.find_last_of('/'));
     _path = path;
 
-    process_node(scene->mRootNode, scene, _meshes);
+    process_node(scene->mRootNode, scene, _meshes, directory);
     return true;
 }
 

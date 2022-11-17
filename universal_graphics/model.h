@@ -28,8 +28,6 @@ public:
     auto operator=(Model &&) -> Model & = default;
 
 private:
-
-private:
     std::string _path;
     std::map<std::string, TexturedMeshPtr> _meshes;
     ShaderPtr _shader;
