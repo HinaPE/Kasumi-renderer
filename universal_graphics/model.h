@@ -13,7 +13,7 @@ namespace Kasumi
 class Model
 {
 public:
-    void load(const std::string &path);
+    auto load(const std::string &path) -> bool;
     void render();
 
 public:
@@ -29,7 +29,6 @@ private:
 private:
     const std::string _path;
     std::map<std::string, TexturedMesh> _meshes;
-    std::map<std::string, Texture> _textures;
 };
 using ModelPtr = std::shared_ptr<Model>;
 }

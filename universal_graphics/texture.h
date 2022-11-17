@@ -20,8 +20,9 @@ public:
     void bind(int texture_idx = 0) const;
 
 private:
-    unsigned int ID;
-    int width, height, nr_channels;
+    unsigned int _ID;
+    std::string _path;
+    int _width, _height, _nr_channels;
 };
 using TexturePtr = std::shared_ptr<Texture>;
 }

@@ -5,6 +5,8 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
+#include "../../model.h"
+
 Kasumi::Platform::Platform(int width, int height) : _inited(false), _current_window(nullptr)
 {
     add_new_window(width, height, "Kasumi: illumine the endless night", {1.f, 1.f, 1.f});
@@ -59,6 +61,7 @@ void Kasumi::Platform::add_new_window(int width, int height, const std::string &
 
 void Kasumi::Platform::rendering_loop(const std::shared_ptr<App> &app)
 {
+    Kasumi::Model model("F:/Projects/Kasumi-renderer/models/ayaka_uniform/ayaka.pmx");
     while (!glfwWindowShouldClose(_current_window) || app->quit())
     {
         begin_frame();

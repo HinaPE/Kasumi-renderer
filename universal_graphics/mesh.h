@@ -4,6 +4,8 @@
 #include "math_api.h"
 #include "texture.h"
 
+#include <map>
+
 namespace Kasumi
 {
 class ColoredMesh final {}; // TODO:
@@ -18,12 +20,15 @@ public:
         mVector3 position;
         mVector3 normal;
         mVector2 tex_coord;
+        mVector3 tangent;
+        mVector3 bi_tangent;
         unsigned int id;
     };
 
 public:
     TexturedMesh() = default;
-    TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices);
+    TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, Texture> &&diffuse_textures, std::map<std::string, Texture> &&specular_textures, std::map<std::string, Texture> &&normal_textures,
+                 std::map<std::string, Texture> &&height_textures);
     TexturedMesh(const std::string &path);
     TexturedMesh(const TexturedMesh &src) = delete;
     TexturedMesh(TexturedMesh &&src) noexcept = default;
@@ -34,7 +39,6 @@ public:
 public:
     void render();
     void update();
-    void attach_texture(const TexturePtr &texture);
 
 private:
     bool dirty;
@@ -43,7 +47,10 @@ private:
 
     std::vector<Vertex> _verts;
     std::vector<Index> _idxs;
-    std::vector<TexturePtr> _textures;
+    std::map<std::string, Texture> _diffuse_textures;
+    std::map<std::string, Texture> _specular_textures;
+    std::map<std::string, Texture> _normal_textures;
+    std::map<std::string, Texture> _height_textures;
     mBBox _bbox;
 };
 using TexturedMeshPtr = std::shared_ptr<TexturedMesh>;

@@ -2,7 +2,9 @@
 
 #include <glad/glad.h>
 
-Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices) : _verts(std::move(vertices)), _idxs(std::move(indices))
+Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, Texture> &&diffuse_textures, std::map<std::string, Texture> &&specular_textures, std::map<std::string, Texture> &&normal_textures,
+                                   std::map<std::string, Texture> &&height_textures) : _verts(std::move(vertices)), _idxs(std::move(indices)), _diffuse_textures(std::move(diffuse_textures)), _specular_textures(std::move(specular_textures)),
+                                                                                       _normal_textures(std::move(normal_textures)), _height_textures(std::move(height_textures))
 {
     VAO = VBO = EBO = 0;
 
@@ -55,7 +57,7 @@ void Kasumi::TexturedMesh::render()
         update();
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, (GLint)n_elem, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, (GLint) n_elem, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
 
@@ -73,5 +75,3 @@ void Kasumi::TexturedMesh::update()
 
     dirty = false;
 }
-
-void Kasumi::TexturedMesh::attach_texture(const Kasumi::TexturePtr &texture) { _textures.emplace_back(texture); }
