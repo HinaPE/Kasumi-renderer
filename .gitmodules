@@ -7,9 +7,6 @@
 [submodule "universal_graphics/deps/glfw3"]
 	path = universal_graphics/deps/glfw3
 	url = https://github.com/BFU-Graphics/Hina_glfw3.git
-[submodule "universal_graphics/deps/imgui"]
-	path = universal_graphics/deps/imgui
-	url = https://github.com/HinaPE/Kasumi_imgui.git
 [submodule "universal_graphics/deps/stb"]
 	path = universal_graphics/deps/stb
 	url = https://github.com/BFU-Graphics/Hina_stb.git

@@ -5,7 +5,7 @@ Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _m
 void Kasumi::Workbench::App::prepare()
 {
     auto shader = std::make_shared<Shader>(std::string(ShaderDir) + "default_shader_vertex.glsl", std::string(ShaderDir) + "default_shader_fragment.glsl");
-    auto ayaka = std::make_shared<Model>("/Users/xayah/Downloads/nahida/nahida.pmx");
+    auto ayaka = std::make_shared<Model>("F:/Projects/Kasumi-renderer/models/ayaka_uniform/ayaka.pmx");
     ayaka->use_shader(shader);
     auto obj = std::make_shared<SceneObject>(ayaka);
     _scene->add(std::move(obj));

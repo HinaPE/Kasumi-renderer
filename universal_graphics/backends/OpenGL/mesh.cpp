@@ -1,6 +1,7 @@
 #include "../../mesh.h"
 
 #include <glad/glad.h>
+#include <iostream>
 
 Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, TexturePtr> &&diffuse_textures, std::map<std::string, TexturePtr> &&specular_textures, std::map<std::string, TexturePtr> &&normal_textures,
                                    std::map<std::string, TexturePtr> &&height_textures) : _verts(std::move(vertices)), _idxs(std::move(indices)), _diffuse_textures(std::move(diffuse_textures)), _specular_textures(std::move(specular_textures)),
@@ -15,17 +16,17 @@ Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<I
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) 0); // location = 0, position
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) sizeof(mVector3));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) sizeof(mVector3)); // location = 1, normal
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (2 * sizeof(mVector3)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (2 * sizeof(mVector3))); // location = 2, tex_coord
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (2 * sizeof(mVector3) + sizeof(mVector2)));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (2 * sizeof(mVector3) + sizeof(mVector2))); // location = 3, tangent
     glEnableVertexAttribArray(3);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (3 * sizeof(mVector3) + sizeof(mVector2)));
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) (3 * sizeof(mVector3) + sizeof(mVector2))); // location = 4, bi_tangent
     glEnableVertexAttribArray(4);
-    glVertexAttribIPointer(5, 1, GL_UNSIGNED_INT, sizeof(Vertex), (GLvoid *) (4 * sizeof(mVector3) + sizeof(mVector2)));
+    glVertexAttribIPointer(5, 1, GL_UNSIGNED_INT, sizeof(Vertex), (GLvoid *) (4 * sizeof(mVector3) + sizeof(mVector2))); // location = 5, id
     glEnableVertexAttribArray(5);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -39,7 +40,7 @@ Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<I
     dirty = true;
     is_inited = true;
 }
-#include <iostream>
+
 Kasumi::TexturedMesh::~TexturedMesh()
 {
     glDeleteBuffers(1, &VAO);
@@ -47,7 +48,7 @@ Kasumi::TexturedMesh::~TexturedMesh()
     glDeleteVertexArrays(1, &EBO);
     VAO = VBO = EBO = 0;
 
-    std::cout << "DELETED!!! " << std::endl;
+    std::cout << "DELETE TEXTURED MESH" << std::endl;
 }
 
 void Kasumi::TexturedMesh::render()
