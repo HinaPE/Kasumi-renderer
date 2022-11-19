@@ -24,14 +24,13 @@ public:
     void erase(unsigned int id);
     void restore(unsigned int id);
     void render();
-    void clear();
     void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:
     Scene();
     Scene(const Scene &) = delete;
     Scene(Scene &&) = delete;
-    ~Scene() = default;
+    ~Scene();
     auto operator=(const Scene &) -> Scene & = delete;
     auto operator=(Scene &&) -> Scene & = delete;
 

@@ -7,10 +7,29 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
+static unsigned static_obj_id = 0;
+static unsigned static_shader_id = 0;
+static unsigned static_camera_id = 0;
+
 Kasumi::Workbench::Scene::Scene()
 {
     opt.default_shader_id = add_shader(std::string(ShaderDir) + "default_shader_vertex.glsl", std::string(ShaderDir) + "default_shader_fragment.glsl"); // default shader
     opt.default_camera_id = add_camera(); // default camera
+}
+
+Kasumi::Workbench::Scene::~Scene()
+{
+    _scene_objects.clear();
+    _scene_objects_erased.clear();
+    _scene_cameras.clear();
+    _scene_shaders.clear();
+
+    opt.default_camera_id = std::numeric_limits<unsigned int>::max();
+    opt.current_object_id = std::numeric_limits<unsigned int>::max();
+
+    static_obj_id = 0;
+    static_shader_id = 0;
+    static_camera_id = 0;
 }
 
 auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::string
@@ -48,10 +67,10 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
                     iss >> scale.x >> scale.y >> scale.z;
             }
             auto id = add_model(model_path);
-            //            auto obj = _scene_objects[id];
-            //            obj->_pose.position = position;
-            //            obj->_pose.euler = rotation;
-            //            obj->_pose.scale = scale;
+//            auto obj = _scene_objects[id];
+//            obj->_pose.position = position;
+//            obj->_pose.euler = rotation;
+//            obj->_pose.scale = scale;
         } else if (type == "shader")
         {
             std::string vertex_shader;
@@ -115,17 +134,6 @@ void Kasumi::Workbench::Scene::render()
     }
 }
 
-void Kasumi::Workbench::Scene::clear()
-{
-    _scene_objects.clear();
-    _scene_objects_erased.clear();
-    _scene_cameras.clear();
-    _scene_shaders.clear();
-
-    opt.default_camera_id = std::numeric_limits<unsigned int>::max();
-    opt.current_object_id = std::numeric_limits<unsigned int>::max();
-}
-
 void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {
     for (auto &obj: _scene_objects)
@@ -152,7 +160,6 @@ auto Kasumi::Workbench::Scene::get_current_camera() const -> Kasumi::CameraPtr
 
 auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
 {
-    static unsigned static_obj_id = 0;
     auto shader = _scene_shaders.find(shader_id)->second;
     auto res = _scene_objects.emplace(static_obj_id++, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
     res.first->second->use_shader(shader);
@@ -161,14 +168,12 @@ auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned
 
 auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
 {
-    static unsigned static_shader_id = 0;
     auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
     return res.first->first;
 }
 
 auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
 {
-    static unsigned static_camera_id = 0;
     auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
     opt.default_camera_id = res.first->first;
     return res.first->first;
