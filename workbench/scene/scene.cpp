@@ -22,8 +22,7 @@ void Kasumi::Workbench::Scene::render()
     for (auto &obj: _scene_objects)
     {
         auto camera = get_current_camera();
-        obj.second->update_mvp(mMatrix4x4::makeIdentity(), mMatrix4x4::makeIdentity());
-//        obj.second->update_mvp(camera->get_view(), camera->get_projection());
+        obj.second->update_mvp(camera->get_view(), camera->get_projection());
         obj.second->render();
     }
 }
@@ -71,7 +70,7 @@ auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, cons
 auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
 {
     static unsigned static_camera_id = 0;
-    auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(mVector2(1024, 768)));
+    auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
     opt.current_camera_id = res.first->first;
     return res.first->first;
 }

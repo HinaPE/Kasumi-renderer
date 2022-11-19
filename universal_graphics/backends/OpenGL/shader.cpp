@@ -81,5 +81,5 @@ void Kasumi::Shader::uniform(const std::string &name, float value) const { glUni
 void Kasumi::Shader::uniform(const std::string &name, const mVector2& value) const { glUniform2f(glGetUniformLocation(ID, name.c_str()), value.x, value.y); }
 void Kasumi::Shader::uniform(const std::string &name, const mVector3& value) const { glUniform3f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z); }
 void Kasumi::Shader::uniform(const std::string &name, const mVector4& value) const { glUniform4f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z, value.w); }
-void Kasumi::Shader::uniform(const std::string &name, mMatrix3x3 value) const { glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }
-void Kasumi::Shader::uniform(const std::string &name, mMatrix4x4 value) const { glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.data()); }
+void Kasumi::Shader::uniform(const std::string &name, mMatrix3x3 value) const { glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.transposed().data()); }
+void Kasumi::Shader::uniform(const std::string &name, mMatrix4x4 value) const { glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, value.transposed().data()); }
