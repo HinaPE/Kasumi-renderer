@@ -6,7 +6,7 @@ Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _m
 
 void Kasumi::Workbench::App::prepare()
 {
-    _scene->read_scene(std::string(TestDir) + "scene.txt");
+    _scene->read_scene(std::string(SceneDir) + "cube.txt");
 }
 
 void Kasumi::Workbench::App::render()
@@ -18,7 +18,7 @@ void Kasumi::Workbench::App::render()
             if (ImGui::MenuItem("Open Scene (Ctrl+o)"))
             {
                 char *scene_file = nullptr;
-                auto res = NFD_OpenDialog("txt", TestDir, &scene_file);
+                auto res = NFD_OpenDialog("txt", SceneDir, &scene_file);
                 if (res == NFD_OKAY)
                 {
                     _scene = nullptr;

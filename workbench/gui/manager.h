@@ -4,8 +4,8 @@
 #include "scene/scene.h"
 #include "scene/undo.h"
 #include "simulate.h"
-#include <memory>
 
+#include <memory>
 #include <map>
 
 namespace Kasumi::Workbench
@@ -25,7 +25,7 @@ public:
     Manager(Manager &&) = delete;
     ~Manager() = default;
     auto operator=(const Manager &) -> Manager & = delete;
-    auto operator=(Manager &&) -> Manager & = delete;
+    auto operator=(Manager &&) -> Manager & = default;
 
 private:
     std::map<std::string, std::shared_ptr<Gui>> _gui;

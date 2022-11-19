@@ -13,7 +13,7 @@ uniform sampler2D texture_height;
 
 void main()
 {
-    vec4 color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    vec4 color = vec4(57.f / 255.9f, 197.f / 255.9f, 187.f / 255.9f, 1.0f);
     if (has_diffuse_texture)
     {
         color = texture(texture_diffuse, TexCoords);

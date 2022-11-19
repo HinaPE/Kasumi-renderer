@@ -11,6 +11,6 @@ file(GLOB_RECURSE PATHTRACER_FILES
 
 add_executable(Kasumi_pathtracer test/main.cpp ${PATHTRACER_FILES})
 set_target_properties(Kasumi_pathtracer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
-target_include_directories(Kasumi_pathtracer PUBLIC ../universal_graphics ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Kasumi_pathtracer PUBLIC ../api ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_pathtracer PUBLIC Kasumi_backend)
 target_compile_definitions(Kasumi_pathtracer PUBLIC -DTestDir="${CMAKE_CURRENT_SOURCE_DIR}/test/")

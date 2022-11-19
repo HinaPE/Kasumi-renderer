@@ -68,12 +68,18 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
                     iss >> rotation.x >> rotation.y >> rotation.z;
                 else if (attrib == "scale")
                     iss >> scale.x >> scale.y >> scale.z;
+                else if (attrib == "cube")
+                    model_path = std::string(ModelDir) + "cube.obj";
+                else if (attrib == "sphere")
+                    model_path = std::string(ModelDir) + "sphere.obj";
+                else if (attrib == "cylinder")
+                    model_path = std::string(ModelDir) + "cylinder.obj";
             }
             auto id = add_model(model_path);
-            //            auto obj = _scene_objects[id];
-            //            obj->_pose.position = position;
-            //            obj->_pose.euler = rotation;
-            //            obj->_pose.scale = scale;
+            auto obj = _scene_objects[id];
+            obj->_pose.position = position;
+            obj->_pose.euler = rotation;
+            obj->_pose.scale = scale;
         } else if (type == "shader")
         {
             std::string vertex_shader;

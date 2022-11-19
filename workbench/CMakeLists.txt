@@ -13,6 +13,12 @@ file(GLOB_RECURSE WORKBENCH_FILES
 
 add_executable(Kasumi_workbench test/main.cpp ${WORKBENCH_FILES})
 set_target_properties(Kasumi_workbench PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
-target_include_directories(Kasumi_workbench PUBLIC ../universal_graphics ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Kasumi_workbench PUBLIC ../api ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_workbench PUBLIC Kasumi_backend)
-target_compile_definitions(Kasumi_workbench PUBLIC -DShaderDir="${CMAKE_CURRENT_SOURCE_DIR}/shader/" -DTestDir="${CMAKE_CURRENT_SOURCE_DIR}/test/")
+target_compile_definitions(
+        Kasumi_workbench
+        PUBLIC
+        -DShaderDir="${CMAKE_CURRENT_SOURCE_DIR}/../api/assets/shader/"
+        -DSceneDir="${CMAKE_CURRENT_SOURCE_DIR}/../api/assets/scene/"
+        -DModelDir="${CMAKE_CURRENT_SOURCE_DIR}/../api/assets/model/"
+)
