@@ -8,7 +8,7 @@ namespace Kasumi
 class Pose
 {
 public:
-    auto get_model_matrix() const -> mMatrix4x4 &&;
+    auto get_model_matrix() const -> mMatrix4x4;
 
 public:
     mVector3 position = {0, 0, 0};

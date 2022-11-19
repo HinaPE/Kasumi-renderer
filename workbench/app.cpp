@@ -1,12 +1,24 @@
 #include "app.h"
+#include "nfd/nfd.h"
 
 Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())) {}
 
 void Kasumi::Workbench::App::prepare()
 {
-    auto camera_id = _scene->add_camera();
-    auto shader_id = _scene->add_shader(std::string(ShaderDir) + "default_shader_vertex.glsl", std::string(ShaderDir) + "default_shader_fragment.glsl");
-    auto ayaka = _scene->add_model("/Users/xayah/Downloads/nahida/nahida.pmx", shader_id);
+//    char *scene_file = nullptr;
+//    auto res = NFD_OpenDialog("txt", TestDir, &scene_file);
+//    if (res == NFD_OKAY)
+//    {
+//        _scene->read_scene(std::string(scene_file));
+//        std::cout << "Success" << std::endl;
+//    } else if (res == NFD_CANCEL)
+//    {
+//        std::cout << "Cancel" << std::endl;
+//    } else
+//    {
+//        std::cout << "Error" << std::endl;
+//    }
+    _scene->read_scene(std::string(TestDir) + "scene.txt");
 }
 
 void Kasumi::Workbench::App::render()

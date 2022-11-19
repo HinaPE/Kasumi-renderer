@@ -14,16 +14,21 @@ namespace Kasumi::Workbench
 class Scene
 {
 public:
+    auto read_scene(const std::string &path) -> std::string /** return: error message **/;
+    auto write_to_file(const std::string &path) -> std::string /** return: error message **/;
+
+public:
     auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default shader **/) -> unsigned int;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
     void erase(unsigned int id);
     void restore(unsigned int id);
     void render();
+    void clear();
     void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:
-    Scene() = default;
+    Scene();
     Scene(const Scene &) = delete;
     Scene(Scene &&) = delete;
     ~Scene() = default;
@@ -34,7 +39,8 @@ public:
     struct Opt
     {
         unsigned int current_object_id = std::numeric_limits<unsigned int>::max();
-        unsigned int current_camera_id = std::numeric_limits<unsigned int>::max();
+        unsigned int default_camera_id = std::numeric_limits<unsigned int>::max();
+        unsigned int default_shader_id = std::numeric_limits<unsigned int>::max();
     } opt;
     auto get_current_object() const -> SceneObjectPtr;
     auto get_current_camera() const -> CameraPtr;
