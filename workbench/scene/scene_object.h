@@ -17,7 +17,7 @@ public:
 
 public:
     template<typename T>
-    SceneObject(const T &ptr) : _underlying(ptr) {}
+    SceneObject(const T &ptr);
     SceneObject(const SceneObject &) = delete;
     SceneObject(SceneObject &&) = delete;
     ~SceneObject() = default;
@@ -25,9 +25,18 @@ public:
     auto operator=(SceneObject &&) -> SceneObject & = delete;
 
 private:
-    Pose pose;
+    Pose _pose;
     std::variant<ModelPtr, TexturedMeshPtr> _underlying;
 };
 using SceneObjectPtr = std::shared_ptr<SceneObject>;
+
+template<typename T>
+Kasumi::Workbench::SceneObject::SceneObject(const T &ptr) : _underlying(ptr)
+{
+    std::visit([&](auto &&renderable)
+               {
+                   _pose.position = -renderable->get_center_point();
+               }, _underlying);
+}
 }
 #endif //KASUMI_SCENE_OBJECT_H

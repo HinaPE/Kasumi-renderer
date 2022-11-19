@@ -32,6 +32,11 @@ Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<I
 
     glBindVertexArray(0);
 
+    _center_point = mVector3(0.0f, 0.0f, 0.0f);
+    for (auto &v: _verts)
+        _center_point += v.position;
+    _center_point /= _verts.size();
+
     n_elem = _idxs.size();
     _bbox.reset();
     for (auto &v: _verts)
@@ -144,3 +149,5 @@ void Kasumi::TexturedMesh::print_info() const
             e.second->print_info();
     }
 }
+
+auto Kasumi::TexturedMesh::get_center_point() const -> Kasumi::mVector3 { return _center_point; }

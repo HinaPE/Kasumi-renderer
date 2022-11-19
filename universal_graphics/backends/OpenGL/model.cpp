@@ -83,6 +83,11 @@ auto Kasumi::Model::load(const std::string &path) -> bool
 
     process_node(scene->mRootNode, scene, _meshes, directory);
 
+    _center_point = {0, 0, 0};
+    for (auto &mesh: _meshes)
+        _center_point += mesh.second->get_center_point();
+    _center_point /= _meshes.size();
+
     print_info();
     return true;
 }
@@ -107,6 +112,11 @@ void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
 auto Kasumi::Model::get_shader() -> Kasumi::ShaderPtr &
 {
     return _shader;
+}
+
+auto Kasumi::Model::get_center_point() const -> Kasumi::mVector3
+{
+    return _center_point;
 }
 
 void Kasumi::Model::print_info() const

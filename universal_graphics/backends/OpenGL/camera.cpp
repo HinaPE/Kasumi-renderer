@@ -1,6 +1,5 @@
-#include <utility>
-
 #include "../../camera.h"
+#include <utility>
 
 Kasumi::Camera::Camera(Kasumi::Camera::Opt opt) : _opt(std::move(opt)) { update(); }
 
@@ -14,10 +13,8 @@ auto Kasumi::Camera::get_view() const -> Kasumi::mMatrix4x4 { return _view; }
 void Kasumi::Camera::update()
 {
     _opt.position = _opt.look_at + _opt.rotation * mVector3(0, 0, _opt.radius);
-//        _projection = Camera::project_matrix(_opt.vertical_fov, _opt.aspect_ratio, _opt.near_plane, _opt.far_plane);
-//        _view = Camera::view_matrix(_opt.position, _opt.rotation);
-    _projection = mMatrix4x4::makeIdentity();
-    _view = mMatrix4x4::makeIdentity();
+    _projection = Camera::project_matrix(_opt.vertical_fov, _opt.aspect_ratio, _opt.near_plane, _opt.far_plane);
+    _view = Camera::view_matrix(_opt.position, _opt.rotation);
 }
 
 auto Kasumi::Camera::up() const -> Kasumi::mVector3 { return {0, 1, 0}; }

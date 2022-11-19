@@ -18,6 +18,7 @@ public:
     void render();
     void use_shader(const ShaderPtr &shader);
     auto get_shader() -> ShaderPtr &;
+    auto get_center_point() const -> mVector3;
 
 public:
     Model() = default;
@@ -34,6 +35,7 @@ public:
 private:
     std::string _path;
     std::map<std::string, TexturedMeshPtr> _meshes;
+    mVector3 _center_point;
     ShaderPtr _shader;
 };
 using ModelPtr = std::shared_ptr<Model>;

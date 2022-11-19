@@ -8,12 +8,12 @@ namespace Kasumi
 class Pose
 {
 public:
-    auto get_model_matrix() -> mMatrix4x4 &&;
+    auto get_model_matrix() const -> mMatrix4x4 &&;
 
-private:
-    mVector3 position = {0.0f, -.5f, 0.0f};
-    mVector3 euler = {0.0f, 0.0f, 0.0f};
-    mVector3 scale = {0.5f, 0.5f, -0.5f};
+public:
+    mVector3 position = {0, 0, 0};
+    mVector3 euler = {0, 0, 0};
+    mVector3 scale = {1, 1, 1};
 };
 }
 #endif //KASUMI_POSE_H

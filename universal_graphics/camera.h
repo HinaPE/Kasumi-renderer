@@ -19,11 +19,11 @@ public:
         mVector3 position; // auto calculated: _opt.position = _opt.look_at + _opt.rotation * mVector3(0, 0, _opt.radius);
         mQuaternion rotation = mQuaternion{1, 0, 0, 0};
         mVector3 look_at = mVector3(0, 0, 0);
-        real radius = 5;
+        real radius = 10;
 
         // for projection
-        real vertical_fov = 90;
-        real aspect_ratio = 1.7778;
+        real vertical_fov = 45;
+        real aspect_ratio = 1024.f / 768.f;
         real near_plane = 0.01;
         real far_plane = 100;
 

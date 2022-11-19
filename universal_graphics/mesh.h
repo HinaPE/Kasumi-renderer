@@ -42,6 +42,7 @@ public:
     void update();
     void use_shader(const ShaderPtr &shader);
     auto get_shader() -> ShaderPtr &;
+    auto get_center_point() const -> mVector3;
 
 private:
     bool is_inited;
@@ -55,6 +56,7 @@ private:
     std::map<std::string, TexturePtr> _specular_textures;
     std::map<std::string, TexturePtr> _normal_textures;
     std::map<std::string, TexturePtr> _height_textures;
+    mVector3 _center_point;
     mBBox _bbox;
     ShaderPtr _shader;
 };
