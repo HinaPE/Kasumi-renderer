@@ -43,3 +43,6 @@ cmake --build Build --config Release
 cmake -S . -B Build
 cmake --build Build --config Release
 ```
+
+## Gallery
+![Kasumi](https://github.com/Xayah-Hina/HinaPE-Resource/blob/master/image-bed/Kasumi-20221119-ayaka.png?raw=true)
