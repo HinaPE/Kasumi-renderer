@@ -4,6 +4,7 @@
 #include "platform.h"
 #include "model.h"
 #include "shader.h"
+#include "camera.h"
 #include "scene/scene.h"
 #include "scene/undo.h"
 #include "gui/manager.h"

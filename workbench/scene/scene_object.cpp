@@ -15,3 +15,8 @@ void Kasumi::Workbench::SceneObject::update_mvp(const Kasumi::mMatrix4x4 &view, 
                    shader->uniform("model", pose.get_model_matrix());
                }, _underlying);
 }
+
+void Kasumi::Workbench::SceneObject::use_shader(const Kasumi::ShaderPtr &shader)
+{
+    std::visit([&](auto &&renderable) { renderable->use_shader(shader); }, _underlying);
+}

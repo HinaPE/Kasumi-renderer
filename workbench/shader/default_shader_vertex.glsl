@@ -15,7 +15,7 @@ out vec2 TexCoords;
 void main()
 {
     TexCoords = aTexCoords;
-    //    gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    //        gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0);
     float scale = 0.07;
-    gl_Position = vec4(scale*aPos.x, scale*aPos.y - 0.5, -scale*aPos.z, 1.0);
+    gl_Position = projection * view * model * vec4(scale*aPos.x, scale*aPos.y - 0.5, -scale*aPos.z, 1.0);
 }

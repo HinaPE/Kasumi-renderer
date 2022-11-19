@@ -64,3 +64,8 @@ void Kasumi::Texture::bind(int texture_idx) const
     }
     glBindTexture(GL_TEXTURE_2D, ID);
 }
+
+void Kasumi::Texture::print_info()
+{
+    std::cout << "| - " << _path << " |" << std::endl;
+}

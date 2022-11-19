@@ -7,13 +7,16 @@
 #include <map>
 #include <memory>
 #include <functional>
+#include <limits>
 
 namespace Kasumi::Workbench
 {
 class Scene
 {
 public:
-    auto add(SceneObjectPtr &&ptr) -> unsigned int;
+    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default shader **/) -> unsigned int;
+    auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
+    auto add_camera() -> unsigned int;
     void erase(unsigned int id);
     void restore(unsigned int id);
     void render();
@@ -30,8 +33,8 @@ public:
 public:
     struct Opt
     {
-        unsigned int current_object_id = -1;
-        unsigned int current_camera_id = -1;
+        unsigned int current_object_id = std::numeric_limits<unsigned int>::max();
+        unsigned int current_camera_id = std::numeric_limits<unsigned int>::max();
     } opt;
     auto get_current_object() const -> SceneObjectPtr;
     auto get_current_camera() const -> CameraPtr;
@@ -40,6 +43,7 @@ private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;
     std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
     std::map<unsigned int, CameraPtr> _scene_cameras;
+    std::map<unsigned int, ShaderPtr> _scene_shaders;
 };
 using ScenePtr = std::shared_ptr<Scene>;
 }

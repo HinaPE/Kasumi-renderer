@@ -18,6 +18,7 @@ public:
 
 public:
     void bind(int texture_idx = 0) const;
+    void print_info();
 
 private:
     unsigned int ID;

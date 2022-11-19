@@ -21,12 +21,15 @@ public:
 
 public:
     Model() = default;
-    Model(const std::string &path);
+    Model(const std::string &path, const ShaderPtr &shader);
     Model(const Model &) = delete;
     Model(Model &&) = default;
     ~Model();
     auto operator=(const Model &) -> Model & = delete;
     auto operator=(Model &&) -> Model & = default;
+
+public:
+    void print_info() const;
 
 private:
     std::string _path;

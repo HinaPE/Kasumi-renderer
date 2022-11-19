@@ -25,6 +25,7 @@ public:
         mVector3 bi_tangent;
         unsigned int id;
     };
+    void print_info() const;
 
 public:
     TexturedMesh() = default;

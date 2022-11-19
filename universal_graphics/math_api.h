@@ -9,6 +9,8 @@
 #include "math/quaternion.h"
 #include "geometry/bounding_box3.h"
 
+#include <iostream>
+#include <iomanip>
 #include <memory>
 
 namespace Kasumi
@@ -27,6 +29,12 @@ using mMatrix3x3 = HinaPE::Matrix3x3<real>;
 using mMatrix4x4 = HinaPE::Matrix4x4<real>;
 using mQuaternion = HinaPE::Quaternion<real>;
 using mBBox = HinaPE::BoundingBox<real, 3>;
+
+template<class... Args>
+void print(Args... args)
+{
+    (std::cout << ... << args) << std::endl;
+}
 }
 
 #endif //KASUMI_MATH_API_H

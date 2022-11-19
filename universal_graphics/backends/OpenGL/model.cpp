@@ -6,13 +6,11 @@
 
 #include <map>
 
-Kasumi::Model::Model(const std::string &path) : _path(path), _shader(nullptr) { load(path); }
+Kasumi::Model::Model(const std::string &path, const ShaderPtr &shader) : _path(path), _shader(shader) { load(path); }
 
 #include <iostream>
-Kasumi::Model::~Model()
-{
-    std::cout << "delete model: " << _path << std::endl;
-}
+#include <iomanip>
+Kasumi::Model::~Model() { std::cout << "delete model: " << _path << std::endl; }
 
 static auto process_mesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) -> Kasumi::TexturedMeshPtr
 {
@@ -85,6 +83,8 @@ auto Kasumi::Model::load(const std::string &path) -> bool
     _path = path;
 
     process_node(scene->mRootNode, scene, _meshes, directory);
+
+    print_info();
     return true;
 }
 
@@ -108,4 +108,15 @@ void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
 auto Kasumi::Model::get_shader() -> Kasumi::ShaderPtr &
 {
     return _shader;
+}
+
+void Kasumi::Model::print_info() const
+{
+    std::cout << "======================================== Model Info ========================================" << std::endl;
+    std::cout << "| " << std::setw(20) << std::left << "Model path: " << std::setw(20) << std::left << _path << " |" << std::endl;
+
+    std::cout << "| Mesh count: " << _meshes.size() << " |" << std::endl;
+    for (auto &mesh: _meshes)
+        mesh.second->print_info();
+    std::cout << "======================================== Model End ========================================" << std::endl;
 }

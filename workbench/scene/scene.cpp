@@ -1,19 +1,6 @@
 #include "scene.h"
 #include <iostream>
 
-static auto next_id() -> unsigned int
-{
-    static unsigned int id = 0;
-    return id++;
-}
-
-auto Kasumi::Workbench::Scene::add(Kasumi::Workbench::SceneObjectPtr &&ptr) -> unsigned int
-{
-    auto id = next_id();
-    _scene_objects.emplace(id, std::forward<SceneObjectPtr>(ptr));
-    return id;
-}
-
 void Kasumi::Workbench::Scene::erase(unsigned int id)
 {
     if (_scene_objects_erased.find(id) != _scene_objects_erased.end())
@@ -35,7 +22,8 @@ void Kasumi::Workbench::Scene::render()
     for (auto &obj: _scene_objects)
     {
         auto camera = get_current_camera();
-        obj.second->update_mvp(camera->get_view(), camera->get_projection());
+        obj.second->update_mvp(mMatrix4x4::makeIdentity(), mMatrix4x4::makeIdentity());
+//        obj.second->update_mvp(camera->get_view(), camera->get_projection());
         obj.second->render();
     }
 }
@@ -50,6 +38,8 @@ auto Kasumi::Workbench::Scene::get_current_object() const -> Kasumi::Workbench::
 {
     if (_scene_objects.contains(opt.current_object_id))
         return _scene_objects.at(opt.current_object_id);
+
+    std::cout << "NO OBJECT SELECTED" << std::endl;
     return nullptr;
 }
 
@@ -60,4 +50,28 @@ auto Kasumi::Workbench::Scene::get_current_camera() const -> Kasumi::CameraPtr
 
     std::cout << "NO CAMERA" << std::endl;
     return nullptr;
+}
+
+auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
+{
+    static unsigned static_obj_id = 0;
+    auto shader = _scene_shaders.find(shader_id)->second;
+    auto res = _scene_objects.emplace(static_obj_id++, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
+    res.first->second->use_shader(shader);
+    return res.first->first;
+}
+
+auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
+{
+    static unsigned static_shader_id = 0;
+    auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
+    return res.first->first;
+}
+
+auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
+{
+    static unsigned static_camera_id = 0;
+    auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(mVector2(1024, 768)));
+    opt.current_camera_id = res.first->first;
+    return res.first->first;
 }

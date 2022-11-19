@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <iostream>
+#include <iomanip>
 
 Kasumi::TexturedMesh::TexturedMesh(std::vector<Vertex> &&vertices, std::vector<Index> &&indices, std::map<std::string, TexturePtr> &&diffuse_textures, std::map<std::string, TexturePtr> &&specular_textures, std::map<std::string, TexturePtr> &&normal_textures,
                                    std::map<std::string, TexturePtr> &&height_textures) : _verts(std::move(vertices)), _idxs(std::move(indices)), _diffuse_textures(std::move(diffuse_textures)), _specular_textures(std::move(specular_textures)),
@@ -114,4 +115,22 @@ void Kasumi::TexturedMesh::use_shader(const Kasumi::ShaderPtr &shader)
 auto Kasumi::TexturedMesh::get_shader() -> Kasumi::ShaderPtr &
 {
     return _shader;
+}
+
+void Kasumi::TexturedMesh::print_info() const
+{
+    std::cout << std::setw(15) << std::left << "| Vertices count: " << _verts.size() << " |" << std::endl;
+    std::cout << std::setw(15) << std::left << "| Indices count: " << _idxs.size() << " |" << std::endl;
+    std::cout << std::setw(15) << std::left << "| Diffuse textures count: " << _diffuse_textures.size() << " |" << std::endl;
+    for (auto &e: _diffuse_textures)
+        e.second->print_info();
+    std::cout << std::setw(15) << std::left << "| Specular textures count: " << _specular_textures.size() << " |" << std::endl;
+    for (auto &e: _specular_textures)
+        e.second->print_info();
+    std::cout << std::setw(15) << std::left << "| Normal textures count: " << _normal_textures.size() << " |" << std::endl;
+    for (auto &e: _normal_textures)
+        e.second->print_info();
+    std::cout << std::setw(15) << std::left << "| Height textures count: " << _height_textures.size() << " |" << std::endl;
+    for (auto &e: _height_textures)
+        e.second->print_info();
 }

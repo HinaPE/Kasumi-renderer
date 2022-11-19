@@ -13,6 +13,7 @@ class SceneObject
 public:
     void render();
     void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
+    void use_shader(const ShaderPtr &shader);
 
 public:
     template<typename T>
