@@ -8,7 +8,6 @@ namespace Kasumi
 class Camera final
 {
 public:
-    void loot_at(const mVector3 &focus_point);
     auto get_projection() const -> mMatrix4x4;
     auto get_view() const -> mMatrix4x4;
     void key(int key, int scancode, int action, int mods);
@@ -32,7 +31,7 @@ public:
         real far_plane = 100;
 
         // mouse control
-        real orbit_sens = 0.2;
+        real orbit_sens = 0.01;
         real move_sens = 0.015;
         real radius_sens = 0.25;
 
@@ -57,6 +56,7 @@ private:
     auto up() const -> mVector3;
     auto front() const -> mVector3;
     auto distance() const -> real;
+    void loot_at(const mVector3 &focus_point);
 
 private:
     mMatrix4x4 _projection, _view;
