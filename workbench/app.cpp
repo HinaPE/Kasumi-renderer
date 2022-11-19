@@ -6,7 +6,7 @@ void Kasumi::Workbench::App::prepare()
 {
     auto camera_id = _scene->add_camera();
     auto shader_id = _scene->add_shader(std::string(ShaderDir) + "default_shader_vertex.glsl", std::string(ShaderDir) + "default_shader_fragment.glsl");
-    auto ayaka = _scene->add_model("F:/Projects/Kasumi-renderer/models/ayaka_uniform/ayaka.pmx", shader_id);
+    auto ayaka = _scene->add_model("/Users/xayah/Downloads/nahida/nahida.pmx", shader_id);
 }
 
 void Kasumi::Workbench::App::render()
