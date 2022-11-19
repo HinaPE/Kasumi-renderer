@@ -57,10 +57,26 @@ void Kasumi::Workbench::App::render()
     _manager->render();
 }
 
-void Kasumi::Workbench::App::event(GLFWwindow *window)
+void Kasumi::Workbench::App::key(int key, int scancode, int action, int mods)
 {
-    Kasumi::App::event(window);
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        std::cout << "Hello Kasumi" << std::endl;
-    _manager->event(window);
+    _scene->key(key, scancode, action, mods);
+    _manager->key(key, scancode, action, mods);
+}
+
+void Kasumi::Workbench::App::mouse_button(int button, int action, int mods)
+{
+    _scene->mouse_button(button, action, mods);
+    _manager->mouse_button(button, action, mods);
+}
+
+void Kasumi::Workbench::App::mouse_scroll(double x_offset, double y_offset)
+{
+    _scene->mouse_scroll(x_offset, y_offset);
+    _manager->mouse_scroll(x_offset, y_offset);
+}
+
+void Kasumi::Workbench::App::mouse_cursor(double x_pos, double y_pos)
+{
+    _scene->mouse_cursor(x_pos, y_pos);
+    _manager->mouse_cursor(x_pos, y_pos);
 }

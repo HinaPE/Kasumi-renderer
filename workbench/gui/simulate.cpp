@@ -4,5 +4,3 @@
 void Kasumi::Workbench::Simulate::render()
 {
 }
-
-void Kasumi::Workbench::Simulate::event(GLFWwindow *window) {}

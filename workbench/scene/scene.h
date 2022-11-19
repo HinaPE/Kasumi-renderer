@@ -16,6 +16,10 @@ class Scene
 public:
     auto read_scene(const std::string &path) -> std::string /** return: error message **/;
     auto write_to_file(const std::string &path) -> std::string /** return: error message **/;
+    void key(int key, int scancode, int action, int mods);
+    void mouse_button(int button, int action, int mods);
+    void mouse_scroll(double x_offset, double y_offset);
+    void mouse_cursor(double x_pos, double y_pos);
 
 public:
     auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default shader **/) -> unsigned int;
@@ -37,12 +41,19 @@ public:
 public:
     struct Opt
     {
+        bool object_dirty = false;
+        bool camera_dirty = false;
+        bool shader_dirty = false;
         unsigned int current_object_id = std::numeric_limits<unsigned int>::max();
         unsigned int default_camera_id = std::numeric_limits<unsigned int>::max();
         unsigned int default_shader_id = std::numeric_limits<unsigned int>::max();
-    } opt;
-    auto get_current_object() const -> SceneObjectPtr;
-    auto get_current_camera() const -> CameraPtr;
+        SceneObjectPtr current_object = nullptr;
+        CameraPtr current_camera = nullptr;
+        ShaderPtr current_shader = nullptr;
+    } _opt;
+    auto get_current_object() -> SceneObjectPtr;
+    auto get_current_camera() -> CameraPtr;
+    auto get_current_shader() -> ShaderPtr;
 
 private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;

@@ -11,6 +11,10 @@ public:
     void loot_at(const mVector3 &focus_point);
     auto get_projection() const -> mMatrix4x4;
     auto get_view() const -> mMatrix4x4;
+    void key(int key, int scancode, int action, int mods);
+    void mouse_button(int button, int action, int mods);
+    void mouse_scroll(double x_offset, double y_offset);
+    void mouse_cursor(double x_pos, double y_pos);
 
 public:
     struct Opt

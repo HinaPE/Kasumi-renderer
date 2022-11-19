@@ -16,8 +16,10 @@ class App : public Kasumi::App
 public:
     void prepare() final;
     void render() final;
-    void event(GLFWwindow *window) final; // keyboard event and mouse event
-    auto get_scene() -> ScenePtr { return _scene; }
+    void key(int key, int scancode, int action, int mods) final;
+    void mouse_button(int button, int action, int mods) final;
+    void mouse_scroll(double x_offset, double y_offset) final;
+    void mouse_cursor(double x_pos, double y_pos) override;
 
 public:
     App();

@@ -9,7 +9,6 @@ class Simulate : public Gui
 {
 public:
     void render() final;
-    void event(GLFWwindow *window) final;
 };
 }
 #endif //KASUMI_SIMULATE_H
