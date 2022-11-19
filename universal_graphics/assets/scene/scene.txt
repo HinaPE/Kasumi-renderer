@@ -1,1 +1,0 @@
-model path /Users/xayah/Downloads/nahida/nahida.pmx shader default_shader position 0 0 0 rotation 0 0 0 scale 1 1 1
