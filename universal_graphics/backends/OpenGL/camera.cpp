@@ -20,7 +20,7 @@ void Kasumi::Camera::reset()
 {
     _vertical_fov = static_cast<real>(90);
     _aspect_ratio = static_cast<real>(1.7778);
-    _rotation = mQuaternion::fromEulerAngles(mVector3(1, 1, 1));
+//    _rotation = mQuaternion(mVector3(1, 1, 1));
     _near_plane = static_cast<real>(0.01);
     _radius = static_cast<real>(5);
     _radius_sens = static_cast<real>(0.25);
@@ -68,7 +68,7 @@ void Kasumi::Camera::loot_at(const Kasumi::mVector3 &center, const Kasumi::mVect
     _look_at = center;
     _radius = (_position - _look_at).length();
     if (front().dot(mVector3(0, 1, 0)) == -1.0f)
-        _rotation = mQuaternion::fromEulerAngles(mVector3(static_cast<real>(270), static_cast<real>(0), static_cast<real>(0)));
+        _rotation = mQuaternion(static_cast<real>(270), static_cast<real>(0), static_cast<real>(0));
     //    else
     //        _rotation = mQuaternion::fromEulerAngles(mMatrix4x4::makeRotationMatrix(front(), 1)); TODO: fix this
     update();
