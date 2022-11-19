@@ -12,8 +12,9 @@ endif ()
 file(GLOB UNIVERSE_FILES
         platform.h
         shader.h
-        mesh.h
         texture.h
+        mesh.h
+        instance.h
         model.h
         framebuffer.h
         camera.h
@@ -29,6 +30,7 @@ if (OpenGL)
             backends/OpenGL/framebuffer.cpp
             backends/OpenGL/model.cpp
             backends/OpenGL/camera.cpp
+            backends/OpenGL/instance.cpp
             )
     set(Imgui_OpenGL
             "deps/imgui/imgui.h"
