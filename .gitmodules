@@ -19,3 +19,6 @@
 [submodule "universal_graphics/deps/nfd"]
 	path = universal_graphics/deps/nfd
 	url = https://github.com/BFU-Graphics/Hina_nfd.git
+[submodule "backends"]
+	path = backends
+	url = https://github.com/HinaPE/backends.git
