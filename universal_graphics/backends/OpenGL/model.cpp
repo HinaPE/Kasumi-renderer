@@ -14,7 +14,7 @@ Kasumi::Model::~Model()
     std::cout << "delete model: " << _path << std::endl;
 }
 
-static auto process_mesh(aiMesh *mesh, const aiScene *scene, const std::string& directory) -> Kasumi::TexturedMeshPtr
+static auto process_mesh(aiMesh *mesh, const aiScene *scene, const std::string &directory) -> Kasumi::TexturedMeshPtr
 {
     std::vector<Kasumi::TexturedMesh::Vertex> vertices;
     std::vector<Kasumi::TexturedMesh::Index> indices;
@@ -63,7 +63,7 @@ static auto process_mesh(aiMesh *mesh, const aiScene *scene, const std::string& 
                                                   std::move(load_material(aiTextureType_AMBIENT)));
 }
 
-static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMeshPtr> &_meshes, const std::string& directory)
+static void process_node(aiNode *node, const aiScene *scene, std::map<std::string, Kasumi::TexturedMeshPtr> &_meshes, const std::string &directory)
 {
     for (int i = 0; i < node->mNumMeshes; ++i)
     {
@@ -88,13 +88,6 @@ auto Kasumi::Model::load(const std::string &path) -> bool
     return true;
 }
 
-void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
-{
-    _shader = shader;
-    for (auto &mesh: _meshes)
-        mesh.second->use_shader(shader);
-}
-
 void Kasumi::Model::render()
 {
     if (!_shader)
@@ -103,4 +96,16 @@ void Kasumi::Model::render()
     _shader->use();
     for (auto &mesh: _meshes)
         mesh.second->render();
+}
+
+void Kasumi::Model::use_shader(const Kasumi::ShaderPtr &shader)
+{
+    _shader = shader;
+    for (auto &mesh: _meshes)
+        mesh.second->use_shader(shader);
+}
+
+auto Kasumi::Model::get_shader() -> Kasumi::ShaderPtr &
+{
+    return _shader;
 }

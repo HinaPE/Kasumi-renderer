@@ -1,6 +1,6 @@
 #include "../../camera.h"
 
-Kasumi::Camera::Camera(const Kasumi::mVector2& dim)
+Kasumi::Camera::Camera(const Kasumi::mVector2 &dim)
 {
     reset();
     _aspect_ratio = dim.x / dim.y;
@@ -57,8 +57,8 @@ auto Kasumi::Camera::project(float fov, float aspect_ratio, float near) -> Kasum
     res(1, 1) = f;
     res(2, 2) = 0.0f;
     res(3, 3) = 0.0f;
-    res(3, 2) = near;
-    res(2, 3) = -1.0f;
+    res(2, 3) = near;
+    res(3, 2) = -1.0f;
     return res;
 }
 
@@ -69,7 +69,7 @@ void Kasumi::Camera::loot_at(const Kasumi::mVector3 &center, const Kasumi::mVect
     _radius = (_position - _look_at).length();
     if (front().dot(mVector3(0, 1, 0)) == -1.0f)
         _rotation = mQuaternion::fromEulerAngles(mVector3(static_cast<real>(270), static_cast<real>(0), static_cast<real>(0)));
-//    else
-//        _rotation = mQuaternion::fromEulerAngles(mMatrix4x4::makeRotationMatrix(front(), 1)); TODO: fix this
+    //    else
+    //        _rotation = mQuaternion::fromEulerAngles(mMatrix4x4::makeRotationMatrix(front(), 1)); TODO: fix this
     update();
 }

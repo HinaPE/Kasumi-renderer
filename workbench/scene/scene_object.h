@@ -12,6 +12,7 @@ class SceneObject
 {
 public:
     void render();
+    void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
 
 public:
     template<typename T>

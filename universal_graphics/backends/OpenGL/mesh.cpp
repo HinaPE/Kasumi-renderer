@@ -110,3 +110,8 @@ void Kasumi::TexturedMesh::use_shader(const Kasumi::ShaderPtr &shader)
 {
     _shader = shader;
 }
+
+auto Kasumi::TexturedMesh::get_shader() -> Kasumi::ShaderPtr &
+{
+    return _shader;
+}

@@ -15,8 +15,9 @@ class Model
 {
 public:
     auto load(const std::string &path) -> bool;
-    void use_shader(const ShaderPtr &shader);
     void render();
+    void use_shader(const ShaderPtr &shader);
+    auto get_shader() -> ShaderPtr &;
 
 public:
     Model() = default;

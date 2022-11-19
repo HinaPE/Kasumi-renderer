@@ -40,6 +40,7 @@ public:
     void render();
     void update();
     void use_shader(const ShaderPtr &shader);
+    auto get_shader() -> ShaderPtr &;
 
 private:
     bool is_inited;

@@ -27,6 +27,15 @@ public:
     auto operator=(const Scene &) -> Scene & = delete;
     auto operator=(Scene &&) -> Scene & = delete;
 
+public:
+    struct Opt
+    {
+        unsigned int current_object_id = -1;
+        unsigned int current_camera_id = -1;
+    } opt;
+    auto get_current_object() const -> SceneObjectPtr;
+    auto get_current_camera() const -> CameraPtr;
+
 private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;
     std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;

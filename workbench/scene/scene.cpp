@@ -1,4 +1,5 @@
 #include "scene.h"
+#include <iostream>
 
 static auto next_id() -> unsigned int
 {
@@ -32,11 +33,31 @@ void Kasumi::Workbench::Scene::restore(unsigned int id)
 void Kasumi::Workbench::Scene::render()
 {
     for (auto &obj: _scene_objects)
+    {
+        auto camera = get_current_camera();
+        obj.second->update_mvp(camera->get_view(), camera->get_projection());
         obj.second->render();
+    }
 }
 
 void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {
     for (auto &obj: _scene_objects)
         func(obj.second);
+}
+
+auto Kasumi::Workbench::Scene::get_current_object() const -> Kasumi::Workbench::SceneObjectPtr
+{
+    if (_scene_objects.contains(opt.current_object_id))
+        return _scene_objects.at(opt.current_object_id);
+    return nullptr;
+}
+
+auto Kasumi::Workbench::Scene::get_current_camera() const -> Kasumi::CameraPtr
+{
+    if (_scene_cameras.contains(opt.current_camera_id))
+        return _scene_cameras.at(opt.current_camera_id);
+
+    std::cout << "NO CAMERA" << std::endl;
+    return nullptr;
 }
