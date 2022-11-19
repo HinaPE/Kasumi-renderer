@@ -21,7 +21,7 @@ public:
 
 public:
     Model() = default;
-    Model(const std::string &path, const ShaderPtr &shader);
+    Model(const std::string &path, ShaderPtr shader);
     Model(const Model &) = delete;
     Model(Model &&) = default;
     ~Model();
