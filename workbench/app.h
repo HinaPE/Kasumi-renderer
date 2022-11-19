@@ -16,6 +16,7 @@ class App : public Kasumi::App
 public:
     void prepare() final;
     void render() final;
+    auto quit() -> bool final;
     void key(int key, int scancode, int action, int mods) final;
     void mouse_button(int button, int action, int mods) final;
     void mouse_scroll(double x_offset, double y_offset) final;

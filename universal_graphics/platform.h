@@ -18,7 +18,7 @@ class App
 public:
     virtual void prepare() = 0;
     virtual void render() = 0;
-    virtual auto quit() -> bool { return false; };
+    virtual auto quit() -> bool = 0;
     virtual void key(int key, int scancode, int action, int mods) = 0;
     virtual void mouse_button(int button, int action, int mods) = 0;
     virtual void mouse_scroll(double x_offset, double y_offset) = 0;

@@ -20,11 +20,8 @@ public:
     void render();
 
 private:
-    union
-    {
-        TexturedMeshPtr _textured_mesh;
-        ColoredMeshPtr _colored_mesh;
-    };
+    TexturedMeshPtr _textured_mesh;
+    ColoredMeshPtr _colored_mesh;
 };
 }
 

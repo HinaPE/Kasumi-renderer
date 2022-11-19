@@ -57,6 +57,11 @@ void Kasumi::Workbench::App::render()
     _manager->render();
 }
 
+bool Kasumi::Workbench::App::quit()
+{
+    return false;
+}
+
 void Kasumi::Workbench::App::key(int key, int scancode, int action, int mods)
 {
     _scene->key(key, scancode, action, mods);
