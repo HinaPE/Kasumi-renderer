@@ -19,6 +19,7 @@ Kasumi::Workbench::Scene::Scene()
     _opt.default_camera_id = add_camera(); // default camera
     _opt.camera_dirty = true;
     _opt.shader_dirty = true;
+    update();
 }
 
 Kasumi::Workbench::Scene::~Scene()
@@ -204,9 +205,11 @@ auto Kasumi::Workbench::Scene::get_current_color_shader() -> Kasumi::ShaderPtr
 
 auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
 {
-    auto shader = get_current_texture_shader();
+    std::shared_ptr<Shader> shader = nullptr;
     if (shader_id != 0)
         shader = _scene_shaders.find(shader_id)->second;
+    else
+        shader = get_current_texture_shader();
     unsigned int id = static_obj_id++;
     auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
     if (!res.second)
@@ -216,7 +219,7 @@ auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, unsigned int shader_id) -> unsigned int { return add_model(std::string(ModelDir) + primitive_name + ".obj", shader_id); }
+auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, unsigned int shader_id) -> unsigned int { return add_model(std::string(ModelDir) + primitive_name + ".obj", _opt.default_texture_shader_id /* TODO: */); }
 
 auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
 {
@@ -229,4 +232,17 @@ auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
     auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
     _opt.default_camera_id = res.first->first;
     return res.first->first;
+}
+
+void Kasumi::Workbench::Scene::update()
+{
+    if (_opt.camera_dirty)
+        _opt.current_camera = _scene_cameras.at(_opt.default_camera_id);
+    if (_opt.object_dirty)
+        _opt.current_object = _scene_objects.at(_opt.current_object_id);
+    if (_opt.shader_dirty)
+    {
+        _opt.current_texture_shader = _scene_shaders.at(_opt.default_texture_shader_id);
+        _opt.current_color_shader = _scene_shaders.at(_opt.default_color_shader_id);
+    }
 }

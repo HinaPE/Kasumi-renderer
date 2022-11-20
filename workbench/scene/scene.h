@@ -59,6 +59,9 @@ public:
     auto get_current_texture_shader() -> ShaderPtr;
     auto get_current_color_shader() -> ShaderPtr;
 
+public:
+    void update();
+
 private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;
     std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
