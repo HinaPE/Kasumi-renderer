@@ -34,7 +34,7 @@ using SceneObjectPtr = std::shared_ptr<SceneObject>;
 template<typename T>
 Kasumi::Workbench::SceneObject::SceneObject(const T &ptr) : _underlying(ptr)
 {
-    std::visit([&](auto &&renderable)
+    std::visit([&](auto &renderable)
                {
                    _pose.position = -renderable->get_center_point();
                }, _underlying);

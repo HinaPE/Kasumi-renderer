@@ -57,7 +57,6 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
             std::string model_path;
             std::string shader_name;
             Kasumi::mVector3 position, rotation, scale = mVector3(1, 1, 1);
-            Kasumi::mVector3 color;
             std::string attrib;
 
             unsigned int obj_id = std::numeric_limits<unsigned int>::max();
@@ -70,8 +69,11 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
                 } else if (attrib == "Hatsune_Miku_V4X")
                     obj_id = add_model(std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx");
                 else if (attrib == "cube" || attrib == "sphere" || attrib == "cylinder")
-                    obj_id = add_primitive(attrib);
-                else if (attrib == "shader")
+                {
+                    std::string color;
+                    iss >> color;
+                    obj_id = add_primitive(attrib, color);
+                } else if (attrib == "shader")
                     iss >> shader_name;
                 else if (attrib == "position")
                     iss >> position.x >> position.y >> position.z;
@@ -79,8 +81,6 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
                     iss >> rotation.x >> rotation.y >> rotation.z;
                 else if (attrib == "scale")
                     iss >> scale.x >> scale.y >> scale.z;
-                else if (attrib == "color")
-                    iss >> color.x >> color.y >> color.z;
             }
             if (obj_id == std::numeric_limits<unsigned int>::max())
                 continue;
@@ -165,42 +165,30 @@ void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjec
 
 auto Kasumi::Workbench::Scene::get_current_object() -> Kasumi::Workbench::SceneObjectPtr
 {
-    if (!_opt.object_dirty)
-        return _opt.current_object;
-    auto co = _scene_objects.at(_opt.current_object_id);
-    _opt.current_object = co;
-    _opt.object_dirty = false;
-    return co;
+    if (_opt.object_dirty)
+        update();
+    return _opt.current_object;
 }
 
 auto Kasumi::Workbench::Scene::get_current_camera() -> Kasumi::CameraPtr
 {
-    if (!_opt.camera_dirty)
-        return _opt.current_camera;
-    auto cc = _scene_cameras.at(_opt.default_camera_id);
-    _opt.current_camera = cc;
-    _opt.camera_dirty = false;
-    return cc;
+    if (_opt.camera_dirty)
+        update();
+    return _opt.current_camera;
 }
 
 auto Kasumi::Workbench::Scene::get_current_texture_shader() -> Kasumi::ShaderPtr
 {
-    if (!_opt.shader_dirty)
-        return _opt.current_texture_shader;
-    auto cs = _scene_shaders.at(_opt.default_texture_shader_id);
-    _opt.current_texture_shader = cs;
-    _opt.shader_dirty = false;
-    return cs;
+    if (_opt.shader_dirty)
+        update();
+    return _opt.current_texture_shader;
 }
 
 auto Kasumi::Workbench::Scene::get_current_color_shader() -> Kasumi::ShaderPtr
 {
-    if (!_opt.shader_dirty)
-        return _opt.current_color_shader;
-    auto cs = _scene_shaders.at(_opt.default_color_shader_id);
-    _opt.current_color_shader = cs;
-    _opt.shader_dirty = false;
-    return cs;
+    if (_opt.shader_dirty)
+        update();
+    return _opt.current_color_shader;
 }
 
 auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
@@ -219,7 +207,17 @@ auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, unsigned int shader_id) -> unsigned int { return add_model(std::string(ModelDir) + primitive_name + ".obj", _opt.default_texture_shader_id /* TODO: */); }
+auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
+{
+    auto shader = get_current_color_shader();
+    unsigned int id = static_obj_id++;
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(primitive_name, color)));
+    if (!res.second)
+        return std::numeric_limits<unsigned int>::max();
+    res.first->second->_id = id;
+    res.first->second->use_shader(shader);
+    return id;
+}
 
 auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
 {
@@ -237,12 +235,19 @@ auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
 void Kasumi::Workbench::Scene::update()
 {
     if (_opt.camera_dirty)
+    {
         _opt.current_camera = _scene_cameras.at(_opt.default_camera_id);
+        _opt.camera_dirty = false;
+    }
     if (_opt.object_dirty)
+    {
         _opt.current_object = _scene_objects.at(_opt.current_object_id);
+        _opt.object_dirty = false;
+    }
     if (_opt.shader_dirty)
     {
         _opt.current_texture_shader = _scene_shaders.at(_opt.default_texture_shader_id);
         _opt.current_color_shader = _scene_shaders.at(_opt.default_color_shader_id);
+        _opt.shader_dirty = false;
     }
 }

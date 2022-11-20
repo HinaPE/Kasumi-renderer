@@ -23,7 +23,7 @@ public:
 
 public:
     auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> unsigned int;
-    auto add_primitive(const std::string &primitive_name, unsigned int shader_id = 0 /** use default color shader **/) -> unsigned int;
+    auto add_primitive(const std::string &primitive_name, const std::string& color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
     void erase(unsigned int id);
