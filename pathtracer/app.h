@@ -15,6 +15,9 @@ public:
     void mouse_button(int button, int action, int mods) final;
     void mouse_scroll(double x_offset, double y_offset) final;
     void mouse_cursor(double x_pos, double y_pos) final;
+
+public:
+
 };
 }
 

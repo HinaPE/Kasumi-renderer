@@ -13,4 +13,10 @@ add_executable(Kasumi_pathtracer test/main.cpp ${PATHTRACER_FILES})
 set_target_properties(Kasumi_pathtracer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
 target_include_directories(Kasumi_pathtracer PUBLIC ../backends ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_pathtracer PUBLIC Kasumi_backend)
-target_compile_definitions(Kasumi_pathtracer PUBLIC -DTestDir="${CMAKE_CURRENT_SOURCE_DIR}/test/")
+target_compile_definitions(
+        Kasumi_pathtracer
+        PUBLIC
+        -DShaderDir="${KASUMI_BACKEND_DIR}/assets/shader/glsl/pathtracer"
+        -DSceneDir="${KASUMI_BACKEND_DIR}/assets/scene/"
+        -DModelDir="${KASUMI_BACKEND_DIR}/assets/model/"
+)

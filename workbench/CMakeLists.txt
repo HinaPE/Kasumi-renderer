@@ -18,7 +18,7 @@ target_link_libraries(Kasumi_workbench PUBLIC Kasumi_backend)
 target_compile_definitions(
         Kasumi_workbench
         PUBLIC
-        -DShaderDir="${KASUMI_BACKEND_DIR}/assets/shader/"
+        -DShaderDir="${KASUMI_BACKEND_DIR}/assets/shader/glsl/"
         -DSceneDir="${KASUMI_BACKEND_DIR}/assets/scene/"
         -DModelDir="${KASUMI_BACKEND_DIR}/assets/model/"
 )
