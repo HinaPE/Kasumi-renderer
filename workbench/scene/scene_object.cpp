@@ -3,13 +3,15 @@
 
 void Kasumi::Workbench::SceneObject::render()
 {
-    static real scale = 1;
+    auto get_unique_str = [&](const std::string &str) -> std::string
+    {
+        return str + std::to_string(_id);
+    };
     ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::SliderFloat3("position", &_pose.position[0], -20.0f, 20.0f, "%.2f");
-    ImGui::SliderFloat3("rotation", &_pose.euler[0], -180.0f, 180.0f, "%.2f");
-    ImGui::SliderFloat("scale", &scale, 0.0f, 1.0f, "%.2f");
+    ImGui::SliderFloat3(get_unique_str("position").c_str(), &_pose.position[0], -20.0f, 20.0f, "%.2f");
+    ImGui::SliderFloat3(get_unique_str("rotation").c_str(), &_pose.euler[0], -180.0f, 180.0f, "%.2f");
+    ImGui::SliderFloat3(get_unique_str("scale").c_str(), &_pose.scale[0], 0.0f, 1.0f, "%.2f");
     ImGui::End();
-    _pose.scale.set(scale, scale, scale);
     std::visit([](auto &&renderable) { renderable->render(); }, _underlying);
 }
 

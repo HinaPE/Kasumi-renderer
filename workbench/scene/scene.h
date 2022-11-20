@@ -22,7 +22,8 @@ public:
     void mouse_cursor(double x_pos, double y_pos);
 
 public:
-    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default shader **/) -> unsigned int;
+    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> unsigned int;
+    auto add_primitive(const std::string &primitive_name, unsigned int shader_id = 0 /** use default color shader **/) -> unsigned int;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
     void erase(unsigned int id);
@@ -46,14 +47,17 @@ public:
         bool shader_dirty = false;
         unsigned int current_object_id = std::numeric_limits<unsigned int>::max();
         unsigned int default_camera_id = std::numeric_limits<unsigned int>::max();
-        unsigned int default_shader_id = std::numeric_limits<unsigned int>::max();
+        unsigned int default_texture_shader_id = std::numeric_limits<unsigned int>::max();
+        unsigned int default_color_shader_id = std::numeric_limits<unsigned int>::max();
         SceneObjectPtr current_object = nullptr;
         CameraPtr current_camera = nullptr;
-        ShaderPtr current_shader = nullptr;
+        ShaderPtr current_texture_shader = nullptr;
+        ShaderPtr current_color_shader = nullptr;
     } _opt;
     auto get_current_object() -> SceneObjectPtr;
     auto get_current_camera() -> CameraPtr;
-    auto get_current_shader() -> ShaderPtr;
+    auto get_current_texture_shader() -> ShaderPtr;
+    auto get_current_color_shader() -> ShaderPtr;
 
 private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;

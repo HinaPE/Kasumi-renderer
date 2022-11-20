@@ -15,6 +15,7 @@ public:
     void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
     void use_shader(const ShaderPtr &shader);
     Pose _pose;
+    unsigned int _id;
 
 public:
     template<typename T>
@@ -26,7 +27,7 @@ public:
     auto operator=(SceneObject &&) -> SceneObject & = delete;
 
 private:
-    std::variant<ModelPtr, TexturedMeshPtr> _underlying;
+    std::variant<ModelPtr, TexturedMeshPtr, ColoredMeshPtr> _underlying;
 };
 using SceneObjectPtr = std::shared_ptr<SceneObject>;
 
