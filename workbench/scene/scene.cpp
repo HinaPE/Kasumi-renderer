@@ -74,6 +74,8 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
                     model_path = std::string(ModelDir) + "sphere.obj";
                 else if (attrib == "cylinder")
                     model_path = std::string(ModelDir) + "cylinder.obj";
+                else if (attrib == "Hatsune_Miku_V4X")
+                    model_path = std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx";
             }
             auto id = add_model(model_path);
             auto obj = _scene_objects[id];

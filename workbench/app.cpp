@@ -6,7 +6,7 @@ Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _m
 
 void Kasumi::Workbench::App::prepare()
 {
-    _scene->read_scene(std::string(SceneDir) + "cube.txt");
+    _scene->read_scene(std::string(SceneDir) + "miku.txt");
 }
 
 void Kasumi::Workbench::App::render()
