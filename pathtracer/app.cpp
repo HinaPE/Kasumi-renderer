@@ -1,4 +1,7 @@
 #include "app.h"
+
+#include <utility>
+Kasumi::Pathtracer::App::App(std::string scene) : Kasumi::App(std::move(scene)) {}
 void Kasumi::Pathtracer::App::prepare()
 {
 

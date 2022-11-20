@@ -8,6 +8,10 @@
 
 1. Kasumi is a cross-platform, light and easy-to-use research-oriented multi-backend renderer, including a workbench renderer, a software rasterizer and a pathtracer.  
 
+## Gallery
+![Kasumi](https://github.com/Xayah-Hina/HinaPE-Resource/blob/master/image-bed/Kasumi-20221120-HatsuneMiku.png?raw=true)
+![Kasumi](https://github.com/Xayah-Hina/HinaPE-Resource/blob/master/image-bed/Kasumi-20221119-ayaka.png?raw=true)
+
 ## Build Instruction
 
 As a cross-platform project, [Clion](https://www.jetbrains.com/clion/) is highly recommanded to build Kasumi.
@@ -43,6 +47,3 @@ cmake --build Build --config Release
 cmake -S . -B Build
 cmake --build Build --config Release
 ```
-
-## Gallery
-![Kasumi](https://github.com/Xayah-Hina/HinaPE-Resource/blob/master/image-bed/Kasumi-20221119-ayaka.png?raw=true)

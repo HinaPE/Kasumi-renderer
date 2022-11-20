@@ -1,14 +1,12 @@
 #include "app.h"
+
+#include <utility>
 #include "nfd/nfd.h"
 #include "imgui/imgui.h"
 
-Kasumi::Workbench::App::App() : _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())) {}
+Kasumi::Workbench::App::App(std::string scene) : Kasumi::App(std::move(scene)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())) {}
 
-void Kasumi::Workbench::App::prepare()
-{
-    _scene->read_scene(std::string(SceneDir) + "stage.txt");
-    _scene->read_scene(std::string(SceneDir) + "miku.txt");
-}
+void Kasumi::Workbench::App::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_name); }
 
 void Kasumi::Workbench::App::render()
 {
@@ -58,10 +56,7 @@ void Kasumi::Workbench::App::render()
     _manager->render();
 }
 
-bool Kasumi::Workbench::App::quit()
-{
-    return false;
-}
+bool Kasumi::Workbench::App::quit() { return _manager->quit(); }
 
 void Kasumi::Workbench::App::key(int key, int scancode, int action, int mods)
 {

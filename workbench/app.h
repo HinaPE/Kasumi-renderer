@@ -23,7 +23,7 @@ public:
     void mouse_cursor(double x_pos, double y_pos) override;
 
 public:
-    App();
+    App(std::string scene);
     App(const App &) = delete;
     App(App &&) = delete;
     ~App() = default;

@@ -14,6 +14,7 @@ class Manager
 {
 public:
     void render();
+    auto quit() -> bool;
     void key(int key, int scancode, int action, int mods);
     void mouse_button(int button, int action, int mods);
     void mouse_scroll(double x_offset, double y_offset);

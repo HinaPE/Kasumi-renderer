@@ -9,8 +9,7 @@ file(GLOB_RECURSE RASTERIZER_FILES
         app.h app.cpp
         )
 
-add_executable(Kasumi_rasterizer test/main.cpp ${RASTERIZER_FILES})
+add_executable(Kasumi_rasterizer main.cpp ${RASTERIZER_FILES})
 set_target_properties(Kasumi_rasterizer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
 target_include_directories(Kasumi_rasterizer PUBLIC ../backends ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_rasterizer PUBLIC Kasumi_backend)
-target_compile_definitions(Kasumi_rasterizer PUBLIC -DTestDir="${CMAKE_CURRENT_SOURCE_DIR}/test/")

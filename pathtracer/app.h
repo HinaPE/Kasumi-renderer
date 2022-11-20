@@ -17,7 +17,7 @@ public:
     void mouse_cursor(double x_pos, double y_pos) final;
 
 public:
-
+    explicit App(std::string scene);
 };
 }
 

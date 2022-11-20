@@ -10,6 +10,10 @@ void Kasumi::Workbench::Manager::render()
     for (auto &gui: _gui)
         gui.second->render();
 }
+auto Kasumi::Workbench::Manager::quit() -> bool
+{
+    return false;
+}
 void Kasumi::Workbench::Manager::key(int key, int scancode, int action, int mods)
 {
     for (auto &gui: _gui)
