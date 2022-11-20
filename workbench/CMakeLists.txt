@@ -18,7 +18,7 @@ target_link_libraries(Kasumi_workbench PUBLIC Kasumi_backend)
 target_compile_definitions(
         Kasumi_workbench
         PUBLIC
-        -DShaderDir="${CMAKE_CURRENT_SOURCE_DIR}/../backends/assets/shader/"
-        -DSceneDir="${CMAKE_CURRENT_SOURCE_DIR}/../backends/assets/scene/"
-        -DModelDir="${CMAKE_CURRENT_SOURCE_DIR}/../backends/assets/model/"
+        -DShaderDir="${KASUMI_BACKEND_DIR}/assets/shader/"
+        -DSceneDir="${KASUMI_BACKEND_DIR}/assets/scene/"
+        -DModelDir="${KASUMI_BACKEND_DIR}/assets/model/"
 )
