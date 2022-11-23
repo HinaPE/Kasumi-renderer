@@ -170,10 +170,17 @@ auto Kasumi::Workbench::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, unsigned int texture_id) -> unsigned int
+auto Kasumi::Workbench::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> unsigned int
 {
     auto shader = get_current_texture_shader();
     unsigned int id = static_obj_id++;
+    std::map<std::string, TexturePtr> df;
+    df["diffuse"] = diffuse;
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<TexturedMesh>(std::move(vertices), std::move(indices), std::move(df))));
+    if (!res.second)
+        return std::numeric_limits<unsigned int>::max();
+    res.first->second->_id = id;
+    res.first->second->use_shader(shader);
     return id;
 }
 

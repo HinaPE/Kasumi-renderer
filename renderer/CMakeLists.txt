@@ -23,4 +23,5 @@ target_compile_definitions(
         -DShaderDir="${KASUMI_BACKEND_DIR}/assets/shader/glsl/"
         -DSceneDir="${KASUMI_BACKEND_DIR}/assets/scene/"
         -DModelDir="${KASUMI_BACKEND_DIR}/assets/model/"
+        -DTextureDir="${KASUMI_BACKEND_DIR}/assets/texture/"
 )
