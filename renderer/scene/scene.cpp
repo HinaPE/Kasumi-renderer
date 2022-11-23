@@ -158,6 +158,25 @@ auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, 
     return id;
 }
 
+auto Kasumi::Workbench::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color) -> unsigned int
+{
+    auto shader = get_current_color_shader();
+    unsigned int id = static_obj_id++;
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(std::move(vertices), std::move(indices), color)));
+    if (!res.second)
+        return std::numeric_limits<unsigned int>::max();
+    res.first->second->_id = id;
+    res.first->second->use_shader(shader);
+    return id;
+}
+
+auto Kasumi::Workbench::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, unsigned int texture_id) -> unsigned int
+{
+    auto shader = get_current_texture_shader();
+    unsigned int id = static_obj_id++;
+    return id;
+}
+
 auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
 {
     auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
@@ -170,10 +189,6 @@ auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
     _opt.default_camera_id = res.first->first;
     return res.first->first;
 }
-
-void Kasumi::Workbench::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
-void Kasumi::Workbench::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
-void Kasumi::Workbench::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
 
 void Kasumi::Workbench::Scene::erase(unsigned int id)
 {
@@ -200,6 +215,10 @@ void Kasumi::Workbench::Scene::render()
         obj.second->render();
     }
 }
+
+void Kasumi::Workbench::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
+void Kasumi::Workbench::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
+void Kasumi::Workbench::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
 
 void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {

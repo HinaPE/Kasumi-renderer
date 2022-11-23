@@ -22,25 +22,27 @@ public:
     void mouse_cursor(double x_pos, double y_pos);
 
 public:
+    /**
+     * manage scene objects
+     */
     auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> unsigned int;
-    auto add_primitive(const std::string &primitive_name, const std::string& color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
+    auto add_primitive(const std::string &primitive_name, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
+    auto add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
+    auto add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, unsigned int texture_id) -> unsigned int;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
-    void set_position(unsigned int id, const mVector3 &position);
-    void set_rotation(unsigned int id, const mVector3 &rotation);
-    void set_scale(unsigned int id, const mVector3 &scale);
     void erase(unsigned int id);
     void restore(unsigned int id);
     void render();
-    void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:
-    Scene();
-    Scene(const Scene &) = delete;
-    Scene(Scene &&) = delete;
-    ~Scene();
-    auto operator=(const Scene &) -> Scene & = delete;
-    auto operator=(Scene &&) -> Scene & = delete;
+    /**
+     * set scene objects properties
+     */
+    void set_position(unsigned int id, const mVector3 &position);
+    void set_rotation(unsigned int id, const mVector3 &rotation);
+    void set_scale(unsigned int id, const mVector3 &scale);
+    void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:
     struct Opt
@@ -62,7 +64,7 @@ public:
     auto get_current_texture_shader() -> ShaderPtr;
     auto get_current_color_shader() -> ShaderPtr;
 
-public:
+private:
     void update();
 
 private:
@@ -70,6 +72,14 @@ private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
     std::map<unsigned int, CameraPtr> _scene_cameras;
     std::map<unsigned int, ShaderPtr> _scene_shaders;
+
+public:
+    Scene();
+    Scene(const Scene &) = delete;
+    Scene(Scene &&) = delete;
+    ~Scene();
+    auto operator=(const Scene &) -> Scene & = delete;
+    auto operator=(Scene &&) -> Scene & = delete;
 };
 using ScenePtr = std::shared_ptr<Scene>;
 }
