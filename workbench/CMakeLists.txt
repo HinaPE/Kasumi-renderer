@@ -6,6 +6,7 @@ if (NOT TARGET Kasumi_backend)
 endif ()
 
 file(GLOB_RECURSE WORKBENCH_FILES
+        api.h
         app.h app.cpp
         scene/*h scene/*.cpp
         gui/*h gui/*.cpp

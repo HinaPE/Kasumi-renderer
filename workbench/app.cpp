@@ -4,11 +4,11 @@
 #include "nfd/nfd.h"
 #include "imgui/imgui.h"
 
-Kasumi::Workbench::App::App(std::string scene) : Kasumi::App(std::move(scene)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())) {}
+Kasumi::Workbench::App::App(std::string scene) : Kasumi::App(std::move(scene)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis() {}
 
+void Kasumi::Workbench::App::load_api(const Kasumi::ApiPtr &api) { _apis.emplace_back(api); }
 void Kasumi::Workbench::App::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_name); }
-
-void Kasumi::Workbench::App::render()
+void Kasumi::Workbench::App::update(double dt)
 {
     if (ImGui::BeginMainMenuBar())
     {
@@ -52,30 +52,30 @@ void Kasumi::Workbench::App::render()
         ImGui::Text("FPS: %.0f", ImGui::GetIO().Framerate);
         ImGui::EndMainMenuBar();
     }
+    for (auto &api: _apis)
+    {
+        api->step(_scene, dt);
+        api->gui(_scene);
+    }
     _scene->render();
     _manager->render();
 }
-
 bool Kasumi::Workbench::App::quit() { return _manager->quit(); }
-
 void Kasumi::Workbench::App::key(int key, int scancode, int action, int mods)
 {
     _scene->key(key, scancode, action, mods);
     _manager->key(key, scancode, action, mods);
 }
-
 void Kasumi::Workbench::App::mouse_button(int button, int action, int mods)
 {
     _scene->mouse_button(button, action, mods);
     _manager->mouse_button(button, action, mods);
 }
-
 void Kasumi::Workbench::App::mouse_scroll(double x_offset, double y_offset)
 {
     _scene->mouse_scroll(x_offset, y_offset);
     _manager->mouse_scroll(x_offset, y_offset);
 }
-
 void Kasumi::Workbench::App::mouse_cursor(double x_pos, double y_pos)
 {
     _scene->mouse_cursor(x_pos, y_pos);
