@@ -26,6 +26,9 @@ public:
     auto add_primitive(const std::string &primitive_name, const std::string& color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
+    void set_position(unsigned int id, const mVector3 &position);
+    void set_rotation(unsigned int id, const mVector3 &rotation);
+    void set_scale(unsigned int id, const mVector3 &scale);
     void erase(unsigned int id);
     void restore(unsigned int id);
     void render();

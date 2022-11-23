@@ -84,10 +84,9 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
             }
             if (obj_id == std::numeric_limits<unsigned int>::max())
                 continue;
-            auto obj = _scene_objects[obj_id];
-            obj->_pose.position = position;
-            obj->_pose.euler = rotation;
-            obj->_pose.scale = scale;
+            set_position(obj_id, position);
+            set_rotation(obj_id, rotation);
+            set_scale(obj_id, scale);
         } else if (type == "shader")
         {
             std::string vertex_shader, fragment_shader, geometry_shader;
@@ -130,6 +129,51 @@ void Kasumi::Workbench::Scene::key(int key, int scancode, int action, int mods) 
 void Kasumi::Workbench::Scene::mouse_button(int button, int action, int mods) { get_current_camera()->mouse_button(button, action, mods); }
 void Kasumi::Workbench::Scene::mouse_scroll(double x_offset, double y_offset) { get_current_camera()->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Workbench::Scene::mouse_cursor(double x_pos, double y_pos) { get_current_camera()->mouse_cursor(x_pos, y_pos); }
+
+auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
+{
+    std::shared_ptr<Shader> shader = nullptr;
+    if (shader_id != 0)
+        shader = _scene_shaders.find(shader_id)->second;
+    else
+        shader = get_current_texture_shader();
+    unsigned int id = static_obj_id++;
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
+    if (!res.second)
+        return std::numeric_limits<unsigned int>::max();
+    res.first->second->_id = id;
+    res.first->second->use_shader(shader);
+    return id;
+}
+
+auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
+{
+    auto shader = get_current_color_shader();
+    unsigned int id = static_obj_id++;
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(primitive_name, color)));
+    if (!res.second)
+        return std::numeric_limits<unsigned int>::max();
+    res.first->second->_id = id;
+    res.first->second->use_shader(shader);
+    return id;
+}
+
+auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
+{
+    auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
+    return res.first->first;
+}
+
+auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
+{
+    auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
+    _opt.default_camera_id = res.first->first;
+    return res.first->first;
+}
+
+void Kasumi::Workbench::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
+void Kasumi::Workbench::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
+void Kasumi::Workbench::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
 
 void Kasumi::Workbench::Scene::erase(unsigned int id)
 {
@@ -189,47 +233,6 @@ auto Kasumi::Workbench::Scene::get_current_color_shader() -> Kasumi::ShaderPtr
     if (_opt.shader_dirty)
         update();
     return _opt.current_color_shader;
-}
-
-auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
-{
-    std::shared_ptr<Shader> shader = nullptr;
-    if (shader_id != 0)
-        shader = _scene_shaders.find(shader_id)->second;
-    else
-        shader = get_current_texture_shader();
-    unsigned int id = static_obj_id++;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
-    res.first->second->_id = id;
-    res.first->second->use_shader(shader);
-    return id;
-}
-
-auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
-{
-    auto shader = get_current_color_shader();
-    unsigned int id = static_obj_id++;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(primitive_name, color)));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
-    res.first->second->_id = id;
-    res.first->second->use_shader(shader);
-    return id;
-}
-
-auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
-{
-    auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
-    return res.first->first;
-}
-
-auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
-{
-    auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
-    _opt.default_camera_id = res.first->first;
-    return res.first->first;
 }
 
 void Kasumi::Workbench::Scene::update()
