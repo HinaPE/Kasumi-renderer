@@ -7,11 +7,11 @@ void Kasumi::Workbench::SceneObject::render()
     {
         return str + std::to_string(_id);
     };
-    ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::SliderFloat3(get_unique_str("position").c_str(), &_pose.position[0], -20.0f, 20.0f, "%.2f");
-    ImGui::SliderFloat3(get_unique_str("rotation").c_str(), &_pose.euler[0], -180.0f, 180.0f, "%.2f");
-    ImGui::SliderFloat3(get_unique_str("scale").c_str(), &_pose.scale[0], 0.0f, 1.0f, "%.2f");
-    ImGui::End();
+//    ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+//    ImGui::SliderFloat3(get_unique_str("position").c_str(), &_pose.position[0], -20.0f, 20.0f, "%.2f");
+//    ImGui::SliderFloat3(get_unique_str("rotation").c_str(), &_pose.euler[0], -180.0f, 180.0f, "%.2f");
+//    ImGui::SliderFloat3(get_unique_str("scale").c_str(), &_pose.scale[0], 0.0f, 1.0f, "%.2f");
+//    ImGui::End();
     std::visit([&](auto &renderable) { renderable->render(); }, _underlying);
 }
 
