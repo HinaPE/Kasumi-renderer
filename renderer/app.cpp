@@ -7,12 +7,16 @@
 Kasumi::Renderer::Renderer(std::string scene) : App(scene), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis(),
                                                 _framebuffer(std::move(std::make_shared<Framebuffer>(300, 300))) {}
 
-void Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) { _apis.emplace_back(api); }
+void Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api)
+{
+    api->_scene = _scene;
+    _apis.emplace_back(api);
+}
 void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_name); }
 void Kasumi::Renderer::update(double dt)
 {
     for (auto &api: _apis)
-        api->step(_scene, dt);
+        api->step(dt);
     reset_state();
     ui_menu();
     ui_sidebar();
@@ -96,7 +100,7 @@ void Kasumi::Renderer::ui_sidebar()
     _scene->ui_sidebar();
     for (auto &api: _apis)
     {
-        api->ui_sidebar(_scene);
+        api->ui_sidebar();
         ImGui::Separator();
     }
     _next_x += ImGui::GetWindowSize().x;
