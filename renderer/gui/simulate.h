@@ -3,7 +3,7 @@
 
 #include "gui.h"
 
-namespace Kasumi::Workbench
+namespace Kasumi
 {
 class Simulate : public Gui
 {

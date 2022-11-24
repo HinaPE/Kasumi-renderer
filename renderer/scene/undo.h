@@ -3,7 +3,7 @@
 
 #include <memory>
 
-namespace Kasumi::Workbench
+namespace Kasumi
 {
 class Undo
 {

@@ -1,7 +1,7 @@
 #include "scene_object.h"
-#include <imgui.h>
+#include "imgui.h"
 
-void Kasumi::Workbench::SceneObject::render()
+void Kasumi::SceneObject::render()
 {
     auto get_unique_str = [&](const std::string &str) -> std::string
     {
@@ -15,7 +15,7 @@ void Kasumi::Workbench::SceneObject::render()
     std::visit([&](auto &renderable) { renderable->render(); }, _underlying);
 }
 
-void Kasumi::Workbench::SceneObject::update_mvp(const Kasumi::mMatrix4x4 &view, const Kasumi::mMatrix4x4 &projection)
+void Kasumi::SceneObject::update_mvp(const Kasumi::mMatrix4x4 &view, const Kasumi::mMatrix4x4 &projection)
 {
     std::visit([&](auto &renderable)
                {
@@ -28,7 +28,7 @@ void Kasumi::Workbench::SceneObject::update_mvp(const Kasumi::mMatrix4x4 &view, 
                }, _underlying);
 }
 
-void Kasumi::Workbench::SceneObject::use_shader(const Kasumi::ShaderPtr &shader)
+void Kasumi::SceneObject::use_shader(const Kasumi::ShaderPtr &shader)
 {
     std::visit([&](auto &renderable) { renderable->use_shader(shader); }, _underlying);
 }

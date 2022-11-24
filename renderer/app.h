@@ -10,29 +10,38 @@
 #include "gui/manager.h"
 #include "api.h"
 
-namespace Kasumi::Workbench
+namespace Kasumi
 {
-class App : public Kasumi::App
+class Renderer : public Kasumi::App
 {
 public:
-    void load_api(const Kasumi::ApiPtr& api);
+    void load_api(const Kasumi::ApiPtr &api);
 
 public:
     void prepare() final;
     void update(double dt) final;
     auto quit() -> bool final;
+
+public:
+    explicit Renderer(std::string scene);
+    Renderer(const Renderer &) = delete;
+    Renderer(Renderer &&) = delete;
+    ~Renderer() = default;
+    auto operator=(const Renderer &) -> Renderer & = delete;
+    auto operator=(Renderer &&) -> Renderer & = delete;
+
+private:
+    friend class Kasumi::Platform;
     void key(int key, int scancode, int action, int mods) final;
     void mouse_button(int button, int action, int mods) final;
     void mouse_scroll(double x_offset, double y_offset) final;
-    void mouse_cursor(double x_pos, double y_pos) override;
+    void mouse_cursor(double x_pos, double y_pos) final;
 
-public:
-    App(std::string scene);
-    App(const App &) = delete;
-    App(App &&) = delete;
-    ~App() = default;
-    auto operator=(const App &) -> App & = delete;
-    auto operator=(App &&) -> App & = delete;
+private:
+    void ui_menu();
+    void ui_sidebar();
+    void reset_state();
+    float _next_x = 0.f, _next_y = 0.f;
 
 private:
     ManagerPtr _manager;

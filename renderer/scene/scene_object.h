@@ -6,7 +6,7 @@
 #include <variant>
 #include <memory>
 
-namespace Kasumi::Workbench
+namespace Kasumi
 {
 class SceneObject
 {
@@ -32,7 +32,7 @@ private:
 using SceneObjectPtr = std::shared_ptr<SceneObject>;
 
 template<typename T>
-Kasumi::Workbench::SceneObject::SceneObject(const T &ptr) : _underlying(ptr)
+Kasumi::SceneObject::SceneObject(const T &ptr) : _underlying(ptr)
 {
     std::visit([&](auto &renderable)
                {

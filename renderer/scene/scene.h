@@ -9,17 +9,13 @@
 #include <functional>
 #include <limits>
 
-namespace Kasumi::Workbench
+namespace Kasumi
 {
 class Scene
 {
 public:
     auto read_scene(const std::string &path) -> std::string /** return: error message **/;
     auto write_to_file(const std::string &path) -> std::string /** return: error message **/;
-    void key(int key, int scancode, int action, int mods);
-    void mouse_button(int button, int action, int mods);
-    void mouse_scroll(double x_offset, double y_offset);
-    void mouse_cursor(double x_pos, double y_pos);
 
 public:
     /**
@@ -65,7 +61,12 @@ public:
     auto get_current_color_shader() -> ShaderPtr;
 
 private:
+    friend class Renderer;
     void update();
+    void key(int key, int scancode, int action, int mods);
+    void mouse_button(int button, int action, int mods);
+    void mouse_scroll(double x_offset, double y_offset);
+    void mouse_cursor(double x_pos, double y_pos);
 
 private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;

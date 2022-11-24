@@ -12,7 +12,7 @@ static unsigned static_obj_id = 0;
 static unsigned static_shader_id = 0;
 static unsigned static_camera_id = 0;
 
-Kasumi::Workbench::Scene::Scene()
+Kasumi::Scene::Scene()
 {
     _opt.default_texture_shader_id = add_shader(std::string(ShaderDir) + "texture_shader_vertex.glsl", std::string(ShaderDir) + "texture_shader_fragment.glsl");
     _opt.default_color_shader_id = add_shader(std::string(ShaderDir) + "color_shader_vertex.glsl", std::string(ShaderDir) + "color_shader_fragment.glsl");
@@ -22,7 +22,7 @@ Kasumi::Workbench::Scene::Scene()
     update();
 }
 
-Kasumi::Workbench::Scene::~Scene()
+Kasumi::Scene::~Scene()
 {
     _scene_objects.clear();
     _scene_objects_erased.clear();
@@ -37,7 +37,7 @@ Kasumi::Workbench::Scene::~Scene()
     static_camera_id = 0;
 }
 
-auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::string
+auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 {
     std::ifstream infile(path);
     if (!infile.is_open())
@@ -107,7 +107,7 @@ auto Kasumi::Workbench::Scene::read_scene(const std::string &path) -> std::strin
     return error_message;
 }
 
-auto Kasumi::Workbench::Scene::write_to_file(const std::string &path) -> std::string
+auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
 {
     // TODO: TOO COMPLICATED, NOT COMPLETED
     std::string error_message;
@@ -125,12 +125,12 @@ auto Kasumi::Workbench::Scene::write_to_file(const std::string &path) -> std::st
     return error_message;
 }
 
-void Kasumi::Workbench::Scene::key(int key, int scancode, int action, int mods) { get_current_camera()->key(key, scancode, action, mods); }
-void Kasumi::Workbench::Scene::mouse_button(int button, int action, int mods) { get_current_camera()->mouse_button(button, action, mods); }
-void Kasumi::Workbench::Scene::mouse_scroll(double x_offset, double y_offset) { get_current_camera()->mouse_scroll(x_offset, y_offset); }
-void Kasumi::Workbench::Scene::mouse_cursor(double x_pos, double y_pos) { get_current_camera()->mouse_cursor(x_pos, y_pos); }
+void Kasumi::Scene::key(int key, int scancode, int action, int mods) { get_current_camera()->key(key, scancode, action, mods); }
+void Kasumi::Scene::mouse_button(int button, int action, int mods) { get_current_camera()->mouse_button(button, action, mods); }
+void Kasumi::Scene::mouse_scroll(double x_offset, double y_offset) { get_current_camera()->mouse_scroll(x_offset, y_offset); }
+void Kasumi::Scene::mouse_cursor(double x_pos, double y_pos) { get_current_camera()->mouse_cursor(x_pos, y_pos); }
 
-auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
+auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
 {
     std::shared_ptr<Shader> shader = nullptr;
     if (shader_id != 0)
@@ -146,7 +146,7 @@ auto Kasumi::Workbench::Scene::add_model(const std::string &model_path, unsigned
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
+auto Kasumi::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
 {
     auto shader = get_current_color_shader();
     unsigned int id = static_obj_id++;
@@ -158,7 +158,7 @@ auto Kasumi::Workbench::Scene::add_primitive(const std::string &primitive_name, 
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color) -> unsigned int
+auto Kasumi::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color) -> unsigned int
 {
     auto shader = get_current_color_shader();
     unsigned int id = static_obj_id++;
@@ -170,7 +170,7 @@ auto Kasumi::Workbench::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> unsigned int
+auto Kasumi::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> unsigned int
 {
     auto shader = get_current_texture_shader();
     unsigned int id = static_obj_id++;
@@ -184,20 +184,20 @@ auto Kasumi::Workbench::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &
     return id;
 }
 
-auto Kasumi::Workbench::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
+auto Kasumi::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
 {
     auto res = _scene_shaders.emplace(static_shader_id++, std::make_shared<Shader>(vertex_shader, fragment_shader, geometry_shader));
     return res.first->first;
 }
 
-auto Kasumi::Workbench::Scene::add_camera() -> unsigned int
+auto Kasumi::Scene::add_camera() -> unsigned int
 {
     auto res = _scene_cameras.emplace(static_camera_id++, std::make_shared<Camera>(Camera::Opt()));
     _opt.default_camera_id = res.first->first;
     return res.first->first;
 }
 
-void Kasumi::Workbench::Scene::erase(unsigned int id)
+void Kasumi::Scene::erase(unsigned int id)
 {
     if (_scene_objects_erased.find(id) != _scene_objects_erased.end())
         return;
@@ -205,7 +205,7 @@ void Kasumi::Workbench::Scene::erase(unsigned int id)
     _scene_objects.erase(id);
 }
 
-void Kasumi::Workbench::Scene::restore(unsigned int id)
+void Kasumi::Scene::restore(unsigned int id)
 {
     if (_scene_objects.find(id) != _scene_objects.end())
         return;
@@ -213,7 +213,7 @@ void Kasumi::Workbench::Scene::restore(unsigned int id)
     _scene_objects_erased.erase(id);
 }
 
-void Kasumi::Workbench::Scene::render()
+void Kasumi::Scene::render()
 {
     for (auto &obj: _scene_objects)
     {
@@ -223,45 +223,45 @@ void Kasumi::Workbench::Scene::render()
     }
 }
 
-void Kasumi::Workbench::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
-void Kasumi::Workbench::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
-void Kasumi::Workbench::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
+void Kasumi::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
+void Kasumi::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
+void Kasumi::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
 
-void Kasumi::Workbench::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
+void Kasumi::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {
     for (auto &obj: _scene_objects)
         func(obj.second);
 }
 
-auto Kasumi::Workbench::Scene::get_current_object() -> Kasumi::Workbench::SceneObjectPtr
+auto Kasumi::Scene::get_current_object() -> Kasumi::SceneObjectPtr
 {
     if (_opt.object_dirty)
         update();
     return _opt.current_object;
 }
 
-auto Kasumi::Workbench::Scene::get_current_camera() -> Kasumi::CameraPtr
+auto Kasumi::Scene::get_current_camera() -> Kasumi::CameraPtr
 {
     if (_opt.camera_dirty)
         update();
     return _opt.current_camera;
 }
 
-auto Kasumi::Workbench::Scene::get_current_texture_shader() -> Kasumi::ShaderPtr
+auto Kasumi::Scene::get_current_texture_shader() -> Kasumi::ShaderPtr
 {
     if (_opt.shader_dirty)
         update();
     return _opt.current_texture_shader;
 }
 
-auto Kasumi::Workbench::Scene::get_current_color_shader() -> Kasumi::ShaderPtr
+auto Kasumi::Scene::get_current_color_shader() -> Kasumi::ShaderPtr
 {
     if (_opt.shader_dirty)
         update();
     return _opt.current_color_shader;
 }
 
-void Kasumi::Workbench::Scene::update()
+void Kasumi::Scene::update()
 {
     if (_opt.camera_dirty)
     {
