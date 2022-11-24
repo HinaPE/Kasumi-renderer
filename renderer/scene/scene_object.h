@@ -17,6 +17,9 @@ public:
     Pose _pose;
     unsigned int _id;
 
+public:
+    void set_wireframe(bool enable);
+
 private:
     std::variant<ModelPtr, TexturedMeshPtr, ColoredMeshPtr> _underlying;
 

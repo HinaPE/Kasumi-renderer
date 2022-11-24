@@ -21,10 +21,10 @@ public:
     /**
      * manage scene objects
      */
-    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> unsigned int;
-    auto add_primitive(const std::string &primitive_name, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
-    auto add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> unsigned int;
-    auto add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr& diffuse) -> unsigned int;
+    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> std::pair<unsigned int, ModelPtr>;
+    auto add_primitive(const std::string &primitive_name, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
+    auto add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
+    auto add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> std::pair<unsigned int, TexturedMeshPtr>;
     auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
     auto add_camera() -> unsigned int;
     void erase(unsigned int id);
@@ -33,11 +33,14 @@ public:
 
 public:
     /**
-     * set scene objects properties
+     * set or get scene objects properties
      */
     void set_position(unsigned int id, const mVector3 &position);
     void set_rotation(unsigned int id, const mVector3 &rotation);
     void set_scale(unsigned int id, const mVector3 &scale);
+    auto get_position(unsigned int id) -> const mVector3 &;
+    auto get_rotation(unsigned int id) -> const mVector3 &;
+    auto get_scale(unsigned int id) -> const mVector3 &;
     void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
 
 public:

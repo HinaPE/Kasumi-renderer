@@ -57,7 +57,7 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
         {
             std::string model_path;
             std::string shader_name;
-            Kasumi::mVector3 position, rotation, scale = mVector3(1, 1, 1);
+            mVector3 position, rotation, scale = mVector3(1, 1, 1);
             std::string attrib;
 
             unsigned int obj_id = std::numeric_limits<unsigned int>::max();
@@ -66,14 +66,14 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
                 if (attrib == "path")
                 {
                     iss >> model_path;
-                    obj_id = add_model(model_path);
+                    obj_id = add_model(model_path).first;
                 } else if (attrib == "Hatsune_Miku_V4X")
-                    obj_id = add_model(std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx");
+                    obj_id = add_model(std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx").first;
                 else if (attrib == "cube" || attrib == "sphere" || attrib == "cylinder")
                 {
                     std::string color;
                     iss >> color;
-                    obj_id = add_primitive(attrib, color);
+                    obj_id = add_primitive(attrib, color).first;
                 } else if (attrib == "shader")
                     iss >> shader_name;
                 else if (attrib == "position")
@@ -126,7 +126,7 @@ auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
     return error_message;
 }
 
-auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
+auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> std::pair<unsigned int, ModelPtr>
 {
     std::shared_ptr<Shader> shader = nullptr;
     if (shader_id != 0)
@@ -134,58 +134,54 @@ auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader
     else
         shader = get_current_texture_shader();
     unsigned int id = static_obj_id++;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<Model>(model_path, shader)));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
+    auto model = std::make_shared<Model>(model_path, shader);
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(model));
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
     _opt.current_object_id = id;
     _opt.object_dirty = true;
-    return id;
+    return {id, model};
 }
 
-auto Kasumi::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> unsigned int
+auto Kasumi::Scene::add_primitive(const std::string &primitive_name, const std::string &color) -> std::pair<unsigned int, ColoredMeshPtr>
 {
     auto shader = get_current_color_shader();
     unsigned int id = static_obj_id++;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(primitive_name, color)));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
+    auto mesh = std::make_shared<ColoredMesh>(primitive_name, color);
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(mesh));
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
     _opt.current_object_id = id;
     _opt.object_dirty = true;
-    return id;
+    return {id, mesh};
 }
 
-auto Kasumi::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color) -> unsigned int
+auto Kasumi::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color) -> std::pair<unsigned int, ColoredMeshPtr>
 {
     auto shader = get_current_color_shader();
     unsigned int id = static_obj_id++;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<ColoredMesh>(std::move(vertices), std::move(indices), color)));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
+    auto mesh = std::make_shared<ColoredMesh>(std::move(vertices), std::move(indices), color);
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(mesh));
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
     _opt.current_object_id = id;
     _opt.object_dirty = true;
-    return id;
+    return {id, mesh};
 }
 
-auto Kasumi::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> unsigned int
+auto Kasumi::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> std::pair<unsigned int, TexturedMeshPtr>
 {
     auto shader = get_current_texture_shader();
     unsigned int id = static_obj_id++;
     std::map<std::string, TexturePtr> df;
     df["diffuse"] = diffuse;
-    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(std::make_shared<TexturedMesh>(std::move(vertices), std::move(indices), std::move(df))));
-    if (!res.second)
-        return std::numeric_limits<unsigned int>::max();
+    auto mesh = std::make_shared<TexturedMesh>(std::move(vertices), std::move(indices), std::move(df));
+    auto res = _scene_objects.emplace(id, std::make_shared<SceneObject>(mesh));
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
     _opt.current_object_id = id;
     _opt.object_dirty = true;
-    return id;
+    return {id, mesh};
 }
 
 auto Kasumi::Scene::add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader) -> unsigned int
@@ -227,9 +223,12 @@ void Kasumi::Scene::render()
     }
 }
 
-void Kasumi::Scene::set_position(unsigned int id, const Kasumi::mVector3 &position) { _scene_objects[id]->_pose.position = position; }
-void Kasumi::Scene::set_rotation(unsigned int id, const Kasumi::mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
-void Kasumi::Scene::set_scale(unsigned int id, const Kasumi::mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
+void Kasumi::Scene::set_position(unsigned int id, const mVector3 &position) { _scene_objects[id]->_pose.position = position; }
+void Kasumi::Scene::set_rotation(unsigned int id, const mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
+void Kasumi::Scene::set_scale(unsigned int id, const mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
+auto Kasumi::Scene::get_position(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.position; }
+auto Kasumi::Scene::get_rotation(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.euler; }
+auto Kasumi::Scene::get_scale(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.scale; }
 
 void Kasumi::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)
 {
@@ -303,5 +302,8 @@ void Kasumi::Scene::ui_sidebar()
     sliders("Position", selected_object->_pose.position, 0.1f);
     sliders("Rotation", selected_object->_pose.euler, 0.1f);
     sliders("Scale", selected_object->_pose.scale, 0.031f);
+    static bool wireframe = false;
+    ImGui::Checkbox("Wireframe", &wireframe);
+    selected_object->set_wireframe(wireframe);
     ImGui::Separator();
 }
