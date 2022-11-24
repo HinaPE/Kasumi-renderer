@@ -4,7 +4,8 @@
 #include "nfd/nfd.h"
 #include "imgui/imgui.h"
 
-Kasumi::Renderer::Renderer(std::string scene) : App(scene), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis() {}
+Kasumi::Renderer::Renderer(std::string scene) : App(scene), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis(),
+                                                _framebuffer(std::move(std::make_shared<Framebuffer>(300, 300))) {}
 
 void Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) { _apis.emplace_back(api); }
 void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_name); }

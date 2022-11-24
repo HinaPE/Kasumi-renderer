@@ -303,4 +303,5 @@ void Kasumi::Scene::ui_sidebar()
     sliders("Position", selected_object->_pose.position, 0.1f);
     sliders("Rotation", selected_object->_pose.euler, 0.1f);
     sliders("Scale", selected_object->_pose.scale, 0.031f);
+    ImGui::Separator();
 }

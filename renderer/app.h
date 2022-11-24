@@ -1,10 +1,14 @@
 #ifndef KASUMI_APP_H
 #define KASUMI_APP_H
 
+// backends includes
 #include "platform.h"
 #include "model.h"
 #include "shader.h"
 #include "camera.h"
+#include "framebuffer.h"
+
+// kasumi includes
 #include "scene/scene.h"
 #include "scene/undo.h"
 #include "gui/manager.h"
@@ -37,6 +41,7 @@ private:
     ScenePtr _scene;
     UndoPtr _undo;
     std::vector<Kasumi::ApiPtr> _apis;
+    FramebufferPtr _framebuffer; // NOT COMPLETED YET
 
 public:
     explicit Renderer(std::string scene);
