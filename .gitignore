@@ -9,3 +9,4 @@ lib
 *.log
 output
 models
+.DS_Store
