@@ -9,26 +9,15 @@
 #include "scene/undo.h"
 #include "gui/manager.h"
 #include "api.h"
-
 namespace Kasumi
 {
 class Renderer : public Kasumi::App
 {
 public:
     void load_api(const Kasumi::ApiPtr &api);
-
-public:
     void prepare() final;
     void update(double dt) final;
     auto quit() -> bool final;
-
-public:
-    explicit Renderer(std::string scene);
-    Renderer(const Renderer &) = delete;
-    Renderer(Renderer &&) = delete;
-    ~Renderer() = default;
-    auto operator=(const Renderer &) -> Renderer & = delete;
-    auto operator=(Renderer &&) -> Renderer & = delete;
 
 private:
     friend class Kasumi::Platform;
@@ -48,6 +37,14 @@ private:
     ScenePtr _scene;
     UndoPtr _undo;
     std::vector<Kasumi::ApiPtr> _apis;
+
+public:
+    explicit Renderer(std::string scene);
+    Renderer(const Renderer &) = delete;
+    Renderer(Renderer &&) = delete;
+    ~Renderer() = default;
+    auto operator=(const Renderer &) -> Renderer & = delete;
+    auto operator=(Renderer &&) -> Renderer & = delete;
 };
 }
 

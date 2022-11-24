@@ -90,8 +90,9 @@ void Kasumi::Renderer::ui_menu()
 void Kasumi::Renderer::ui_sidebar()
 {
     ImGui::SetNextWindowPos({_next_x, _next_y});
-    ImGui::SetNextWindowSizeConstraints({ImGui::GetIO().DisplaySize.x / 4.75f, ImGui::GetIO().DisplaySize.y - _next_y}, {ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - _next_y});
+    ImGui::SetNextWindowSizeConstraints({ImGui::GetIO().DisplaySize.x / 5.75f, ImGui::GetIO().DisplaySize.y - _next_y}, {ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - _next_y});
     ImGui::Begin("Monitor", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing);
+    _scene->ui_sidebar();
     for (auto &api: _apis)
     {
         api->ui_sidebar(_scene);

@@ -69,6 +69,9 @@ private:
     void mouse_cursor(double x_pos, double y_pos);
 
 private:
+    void ui_sidebar();
+
+private:
     std::map<unsigned int, SceneObjectPtr> _scene_objects;
     std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
     std::map<unsigned int, CameraPtr> _scene_cameras;

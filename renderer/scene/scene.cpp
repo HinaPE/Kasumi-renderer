@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "GLFW/glfw3.h"
+#include "imgui.h"
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
@@ -125,11 +126,6 @@ auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
     return error_message;
 }
 
-void Kasumi::Scene::key(int key, int scancode, int action, int mods) { get_current_camera()->key(key, scancode, action, mods); }
-void Kasumi::Scene::mouse_button(int button, int action, int mods) { get_current_camera()->mouse_button(button, action, mods); }
-void Kasumi::Scene::mouse_scroll(double x_offset, double y_offset) { get_current_camera()->mouse_scroll(x_offset, y_offset); }
-void Kasumi::Scene::mouse_cursor(double x_pos, double y_pos) { get_current_camera()->mouse_cursor(x_pos, y_pos); }
-
 auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader_id) -> unsigned int
 {
     std::shared_ptr<Shader> shader = nullptr;
@@ -143,6 +139,8 @@ auto Kasumi::Scene::add_model(const std::string &model_path, unsigned int shader
         return std::numeric_limits<unsigned int>::max();
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
+    _opt.current_object_id = id;
+    _opt.object_dirty = true;
     return id;
 }
 
@@ -155,6 +153,8 @@ auto Kasumi::Scene::add_primitive(const std::string &primitive_name, const std::
         return std::numeric_limits<unsigned int>::max();
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
+    _opt.current_object_id = id;
+    _opt.object_dirty = true;
     return id;
 }
 
@@ -167,6 +167,8 @@ auto Kasumi::Scene::add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, s
         return std::numeric_limits<unsigned int>::max();
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
+    _opt.current_object_id = id;
+    _opt.object_dirty = true;
     return id;
 }
 
@@ -181,6 +183,8 @@ auto Kasumi::Scene::add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, 
         return std::numeric_limits<unsigned int>::max();
     res.first->second->_id = id;
     res.first->second->use_shader(shader);
+    _opt.current_object_id = id;
+    _opt.object_dirty = true;
     return id;
 }
 
@@ -279,4 +283,24 @@ void Kasumi::Scene::update()
         _opt.current_color_shader = _scene_shaders.at(_opt.default_color_shader_id);
         _opt.shader_dirty = false;
     }
+}
+
+void Kasumi::Scene::key(int key, int scancode, int action, int mods) { get_current_camera()->key(key, scancode, action, mods); }
+void Kasumi::Scene::mouse_button(int button, int action, int mods) { get_current_camera()->mouse_button(button, action, mods); }
+void Kasumi::Scene::mouse_scroll(double x_offset, double y_offset) { get_current_camera()->mouse_scroll(x_offset, y_offset); }
+void Kasumi::Scene::mouse_cursor(double x_pos, double y_pos) { get_current_camera()->mouse_cursor(x_pos, y_pos); }
+void Kasumi::Scene::ui_sidebar()
+{
+    auto selected_object = get_current_object();
+    if (selected_object == nullptr)
+        return;
+    auto sliders = [&](std::string label, mVector3 &data, float sens)
+    {
+        label += "##" + std::to_string(selected_object->_id);
+        ImGui::DragFloat3(label.c_str(), &data[0], sens);
+    };
+    ImGui::Text("Edit Pose");
+    sliders("Position", selected_object->_pose.position, 0.1f);
+    sliders("Rotation", selected_object->_pose.euler, 0.1f);
+    sliders("Scale", selected_object->_pose.scale, 0.031f);
 }

@@ -12,10 +12,13 @@ class SceneObject
 {
 public:
     void render();
-    void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
     void use_shader(const ShaderPtr &shader);
+    void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
     Pose _pose;
     unsigned int _id;
+
+private:
+    std::variant<ModelPtr, TexturedMeshPtr, ColoredMeshPtr> _underlying;
 
 public:
     template<typename T>
@@ -25,9 +28,6 @@ public:
     ~SceneObject() = default;
     auto operator=(const SceneObject &) -> SceneObject & = delete;
     auto operator=(SceneObject &&) -> SceneObject & = delete;
-
-private:
-    std::variant<ModelPtr, TexturedMeshPtr, ColoredMeshPtr> _underlying;
 };
 using SceneObjectPtr = std::shared_ptr<SceneObject>;
 
