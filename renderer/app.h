@@ -26,6 +26,10 @@ public:
 public:
 	void load_api(const Kasumi::ApiPtr &api);
 	void prepare() final;
+	/**
+	 * Update Rendering Loop
+	 * @param dt
+	 */
 	void update(double dt) final;
 	auto quit() -> bool final;
 
