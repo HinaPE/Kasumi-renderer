@@ -18,9 +18,6 @@ public:
     auto write_to_file(const std::string &path) -> std::string /** return: error message **/;
 
 public:
-    /**
-     * manage scene objects
-     */
     auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> std::pair<unsigned int, ModelPtr>;
     auto add_primitive(const std::string &primitive_name, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
     auto add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
