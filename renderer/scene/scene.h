@@ -14,76 +14,59 @@ namespace Kasumi
 class Scene
 {
 public:
-    auto read_scene(const std::string &path) -> std::string /** return: error message **/;
-    auto write_to_file(const std::string &path) -> std::string /** return: error message **/;
+	auto read_scene(const std::string &path) -> std::string /** return: error message */;
+	auto write_to_file(const std::string &path) -> std::string /** return: error message */;
 
 public:
-    auto add_model(const std::string &model_path, unsigned int shader_id = 0 /** use default texture shader **/) -> std::pair<unsigned int, ModelPtr>;
-    auto add_primitive(const std::string &primitive_name, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
-    auto add_primitive(std::vector<ColoredMesh::Vertex> &&vertices, std::vector<ColoredMesh::Index> &&indices, const std::string &color = "MIKU" /** default color: #39c5bb **/) -> std::pair<unsigned int, ColoredMeshPtr>;
-    auto add_primitive(std::vector<TexturedMesh::Vertex> &&vertices, std::vector<TexturedMesh::Index> &&indices, const TexturePtr &diffuse) -> std::pair<unsigned int, TexturedMeshPtr>;
-    auto add_shader(const std::string &vertex_shader, const std::string &fragment_shader, const std::string &geometry_shader = "") -> unsigned int;
-    auto add_camera() -> unsigned int;
-    void erase(unsigned int id);
-    void restore(unsigned int id);
-    void render();
+	void render();
 
-public:
-    /**
-     * set or get scene objects properties
-     */
-    void set_position(unsigned int id, const mVector3 &position);
-    void set_rotation(unsigned int id, const mVector3 &rotation);
-    void set_scale(unsigned int id, const mVector3 &scale);
-    auto get_position(unsigned int id) -> const mVector3 &;
-    auto get_rotation(unsigned int id) -> const mVector3 &;
-    auto get_scale(unsigned int id) -> const mVector3 &;
-    void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
+public:  //! ==================== Scene Objects properties ====================
+	inline void set_position(unsigned int id, const mVector3 &position) { _scene_objects[id]->_pose.position = position; }
+	inline void set_rotation(unsigned int id, const mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
+	inline void set_scale(unsigned int id, const mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
+	inline auto get_position(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.position; }
+	inline auto get_rotation(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.euler; }
+	inline auto get_scale(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.scale; }
+	inline auto get_camera() -> CameraPtr & { return _scene_camera; }
+	inline auto get_object(unsigned int id) -> SceneObjectPtr & { return _scene_objects[id]; }
+	auto add_object(ModelPtr &&o) -> unsigned int;
+	void erase_object(unsigned int id);
+	void restore_object(unsigned int id);
+private:
+	std::map<unsigned int, SceneObjectPtr> _scene_objects;
+	std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
+	CameraPtr _scene_camera;
 
+public:  //! ==================== Scene Objects properties ====================
+	struct State
+	{
+		unsigned int selected_object_id = std::numeric_limits<unsigned int>::max();
+		unsigned int selected_camera_id = std::numeric_limits<unsigned int>::max();
+	} _state;
+
+//! Constructors & Destructor
+//! - [DELETE] copy constructor & copy assignment operator
+//! - [DELETE] move constructor & move assignment operator
 public:
-    struct Opt
-    {
-        bool object_dirty = false;
-        bool camera_dirty = false;
-        bool shader_dirty = false;
-        unsigned int current_object_id = std::numeric_limits<unsigned int>::max();
-        unsigned int default_camera_id = std::numeric_limits<unsigned int>::max();
-        unsigned int default_texture_shader_id = std::numeric_limits<unsigned int>::max();
-        unsigned int default_color_shader_id = std::numeric_limits<unsigned int>::max();
-        SceneObjectPtr current_object = nullptr;
-        CameraPtr current_camera = nullptr;
-        ShaderPtr current_texture_shader = nullptr;
-        ShaderPtr current_color_shader = nullptr;
-    } _opt;
-    auto get_current_object() -> SceneObjectPtr;
-    auto get_current_camera() -> CameraPtr;
-    auto get_current_texture_shader() -> ShaderPtr;
-    auto get_current_color_shader() -> ShaderPtr;
+	friend class Renderer;
+	Scene();
+	Scene(const Scene &) = delete;
+	Scene(Scene &&) = delete;
+	~Scene();
+	auto operator=(const Scene &) -> Scene & = delete;
+	auto operator=(Scene &&) -> Scene & = delete;
+
+	void for_each_item(const std::function<void(SceneObjectPtr &)> &func);
+
+private: //! ==================== UI & callbacks ====================
+	void key(int key, int scancode, int action, int mods);
+	void mouse_button(int button, int action, int mods);
+	void mouse_scroll(double x_offset, double y_offset);
+	void mouse_cursor(double x_pos, double y_pos);
+	void ui_sidebar();
 
 private:
-    friend class Renderer;
-    void update();
-    void key(int key, int scancode, int action, int mods);
-    void mouse_button(int button, int action, int mods);
-    void mouse_scroll(double x_offset, double y_offset);
-    void mouse_cursor(double x_pos, double y_pos);
-
-private:
-    void ui_sidebar();
-
-private:
-    std::map<unsigned int, SceneObjectPtr> _scene_objects;
-    std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
-    std::map<unsigned int, CameraPtr> _scene_cameras;
-    std::map<unsigned int, ShaderPtr> _scene_shaders;
-
-public:
-    Scene();
-    Scene(const Scene &) = delete;
-    Scene(Scene &&) = delete;
-    ~Scene();
-    auto operator=(const Scene &) -> Scene & = delete;
-    auto operator=(Scene &&) -> Scene & = delete;
+	void clear();
 };
 using ScenePtr = std::shared_ptr<Scene>;
 }
