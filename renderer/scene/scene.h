@@ -21,14 +21,8 @@ public:
 	void render();
 
 public:  //! ==================== Scene Objects properties ====================
-	inline void set_position(unsigned int id, const mVector3 &position) { _scene_objects[id]->_pose.position = position; }
-	inline void set_rotation(unsigned int id, const mVector3 &rotation) { _scene_objects[id]->_pose.euler = rotation; }
-	inline void set_scale(unsigned int id, const mVector3 &scale) { _scene_objects[id]->_pose.scale = scale; }
-	inline auto get_position(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.position; }
-	inline auto get_rotation(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.euler; }
-	inline auto get_scale(unsigned int id) -> const mVector3 & { return _scene_objects[id]->_pose.scale; }
 	inline auto get_camera() -> CameraPtr & { return _scene_camera; }
-	inline auto get_object(unsigned int id) -> SceneObjectPtr & { return _scene_objects[id]; }
+	inline auto get_object(unsigned int id) -> SceneObjectPtr { return _scene_objects.count(id) == 1 ? _scene_objects[id] : nullptr; }
 	auto add_object(ModelPtr &&o) -> unsigned int;
 	void erase_object(unsigned int id);
 	void restore_object(unsigned int id);

@@ -12,6 +12,10 @@ class SceneObject
 {
 public:
 	auto get_model() -> ModelPtr & { return std::get<ModelPtr>(_underlying); }
+	inline auto position() -> mVector3 & { return _pose.position; }
+	inline auto rotation() -> mVector3 & { return _pose.euler; }
+	inline auto scale() -> mVector3 & { return _pose.scale; }
+
 private:
 	std::variant<ModelPtr> _underlying;
 

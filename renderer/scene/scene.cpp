@@ -9,7 +9,7 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
-Kasumi::Scene::Scene() = default;
+Kasumi::Scene::Scene() { _scene_camera = std::make_shared<Camera>(Camera::Opt()); }
 Kasumi::Scene::~Scene() { clear(); }
 
 // ================================================== Public Methods ==================================================
@@ -61,9 +61,9 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 			}
 			if (obj_id == std::numeric_limits<unsigned int>::max())
 				continue;
-			set_position(obj_id, position);
-			set_rotation(obj_id, rotation);
-			set_scale(obj_id, scale);
+			get_object(obj_id)->position() = position;
+			get_object(obj_id)->rotation() = rotation;
+			get_object(obj_id)->scale() = scale;
 		} else if (type == "shader")
 		{
 			std::string vertex_shader, fragment_shader, geometry_shader;
@@ -99,7 +99,7 @@ auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
 auto Kasumi::Scene::add_object(Kasumi::ModelPtr &&o) -> unsigned int
 {
 	static unsigned static_obj_id = 0;
-	int id = static_obj_id++;
+	unsigned id = static_obj_id++;
 	_scene_objects[id] = std::make_shared<SceneObject>(std::move(o));
 	return id;
 }
@@ -141,10 +141,10 @@ void Kasumi::Scene::mouse_scroll(double x_offset, double y_offset) { _scene_came
 void Kasumi::Scene::mouse_cursor(double x_pos, double y_pos) { _scene_camera->mouse_cursor(x_pos, y_pos); }
 void Kasumi::Scene::ui_sidebar()
 {
-	auto selected_object = get_object(_state.selected_object_id);
-	if (selected_object == nullptr)
+	if (_state.selected_object_id == std::numeric_limits<unsigned int>::max())
 		return;
 
+	auto selected_object = get_object(_state.selected_object_id);
 	auto sliders = [&](std::string label, mVector3 &data, float sens)
 	{
 		label += "##" + std::to_string(_state.selected_object_id);

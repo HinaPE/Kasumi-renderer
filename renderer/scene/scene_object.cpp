@@ -2,8 +2,8 @@
 
 Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &&ptr)
 {
+	_pose.position = ptr->center_of_gravity();
 	_underlying = std::move(ptr);
-	_pose.position = -ptr->center_of_gravity();
 }
 void Kasumi::SceneObject::render() { std::visit([&](auto &renderable) { renderable->render(); }, _underlying); }
 void Kasumi::SceneObject::use_custom_shader(const ShaderPtr &shader) { std::visit([&](auto &renderable) { renderable->use_custom_shader(shader); }, _underlying); }
