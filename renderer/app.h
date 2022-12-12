@@ -24,7 +24,7 @@ public:
 	} _opt;
 
 public:
-	void load_api(const Kasumi::ApiPtr &api);
+	std::shared_ptr<App> load_api(const Kasumi::ApiPtr &api);
 	void prepare() final;
 	/**
 	 * Update Rendering Loop
@@ -52,9 +52,10 @@ private:
 	UndoPtr _undo;
 	std::vector<Kasumi::ApiPtr> _apis;
 	FramebufferPtr _framebuffer; // NOT COMPLETED YET
+	std::string _scene_file;
 
 public:
-	explicit Renderer(std::string scene);
+	Renderer(std::string scene_file = "empty.txt");
 	Renderer(const Renderer &) = delete;
 	Renderer(Renderer &&) = delete;
 	~Renderer() = default;

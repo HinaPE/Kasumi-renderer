@@ -1,18 +1,20 @@
 #include "app.h"
 
-#include <utility>
+#include "GLFW/glfw3.h"
 #include "nfd/nfd.h"
 #include "imgui/imgui.h"
+#include <utility>
 
-Kasumi::Renderer::Renderer(std::string scene) : App(scene), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis(),
+Kasumi::Renderer::Renderer(std::string scene_file) : App(), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis(),
 		_framebuffer(std::move(std::make_shared<Framebuffer>(300, 300))) {}
 
-void Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api)
+std::shared_ptr<Kasumi::App> Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api)
 {
 	api->_scene = _scene;
 	_apis.emplace_back(api);
+	return shared_from_this();
 }
-void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_name); }
+void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_file); }
 void Kasumi::Renderer::update(double dt)
 {
 	if (_opt.api_running)
