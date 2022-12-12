@@ -24,12 +24,8 @@ public:
 	} _opt;
 
 public:
-	std::shared_ptr<App> load_api(const Kasumi::ApiPtr &api);
+	auto load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<App>;
 	void prepare() final;
-	/**
-	 * Update Rendering Loop
-	 * @param dt
-	 */
 	void update(double dt) final;
 	auto quit() -> bool final;
 
