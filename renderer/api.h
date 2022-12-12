@@ -10,7 +10,7 @@ using ScenePtr = std::shared_ptr<Scene>;
 class Api
 {
 public:
-	virtual void step(float dt) = 0;
+	virtual void step(float dt) {};
 	virtual void ui_menu() {};
 	virtual void ui_sidebar() {};
 	ScenePtr _scene;

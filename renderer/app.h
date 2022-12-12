@@ -33,7 +33,7 @@ public:
 //! - [DELETE] copy constructor & copy assignment operator
 //! - [DELETE] move constructor & move assignment operator
 public:
-	explicit Renderer(std::string scene_file = "empty.txt");
+	explicit Renderer(std::string scene_file = "empty.txt", int width = 1920, int height = 768, const std::string& title = "Kasumi Renderer");
 	Renderer(const Renderer &) = delete;
 	Renderer(Renderer &&) = delete;
 	~Renderer() = default;
@@ -58,7 +58,6 @@ private:
 	ScenePtr _scene;
 	UndoPtr _undo;
 	std::vector<Kasumi::ApiPtr> _apis;
-	FramebufferPtr _framebuffer; // NOT COMPLETED YET
 	std::string _scene_file;
 };
 }

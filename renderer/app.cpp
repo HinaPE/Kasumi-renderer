@@ -5,8 +5,7 @@
 #include "imgui/imgui.h"
 #include <utility>
 
-Kasumi::Renderer::Renderer(std::string scene_file) : App(), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis(),
-		_framebuffer(std::move(std::make_shared<Framebuffer>(300, 300))) {}
+Kasumi::Renderer::Renderer(std::string scene_file, int width, int height, const std::string &title) : App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _undo(std::move(std::make_shared<Undo>())), _apis() {}
 
 auto Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<Kasumi::App>
 {
