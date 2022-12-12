@@ -9,7 +9,7 @@ void Kasumi::Manager::render(const ScenePtr &scene, float &start_x, float &start
 {
 //    ImGui::SetNextWindowPos({start_x, start_y});
 //    ImGui::SetNextWindowSizeConstraints({ImGui::GetIO().DisplaySize.x / 4.75f, ImGui::GetIO().DisplaySize.y - start_y}, {ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - start_y});
-//    ImGui::Begin("Monitor", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing);
+//    ImGui::Begin("mMonitor", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing);
 //    ImGui::Text("Edit Scene");
 //    scene->render();
 //    for (auto &gui: _gui)
