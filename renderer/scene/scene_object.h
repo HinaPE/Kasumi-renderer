@@ -26,6 +26,7 @@ public:
 	Pose _pose;
 
 public:
+	explicit SceneObject(ModelPtr &ptr);
 	explicit SceneObject(ModelPtr &&ptr);
 	SceneObject(const SceneObject &) = delete;
 	SceneObject(SceneObject &&) = delete;

@@ -96,9 +96,17 @@ auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
 	return error_message;
 }
 
+static unsigned static_obj_id = 0;
+
+auto Kasumi::Scene::add_object(Kasumi::ModelPtr &o) -> unsigned int
+{
+	unsigned id = static_obj_id++;
+	_scene_objects[id] = std::make_shared<SceneObject>(o);
+	return id;
+}
+
 auto Kasumi::Scene::add_object(Kasumi::ModelPtr &&o) -> unsigned int
 {
-	static unsigned static_obj_id = 0;
 	unsigned id = static_obj_id++;
 	_scene_objects[id] = std::make_shared<SceneObject>(std::move(o));
 	return id;
@@ -135,7 +143,13 @@ void Kasumi::Scene::render()
 
 // ================================================== Private Methods ==================================================
 
-void Kasumi::Scene::key(int key, int scancode, int action, int mods) { _scene_camera->key(key, scancode, action, mods); }
+void Kasumi::Scene::key(int key, int scancode, int action, int mods)
+{
+	_scene_camera->key(key, scancode, action, mods);
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+		for (auto &obj: _scene_objects)
+			obj.second->get_model()->_opt.render_wireframe = !obj.second->get_model()->_opt.render_wireframe;
+}
 void Kasumi::Scene::mouse_button(int button, int action, int mods) { _scene_camera->mouse_button(button, action, mods); }
 void Kasumi::Scene::mouse_scroll(double x_offset, double y_offset) { _scene_camera->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Scene::mouse_cursor(double x_pos, double y_pos) { _scene_camera->mouse_cursor(x_pos, y_pos); }
@@ -171,6 +185,8 @@ void Kasumi::Scene::clear()
 
 	_state.selected_camera_id = std::numeric_limits<unsigned int>::max();
 	_state.selected_object_id = std::numeric_limits<unsigned int>::max();
+
+	static_obj_id = 0;
 }
 
 // ================================================== Private Methods ==================================================

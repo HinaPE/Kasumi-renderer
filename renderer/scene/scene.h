@@ -23,6 +23,7 @@ public:
 public:  //! ==================== Scene Objects properties ====================
 	inline auto get_camera() -> CameraPtr & { return _scene_camera; }
 	inline auto get_object(unsigned int id) -> SceneObjectPtr { return _scene_objects.count(id) == 1 ? _scene_objects[id] : nullptr; }
+	auto add_object(ModelPtr &o) -> unsigned int;
 	auto add_object(ModelPtr &&o) -> unsigned int;
 	void erase_object(unsigned int id);
 	void restore_object(unsigned int id);
