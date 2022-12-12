@@ -17,17 +17,34 @@ namespace Kasumi
 {
 class Renderer : public Kasumi::App
 {
+public: //! ==================== Public Methods ====================
+	auto load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<App>;
+	void prepare() final;
+	void update(double dt) final;
+	auto quit() -> bool final;
+
 public:
 	struct Opt
 	{
 		bool api_running = false;
 	} _opt;
 
+//! ==================== Constructors & Destructor ====================
+//! - [DELETE] copy constructor & copy assignment operator
+//! - [DELETE] move constructor & move assignment operator
 public:
-	auto load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<App>;
-	void prepare() final;
-	void update(double dt) final;
-	auto quit() -> bool final;
+	explicit Renderer(std::string scene_file = "empty.txt");
+	Renderer(const Renderer &) = delete;
+	Renderer(Renderer &&) = delete;
+	~Renderer() = default;
+	auto operator=(const Renderer &) -> Renderer & = delete;
+	auto operator=(Renderer &&) -> Renderer & = delete;
+
+private:
+	void ui_menu();
+	void ui_sidebar();
+	void reset_state();
+	float _next_x = 0.f, _next_y = 0.f;
 
 private:
 	friend class Kasumi::Platform;
@@ -37,26 +54,12 @@ private:
 	void mouse_cursor(double x_pos, double y_pos) final;
 
 private:
-	void ui_menu();
-	void ui_sidebar();
-	void reset_state();
-	float _next_x = 0.f, _next_y = 0.f;
-
-private:
 	ManagerPtr _manager;
 	ScenePtr _scene;
 	UndoPtr _undo;
 	std::vector<Kasumi::ApiPtr> _apis;
 	FramebufferPtr _framebuffer; // NOT COMPLETED YET
 	std::string _scene_file;
-
-public:
-	Renderer(std::string scene_file = "empty.txt");
-	Renderer(const Renderer &) = delete;
-	Renderer(Renderer &&) = delete;
-	~Renderer() = default;
-	auto operator=(const Renderer &) -> Renderer & = delete;
-	auto operator=(Renderer &&) -> Renderer & = delete;
 };
 }
 

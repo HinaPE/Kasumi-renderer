@@ -20,7 +20,7 @@ public:
 public:
 	void render();
 
-public:  //! ==================== Scene Objects properties ====================
+public: //! ==================== Scene Objects properties ====================
 	inline auto get_camera() -> CameraPtr & { return _scene_camera; }
 	inline auto get_object(unsigned int id) -> SceneObjectPtr { return _scene_objects.count(id) == 1 ? _scene_objects[id] : nullptr; }
 	auto add_object(ModelPtr &o) -> unsigned int;
@@ -32,7 +32,7 @@ private:
 	std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
 	CameraPtr _scene_camera;
 
-public:  //! ==================== Scene Objects properties ====================
+public: //! ==================== Scene Objects properties ====================
 	struct State
 	{
 		unsigned int selected_object_id = std::numeric_limits<unsigned int>::max();
