@@ -2,7 +2,7 @@
 
 Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &&ptr)
 {
-	_pose.position = ptr->center_of_gravity();
+	_pose.position = -ptr->center_of_gravity();
 	_underlying = std::move(ptr);
 }
 void Kasumi::SceneObject::render() { std::visit([&](auto &renderable) { renderable->render(); }, _underlying); }
