@@ -180,6 +180,7 @@ void Kasumi::Scene::ui_sidebar()
 	if (_state.selected_object_id == std::numeric_limits<unsigned int>::max())
 		return;
 
+	ImGui::Text("Selected Object");
 	auto selected_object = get_object(_state.selected_object_id);
 	static int selected_id = _state.selected_object_id;
 	for (auto &obj: _scene_objects)
@@ -188,7 +189,6 @@ void Kasumi::Scene::ui_sidebar()
 		ImGui::RadioButton(n.c_str(), &selected_id, obj.first);
 	}
 	_state.selected_object_id = selected_id;
-	ImGui::Separator();
 
 	auto sliders = [&](std::string label, mVector3 &data, float sens)
 	{
@@ -196,12 +196,10 @@ void Kasumi::Scene::ui_sidebar()
 		ImGui::DragFloat3(label.c_str(), &data[0], sens);
 	};
 	ImGui::Text("Edit Pose");
-	ImGui::Text("Pose: ");
 	sliders("Position", selected_object->_pose.position, 0.1f);
 	sliders("Rotation", selected_object->_pose.euler, 0.1f);
 	sliders("Scale", selected_object->_pose.scale, 0.031f);
 	ImGui::Checkbox("Wireframe", &selected_object->get_model()->_opt.render_wireframe);
-	ImGui::Separator();
 }
 
 void Kasumi::Scene::for_each_item(const std::function<void(SceneObjectPtr &)> &func)

@@ -22,8 +22,8 @@ void Kasumi::Renderer::update(double dt)
 	reset_state();
 	ui_menu();
 	ui_sidebar();
-	_scene->render();
 	_manager->render(_scene, _next_x, _next_y);
+	_scene->render();
 }
 auto Kasumi::Renderer::quit() -> bool { return _manager->quit(); }
 void Kasumi::Renderer::key(int key, int scancode, int action, int mods)
@@ -102,11 +102,15 @@ void Kasumi::Renderer::ui_sidebar()
 	ImGui::SetNextWindowSizeConstraints({ImGui::GetIO().DisplaySize.x / 5.75f, ImGui::GetIO().DisplaySize.y - _next_y}, {ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - _next_y});
 	ImGui::Begin("Monitor", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing);
 	_scene->ui_sidebar();
+	ImGui::Separator();
 	for (auto &api: _apis)
 	{
 		api->ui_sidebar();
 		ImGui::Separator();
 	}
+	ImGui::Text("Shortcuts");
+	ImGui::Text("- Space: start/stop sim");
+	ImGui::Text("- W: wireframe mode");
 	_next_x += ImGui::GetWindowSize().x;
 	ImGui::End();
 }
