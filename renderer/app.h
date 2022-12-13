@@ -18,6 +18,7 @@ class Renderer : public Kasumi::App
 {
 public: //! ==================== Public Methods ====================
 	auto load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<App>;
+	inline auto get_scene() -> ScenePtr & { return _scene; }
 	void prepare() final;
 	void update(double dt) final;
 	auto quit() -> bool final;
@@ -32,7 +33,7 @@ public:
 //! - [DELETE] copy constructor & copy assignment operator
 //! - [DELETE] move constructor & move assignment operator
 public:
-	explicit Renderer(std::string scene_file = "empty.txt", int width = 1500, int height = 700, const std::string& title = "Kasumi Renderer");
+	explicit Renderer(std::string scene_file = "empty.txt", int width = 1500, int height = 700, const std::string &title = "Kasumi Renderer");
 	Renderer(const Renderer &) = delete;
 	Renderer(Renderer &&) = delete;
 	~Renderer() = default;
