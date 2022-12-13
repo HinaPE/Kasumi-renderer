@@ -59,6 +59,7 @@ private:
 	std::vector<Kasumi::ApiPtr> _apis;
 	std::string _scene_file;
 };
+using RendererPtr = std::shared_ptr<Renderer>;
 }
 
 #endif //KASUMI_APP_H
