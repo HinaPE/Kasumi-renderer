@@ -5,7 +5,11 @@
 #include "imgui/imgui.h"
 #include <utility>
 
-Kasumi::Renderer::Renderer(std::string scene_file, int width, int height, const std::string &title) : App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _apis() {}
+Kasumi::Renderer::Renderer(std::string scene_file, int width, int height, const std::string &title)
+		: App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _debug_frame(std::make_shared<Framebuffer>(width, height, 0.4, 0.2, 1.0, 1.0)), _apis()
+{
+	_debug_frame->render_callback = [&]() {};
+}
 
 auto Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<Kasumi::App>
 {
@@ -23,7 +27,12 @@ void Kasumi::Renderer::update(double dt)
 	ui_menu();
 	ui_sidebar();
 	_manager->render(_scene, _next_x, _next_y);
+
 	_scene->render();
+	_debug_frame->use();
+	_scene->render();
+	_debug_frame->unuse();
+	_debug_frame->render();
 }
 auto Kasumi::Renderer::quit() -> bool { return _manager->quit(); }
 void Kasumi::Renderer::key(int key, int scancode, int action, int mods)

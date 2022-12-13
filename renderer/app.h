@@ -55,6 +55,7 @@ private:
 private:
 	ManagerPtr _manager;
 	ScenePtr _scene;
+	FramebufferPtr _debug_frame;
 	std::vector<Kasumi::ApiPtr> _apis;
 	std::string _scene_file;
 };
