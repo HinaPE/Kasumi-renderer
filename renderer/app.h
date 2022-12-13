@@ -10,7 +10,6 @@
 
 // kasumi includes
 #include "scene/scene.h"
-#include "scene/undo.h"
 #include "gui/manager.h"
 #include "api.h"
 namespace Kasumi
@@ -56,7 +55,6 @@ private:
 private:
 	ManagerPtr _manager;
 	ScenePtr _scene;
-	UndoPtr _undo;
 	std::vector<Kasumi::ApiPtr> _apis;
 	std::string _scene_file;
 };

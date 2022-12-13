@@ -1,7 +1,7 @@
 #ifndef KASUMI_SIMULATE_H
 #define KASUMI_SIMULATE_H
 
-#include "gui.h"
+#include "manager.h"
 
 namespace Kasumi
 {

@@ -32,11 +32,10 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 		if (type == "model")
 		{
 			std::string model_path;
-			std::string shader_name;
 			mVector3 position, rotation, scale = mVector3(1, 1, 1);
-			std::string attrib;
 
 			unsigned int obj_id = std::numeric_limits<unsigned int>::max();
+			std::string attrib;
 			while (iss >> attrib)
 			{
 				if (attrib == "path")
@@ -49,10 +48,26 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 				{
 					std::string color;
 					iss >> color;
-					obj_id = add_object(std::make_shared<Model>(attrib, color));
-				} else if (attrib == "shader")
-					iss >> shader_name;
-				else if (attrib == "position")
+					std::transform(color.begin(), color.end(), color.begin(), [](unsigned char c) { return std::toupper(c); });
+					if (color == "RED")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::RED));
+					else if (color == "GREEN")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::GREEN));
+					else if (color == "BLUE")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::BLUE));
+					else if (color == "YELLOW")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::YELLOW));
+					else if (color == "PURPLE")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::PURPLE));
+					else if (color == "CYAN")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::CYAN));
+					else if (color == "WHITE")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::WHITE));
+					else if (color == "BLACK")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::BLACK));
+					else // is texture
+						obj_id = add_object(std::make_shared<Model>(attrib, color));
+				} else if (attrib == "position")
 					iss >> position.x >> position.y >> position.z;
 				else if (attrib == "rotation")
 					iss >> rotation.x >> rotation.y >> rotation.z;
@@ -64,12 +79,6 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 			get_object(obj_id)->position() = position;
 			get_object(obj_id)->rotation() = rotation;
 			get_object(obj_id)->scale() = scale;
-		} else if (type == "shader")
-		{
-			std::string vertex_shader, fragment_shader, geometry_shader;
-			if (!(iss >> vertex_shader >> fragment_shader))
-				continue;
-			// TODO:
 		} else
 		{
 			error_message += "UNKNOWN TYPE: " + type;

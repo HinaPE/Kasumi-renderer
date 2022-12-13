@@ -1,7 +1,7 @@
 #include "manager.h"
 #include "imgui.h"
 
-Kasumi::Manager::Manager() { _gui.emplace("Simulate", std::move(std::make_shared<Simulate>())); }
+Kasumi::Manager::Manager() = default;
 void Kasumi::Manager::render(const ScenePtr &scene, float &start_x, float &start_y)
 {
 //    ImGui::SetNextWindowPos({start_x, start_y});

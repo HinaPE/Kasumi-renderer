@@ -2,14 +2,13 @@
 #define KASUMI_MANAGER_H
 
 #include "scene/scene.h"
-#include "scene/undo.h"
-#include "simulate.h"
 
 #include <memory>
 #include <map>
 
 namespace Kasumi
 {
+class Gui;
 class Manager
 {
 public:
@@ -35,5 +34,17 @@ private:
 	std::map<std::string, std::shared_ptr<Gui>> _gui;
 };
 using ManagerPtr = std::shared_ptr<Manager>;
+class Gui
+{
+public:
+	virtual void render() = 0;
+
+private:
+	friend class Manager;
+	void key(int key, int scancode, int action, int mods) {};
+	void mouse_button(int button, int action, int mods) {};
+	void mouse_scroll(double x_offset, double y_offset) {};
+	void mouse_cursor(double x_pos, double y_pos) {};
+};
 }
 #endif //KASUMI_MANAGER_H
