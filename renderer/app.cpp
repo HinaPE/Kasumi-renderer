@@ -30,7 +30,11 @@ void Kasumi::Renderer::update(double dt)
 
 	_scene->render();
 	_debug_frame->use();
+	for (auto &o:_scene->_scene_objects)
+		o.second->framebuffer_mode(true);
 	_scene->render();
+	for (auto &o:_scene->_scene_objects)
+		o.second->framebuffer_mode(false);
 	_debug_frame->unuse();
 	_debug_frame->render();
 }

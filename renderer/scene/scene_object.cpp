@@ -24,3 +24,10 @@ void Kasumi::SceneObject::update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &p
 				   renderable->update_mvp(model, view, projection);
 			   }, _underlying);
 }
+void Kasumi::SceneObject::framebuffer_mode(bool mode)
+{
+	std::visit([&](auto &renderable)
+			   {
+				   renderable->framebuffer_mode(mode);
+			   }, _underlying);
+}

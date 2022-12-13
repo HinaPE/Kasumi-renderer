@@ -3,6 +3,7 @@
 
 #include "pose.h"
 #include "model.h"
+#include "framebuffer.h"
 #include <variant>
 #include <memory>
 
@@ -23,6 +24,7 @@ public:
 	void render();
 	void use_custom_shader(const ShaderPtr &shader);
 	void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
+	void framebuffer_mode(bool mode);
 	Pose _pose;
 	std::string _name;
 
