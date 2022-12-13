@@ -44,6 +44,8 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 					obj_id = add_object(std::make_shared<Model>(model_path));
 				} else if (attrib == "Hatsune_Miku_V4X")
 					obj_id = add_object(std::make_shared<Model>(std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx"));
+				else if (attrib == "desk")
+					obj_id = add_object(std::make_shared<Model>(std::string(ModelDir) + "desk.fbx"));
 				else if (attrib == "cube" || attrib == "sphere" || attrib == "cylinder")
 				{
 					std::string color;
