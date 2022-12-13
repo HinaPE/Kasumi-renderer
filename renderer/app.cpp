@@ -30,23 +30,23 @@ void Kasumi::Renderer::key(int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 		_opt.api_running = !_opt.api_running;
-	_scene->key(key, scancode, action, mods);
 	_manager->key(key, scancode, action, mods);
+	_scene->key(key, scancode, action, mods);
 }
 void Kasumi::Renderer::mouse_button(int button, int action, int mods)
 {
-	_scene->mouse_button(button, action, mods);
 	_manager->mouse_button(button, action, mods);
+	_scene->mouse_button(button, action, mods);
 }
 void Kasumi::Renderer::mouse_scroll(double x_offset, double y_offset)
 {
-	_scene->mouse_scroll(x_offset, y_offset);
 	_manager->mouse_scroll(x_offset, y_offset);
+	_scene->mouse_scroll(x_offset, y_offset);
 }
 void Kasumi::Renderer::mouse_cursor(double x_pos, double y_pos)
 {
-	_scene->mouse_cursor(x_pos, y_pos);
 	_manager->mouse_cursor(x_pos, y_pos);
+	_scene->mouse_cursor(x_pos, y_pos);
 }
 void Kasumi::Renderer::ui_menu()
 {
