@@ -9,7 +9,12 @@
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 
-Kasumi::Scene::Scene() { _scene_camera = std::make_shared<Camera>(Camera::Opt()); }
+Kasumi::Scene::Scene()
+{
+	Camera::Opt opt;
+	opt.aspect_ratio = 1500.f / 700.f;
+	_scene_camera = std::make_shared<Camera>(opt);
+}
 Kasumi::Scene::~Scene() { clear(); }
 
 // ================================================== Public Methods ==================================================

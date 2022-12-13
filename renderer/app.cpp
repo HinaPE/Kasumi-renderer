@@ -27,8 +27,8 @@ void Kasumi::Renderer::update(double dt)
 	ui_menu();
 	ui_sidebar();
 	_manager->render(_scene, _next_x, _next_y);
-
 	_scene->render();
+
 	_debug_frame->use();
 	for (auto &o:_scene->_scene_objects)
 		o.second->framebuffer_mode(true);

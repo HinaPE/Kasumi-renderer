@@ -32,7 +32,7 @@ public:
 //! - [DELETE] copy constructor & copy assignment operator
 //! - [DELETE] move constructor & move assignment operator
 public:
-	explicit Renderer(std::string scene_file = "empty.txt", int width = 1920, int height = 768, const std::string& title = "Kasumi Renderer");
+	explicit Renderer(std::string scene_file = "empty.txt", int width = 1500, int height = 700, const std::string& title = "Kasumi Renderer");
 	Renderer(const Renderer &) = delete;
 	Renderer(Renderer &&) = delete;
 	~Renderer() = default;
