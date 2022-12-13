@@ -43,12 +43,18 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 					iss >> model_path;
 					obj_id = add_object(std::make_shared<Model>(model_path));
 				} else if (attrib == "Hatsune_Miku_V4X")
+				{
 					obj_id = add_object(std::make_shared<Model>(std::string(ModelDir) + "Hatsune_Miku_V4X/Hatsune_Miku_V4X.pmx"));
-				else if (attrib == "desk")
+					get_object(obj_id)->_name = "Hatsune Miku V4X";
+				} else if (attrib == "desk")
+				{
 					obj_id = add_object(std::make_shared<Model>(std::string(ModelDir) + "desk.obj"));
-				else if (attrib == "background")
+					get_object(obj_id)->_name = "desk";
+				} else if (attrib == "background")
+				{
 					obj_id = add_object(std::make_shared<Model>(std::string(ModelDir) + "background.obj"));
-				else if (attrib == "cube" || attrib == "sphere" || attrib == "cylinder")
+					get_object(obj_id)->_name = "background";
+				} else if (attrib == "cube" || attrib == "sphere" || attrib == "cylinder")
 				{
 					std::string color;
 					iss >> color;
@@ -73,6 +79,7 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 						obj_id = add_object(std::make_shared<Model>(attrib, Color::BLACK));
 					else // is texture
 						obj_id = add_object(std::make_shared<Model>(attrib, color));
+					get_object(obj_id)->_name = attrib;
 				} else if (attrib == "position")
 					iss >> position.x >> position.y >> position.z;
 				else if (attrib == "rotation")
@@ -174,12 +181,22 @@ void Kasumi::Scene::ui_sidebar()
 		return;
 
 	auto selected_object = get_object(_state.selected_object_id);
+	static int selected_id = _state.selected_object_id;
+	for (auto &obj: _scene_objects)
+	{
+		auto n = ("id: " + std::to_string(obj.first) + " " + obj.second->_name);
+		ImGui::RadioButton(n.c_str(), &selected_id, obj.first);
+	}
+	_state.selected_object_id = selected_id;
+	ImGui::Separator();
+
 	auto sliders = [&](std::string label, mVector3 &data, float sens)
 	{
 		label += "##" + std::to_string(_state.selected_object_id);
 		ImGui::DragFloat3(label.c_str(), &data[0], sens);
 	};
 	ImGui::Text("Edit Pose");
+	ImGui::Text("Pose: ");
 	sliders("Position", selected_object->_pose.position, 0.1f);
 	sliders("Rotation", selected_object->_pose.euler, 0.1f);
 	sliders("Scale", selected_object->_pose.scale, 0.031f);

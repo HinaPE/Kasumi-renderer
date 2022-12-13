@@ -1,13 +1,13 @@
 #include "scene_object.h"
 
-Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &ptr)
+Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &ptr) : _name("Not Named")
 {
 	for (int i = 0; i < ptr->mesh_size(); ++i)
 		for (auto &v: ptr->vertices(i))
 			v.position -= ptr->center_of_gravity();
 	_underlying = ptr;
 }
-Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &&ptr)
+Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &&ptr) : _name("Not Named")
 {
 	for (int i = 0; i < ptr->mesh_size(); ++i)
 		for (auto &v: ptr->vertices(i))
