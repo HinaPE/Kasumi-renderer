@@ -1,10 +1,17 @@
 #include "scene_object.h"
 
-Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &ptr) { _underlying = ptr; }
+Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &ptr)
+{
+	for (int i = 0; i < ptr->mesh_size(); ++i)
+		for (auto &v: ptr->vertices(i))
+			v.position -= ptr->center_of_gravity();
+	_underlying = ptr;
+}
 Kasumi::SceneObject::SceneObject(Kasumi::ModelPtr &&ptr)
 {
-	for (auto &v: ptr->vertices(0))
-		v.position -= ptr->center_of_gravity();
+	for (int i = 0; i < ptr->mesh_size(); ++i)
+		for (auto &v: ptr->vertices(i))
+			v.position -= ptr->center_of_gravity();
 	_underlying = std::move(ptr);
 }
 void Kasumi::SceneObject::render() { std::visit([&](auto &renderable) { renderable->render(); }, _underlying); }

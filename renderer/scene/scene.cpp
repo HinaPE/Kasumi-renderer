@@ -49,7 +49,9 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 					std::string color;
 					iss >> color;
 					std::transform(color.begin(), color.end(), color.begin(), [](unsigned char c) { return std::toupper(c); });
-					if (color == "RED")
+					if (color == "MIKU")
+						obj_id = add_object(std::make_shared<Model>(attrib, Color::MIKU));
+					else if (color == "RED")
 						obj_id = add_object(std::make_shared<Model>(attrib, Color::RED));
 					else if (color == "GREEN")
 						obj_id = add_object(std::make_shared<Model>(attrib, Color::GREEN));
