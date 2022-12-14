@@ -31,8 +31,8 @@ void Kasumi::Renderer::update(double dt)
 	ui_menu();
 	ui_sidebar();
 
-	_manager->render(_scene, _next_x, _next_y);
 	_scene->render(); // draw call: render the world to the main window
+	_manager->render(_scene, _next_x, _next_y);
 }
 auto Kasumi::Renderer::quit() -> bool { return _manager->quit(); }
 void Kasumi::Renderer::key(int key, int scancode, int action, int mods)

@@ -1,5 +1,5 @@
 #include "simulate.h"
-#include <imgui/imgui.h>
+#include "imgui.h"
 
 Kasumi::Simulate::Simulate(int width, int height) : _debug_frame(std::make_shared<Framebuffer>(width, height, 0.4, 0.2, 1.0, 1.0)) { _debug_frame->render_callback = [&]() {}; }
 

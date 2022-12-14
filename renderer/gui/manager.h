@@ -13,9 +13,9 @@ using GuiPtr = std::shared_ptr<Gui>;
 class Manager
 {
 public:
+	void load_api(const GuiPtr &gui);
 	void render(const ScenePtr &scene, float &start_x, float &start_y);
 	auto quit() -> bool;
-	void load_api(const GuiPtr &gui);
 
 public:
 	Manager(ScenePtr scene);

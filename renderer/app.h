@@ -10,9 +10,10 @@
 // kasumi includes
 #include "scene/scene.h"
 #include "gui/manager.h"
-#include "api.h"
 namespace Kasumi
 {
+class Api;
+using ApiPtr = std::shared_ptr<Api>;
 class Renderer : public Kasumi::App
 {
 public: //! ==================== Public Methods ====================
@@ -59,6 +60,15 @@ private:
 	std::string _scene_file;
 };
 using RendererPtr = std::shared_ptr<Renderer>;
+class Api
+{
+public:
+	virtual void step(float dt) {};
+	virtual void ui_menu() {};
+	virtual void ui_sidebar() {};
+	ScenePtr _scene;
+};
+using ApiPtr = std::shared_ptr<Api>;
 }
 
 #endif //KASUMI_APP_H
