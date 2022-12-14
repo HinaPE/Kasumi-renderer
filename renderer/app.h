@@ -6,7 +6,6 @@
 #include "model.h"
 #include "shader.h"
 #include "camera.h"
-#include "framebuffer.h"
 
 // kasumi includes
 #include "scene/scene.h"
@@ -56,7 +55,6 @@ private:
 private:
 	ManagerPtr _manager;
 	ScenePtr _scene;
-	FramebufferPtr _debug_frame;
 	std::vector<Kasumi::ApiPtr> _apis;
 	std::string _scene_file;
 };

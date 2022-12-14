@@ -44,6 +44,8 @@ public: //! ==================== Scene Objects properties ====================
 //! - [DELETE] move constructor & move assignment operator
 public:
 	friend class Renderer;
+	friend class Manager;
+	friend class Simulate;
 	Scene();
 	Scene(const Scene &) = delete;
 	Scene(Scene &&) = delete;

@@ -7,7 +7,10 @@
 #include <utility>
 
 Kasumi::Renderer::Renderer(std::string scene_file, int width, int height, const std::string &title)
-		: App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _manager(std::move(std::make_shared<Manager>())), _debug_frame(std::make_shared<Framebuffer>(width, height, 0.4, 0.2, 1.0, 1.0)), _apis() { _debug_frame->render_callback = [&]() {}; }
+		: App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _apis()
+{
+	_manager = std::move(std::make_shared<Manager>(_scene));
+}
 
 auto Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<Kasumi::App>
 {
@@ -27,22 +30,9 @@ void Kasumi::Renderer::update(double dt)
 	reset_state();
 	ui_menu();
 	ui_sidebar();
+
 	_manager->render(_scene, _next_x, _next_y);
-
-	// first draw call: render the world to the main window
-	_scene->render();
-
-	// second draw call: render the world to the debug framebuffer
-	_debug_frame->use();
-	for (auto &o: _scene->_scene_objects)
-		o.second->framebuffer_mode(true);
-	_scene->render();
-	for (auto &o: _scene->_scene_objects)
-		o.second->framebuffer_mode(false);
-
-	// third draw call: render the debug framebuffer to the main window
-	_debug_frame->unuse();
-	_debug_frame->render();
+	_scene->render(); // draw call: render the world to the main window
 }
 auto Kasumi::Renderer::quit() -> bool { return _manager->quit(); }
 void Kasumi::Renderer::key(int key, int scancode, int action, int mods)
