@@ -7,7 +7,7 @@
 #include <utility>
 
 Kasumi::Renderer::Renderer(std::string scene_file, int width, int height, const std::string &title)
-		: App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>())), _apis()
+		: App(width, height, title), _scene_file(std::move(scene_file)), _scene(std::move(std::make_shared<Scene>()))
 {
 	_manager = std::move(std::make_shared<Manager>(_scene));
 }
@@ -16,6 +16,7 @@ auto Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<Ka
 {
 	api->_scene = _scene;
 	_apis.emplace_back(api);
+	api->prepare();
 	return shared_from_this();
 }
 void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_file); }

@@ -63,6 +63,7 @@ using RendererPtr = std::shared_ptr<Renderer>;
 class Api
 {
 public:
+	virtual void prepare() {};
 	virtual void step(float dt) {};
 	virtual void ui_menu() {};
 	virtual void ui_sidebar() {};
