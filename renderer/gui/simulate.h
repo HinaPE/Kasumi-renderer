@@ -17,5 +17,6 @@ public:
 private:
 	FramebufferPtr _debug_frame;
 };
+using SimulatePtr = std::shared_ptr<Manager>;
 }
 #endif //KASUMI_SIMULATE_H
