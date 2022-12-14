@@ -1,6 +1,10 @@
 #ifndef HINAPE_PATHTRACER_H
 #define HINAPE_PATHTRACER_H
 
+//!
+//! Mention: NOT COMPLETE YET!
+//!
+
 #include "manager.h"
 #include "framebuffer.h"
 namespace Kasumi
