@@ -11,9 +11,14 @@
 
 Kasumi::Scene::Scene()
 {
-	Camera::Opt opt;
-	opt.aspect_ratio = 1500.f / 700.f;
-	_scene_camera = std::make_shared<Camera>(opt);
+	// create a default camera
+	Camera::Opt camera_opt;
+	camera_opt.aspect_ratio = 1500.f / 700.f;
+	_scene_camera = std::make_shared<Camera>(camera_opt);
+
+	// create a default light
+	Light::Opt light_opt;
+	_scene_light = std::make_shared<Light>(light_opt);
 }
 Kasumi::Scene::~Scene() { clear(); }
 
@@ -161,6 +166,8 @@ void Kasumi::Scene::render()
 	{
 		auto camera = get_camera();
 		obj.second->update_mvp(camera->get_view(), camera->get_projection());
+		_scene_light->update(_scene_camera);
+		obj.second->update_light(_scene_light);
 		obj.second->render();
 	}
 }

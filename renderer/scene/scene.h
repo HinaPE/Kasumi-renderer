@@ -1,6 +1,7 @@
 #ifndef KASUMI_SCENE_H
 #define KASUMI_SCENE_H
 
+#include "light.h"
 #include "camera.h"
 #include "scene_object.h"
 
@@ -31,6 +32,7 @@ private:
 	std::map<unsigned int, SceneObjectPtr> _scene_objects;
 	std::map<unsigned int, SceneObjectPtr> _scene_objects_erased;
 	CameraPtr _scene_camera;
+	LightPtr _scene_light;
 
 public: //! ==================== Scene Objects properties ====================
 	struct State
