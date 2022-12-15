@@ -134,6 +134,9 @@ auto Kasumi::Scene::add_object(Kasumi::ModelPtr &o) -> unsigned int
 {
 	unsigned id = static_obj_id++;
 	_scene_objects[id] = std::make_shared<SceneObject>(o);
+
+	if (_state.selected_object_id == std::numeric_limits<unsigned int>::max())
+		_state.selected_object_id = id;
 	return id;
 }
 
@@ -141,6 +144,9 @@ auto Kasumi::Scene::add_object(Kasumi::ModelPtr &&o) -> unsigned int
 {
 	unsigned id = static_obj_id++;
 	_scene_objects[id] = std::make_shared<SceneObject>(std::move(o));
+
+	if (_state.selected_object_id == std::numeric_limits<unsigned int>::max())
+		_state.selected_object_id = id;
 	return id;
 }
 
