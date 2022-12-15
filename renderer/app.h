@@ -67,6 +67,7 @@ public:
 	virtual void step(float dt) {};
 	virtual void ui_menu() {};
 	virtual void ui_sidebar() {};
+	virtual void key(int key, int scancode, int action, int mods) {}
 	ScenePtr _scene;
 };
 using ApiPtr = std::shared_ptr<Api>;

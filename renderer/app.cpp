@@ -16,10 +16,14 @@ auto Kasumi::Renderer::load_api(const Kasumi::ApiPtr &api) -> std::shared_ptr<Ka
 {
 	api->_scene = _scene;
 	_apis.emplace_back(api);
-	api->prepare();
 	return shared_from_this();
 }
-void Kasumi::Renderer::prepare() { _scene->read_scene(std::string(SceneDir) + _scene_file); }
+void Kasumi::Renderer::prepare()
+{
+	_scene->read_scene(std::string(SceneDir) + _scene_file);
+	for (auto &api: _apis)
+		api->prepare();
+}
 void Kasumi::Renderer::update(double dt)
 {
 	// update plugin api scene (physics scene)
