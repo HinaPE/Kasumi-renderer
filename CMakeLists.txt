@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Kasumi VERSION 0.2.0 DESCRIPTION "Kasumi: Illumine the Endless Night." LANGUAGES CXX)
+project(Kasumi VERSION 0.3.0 DESCRIPTION "Kasumi: Illumine the Endless Night." LANGUAGES CXX)
 
 if (NOT TARGET Kasumi_backend)
     set(KASUMI_BACKEND_DIR "${CMAKE_CURRENT_SOURCE_DIR}/backends" CACHE PATH "Path to Kasumi backend")
