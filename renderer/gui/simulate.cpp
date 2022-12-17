@@ -7,10 +7,10 @@ Kasumi::Simulate::Simulate(int width, int height) : _debug_frame(std::make_share
 	{
 		// draw call: render the world to the debug framebuffer
 		for (auto &o: _scene->_scene_objects)
-			o.second->framebuffer_mode(true);
+			o.second->debug_frame_mode(true);
 		_scene->render();
 		for (auto &o: _scene->_scene_objects)
-			o.second->framebuffer_mode(false);
+			o.second->debug_frame_mode(false);
 	};
 }
 

@@ -15,8 +15,8 @@ namespace Kasumi
 class Scene
 {
 public:
-	auto read_scene(const std::string &path) -> std::string /** return: error message */;
-	auto write_to_file(const std::string &path) -> std::string /** return: error message */;
+	void read_scene(const std::string &path);
+	void write_to_file(const std::string &path);
 
 public:
 	void render();

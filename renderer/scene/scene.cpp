@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
@@ -24,11 +25,11 @@ Kasumi::Scene::~Scene() { clear(); }
 
 // ================================================== Public Methods ==================================================
 
-auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
+void Kasumi::Scene::read_scene(const std::string &path)
 {
 	std::ifstream infile(path);
 	if (!infile.is_open())
-		return "PATH NOT VALID";
+		throw std::runtime_error("Failed to open scene file: " + path);
 	std::string error_message;
 	std::string line;
 	while (std::getline(infile, line))
@@ -103,29 +104,13 @@ auto Kasumi::Scene::read_scene(const std::string &path) -> std::string
 			get_object(obj_id)->rotation() = rotation;
 			get_object(obj_id)->scale() = scale;
 		} else
-		{
-			error_message += "UNKNOWN TYPE: " + type;
-		}
+			throw std::runtime_error("PARSE Type: " + type + " FAILED!");
 	}
-	return error_message;
 }
 
-auto Kasumi::Scene::write_to_file(const std::string &path) -> std::string
+void Kasumi::Scene::write_to_file(const std::string &path)
 {
-	// TODO: TOO COMPLICATED, NOT COMPLETED
-	std::string error_message;
-
-	aiScene scene;
-	{
-		scene.mRootNode = new aiNode();
-	}
-	{ // Scene Objects
-		for (auto &entry: _scene_objects)
-		{
-			auto &object = entry.second;
-		}
-	}
-	return error_message;
+	// TODO: TOO COMPLICATED, NOT COMPLETED YET
 }
 
 static unsigned static_obj_id = 0;

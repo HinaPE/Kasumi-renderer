@@ -31,10 +31,10 @@ void Kasumi::SceneObject::update_light(const LightPtr &light)
 				   renderable->update_light(light);
 			   }, _underlying);
 }
-void Kasumi::SceneObject::framebuffer_mode(bool mode)
+void Kasumi::SceneObject::debug_frame_mode(bool mode)
 {
 	std::visit([&](auto &renderable)
 			   {
-				   renderable->framebuffer_mode(mode);
+				   renderable->debug_frame_mode(mode);
 			   }, _underlying);
 }

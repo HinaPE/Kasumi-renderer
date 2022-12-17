@@ -18,7 +18,7 @@ public:
 	auto quit() -> bool;
 
 public:
-	Manager(ScenePtr scene);
+	explicit Manager(ScenePtr scene);
 	Manager(const Manager &) = delete;
 	Manager(Manager &&) = delete;
 	~Manager() = default;

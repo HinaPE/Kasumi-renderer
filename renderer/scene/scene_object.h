@@ -26,7 +26,7 @@ public:
 	void use_custom_shader(const ShaderPtr &shader);
 	void update_mvp(const mMatrix4x4 &view, const mMatrix4x4 &projection);
 	void update_light(const LightPtr &light);
-	void framebuffer_mode(bool mode);
+	void debug_frame_mode(bool mode);
 	Pose _pose;
 	std::string _name;
 
