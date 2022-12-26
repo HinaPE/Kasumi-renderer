@@ -7,3 +7,4 @@ if (NOT TARGET Kasumi_backend)
 endif ()
 
 add_subdirectory(renderer)
+add_subdirectory(tiny2d-renderer)
