@@ -18,7 +18,24 @@ public:
 	void render() final;
 
 private:
-	FramebufferPtr _debug_frame;
+	FramebufferPtr _pathtracer_frame;
+
+private:
+
+
+private:
+	int sampleSceneIndex = -1;
+	int envMapIndex = 0;
+	int selectedInstance = 0;
+	double lastTime = 0;
+	std::string shaderDir;
+	std::string assetsDir;
+	std::string hdrResDir;
+
+	std::vector<std::string> sceneFiles;
+	std::vector<std::string> sceneNames;
+	std::vector<std::string> envFiles;
+	std::vector<std::string> envNames;
 };
 using PathtracerPtr = std::shared_ptr<Pathtracer>;
 }

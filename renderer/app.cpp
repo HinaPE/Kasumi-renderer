@@ -103,6 +103,13 @@ void Kasumi::Renderer::ui_menu()
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("Pathtracer"))
+		{
+			if (ImGui::MenuItem("Load Pathtracer"))
+				std::cout << std::endl;
+			ImGui::EndMenu();
+		}
+
 		ImGui::Text("FPS: %.0f", ImGui::GetIO().Framerate);
 
 		_next_x = 0.f;
