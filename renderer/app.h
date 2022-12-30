@@ -65,9 +65,11 @@ class Api
 public:
 	virtual void prepare() {};
 	virtual void step(float dt) {};
-	virtual void ui_menu() {};
 	virtual void ui_sidebar() {};
 	virtual void key(int key, int scancode, int action, int mods) {}
+	virtual void mouse_cursor(double x_pos, double y_pos) {}
+	virtual void mouse_button(int button, int action, int mods) {}
+	virtual void mouse_scroll(double x_offset, double y_offset) {}
 	ScenePtr _scene;
 };
 using ApiPtr = std::shared_ptr<Api>;
