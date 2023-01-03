@@ -138,8 +138,10 @@ void Kasumi::Renderer::ui_sidebar()
 		ImGui::Separator();
 	}
 	ImGui::Text("Shortcuts");
-	ImGui::Text("- Space: start/stop sim");
-	ImGui::Text("- W: wireframe mode");
+	ImGui::BeginDisabled(true);
+	ImGui::Checkbox("Space: start/stop sim", &_opt.api_running);
+	ImGui::EndDisabled();
+	ImGui::Text("W: wireframe mode");
 	_next_x += ImGui::GetWindowSize().x;
 	ImGui::End();
 }
