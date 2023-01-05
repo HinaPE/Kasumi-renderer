@@ -23,6 +23,22 @@ void Kasumi::Renderer::prepare()
 	_scene->read_scene(std::string(SceneDir) + _scene_file);
 	for (auto &api: _apis)
 		api->prepare();
+
+
+//	_api_thread = std::thread([&]()
+//							  {
+//								  while (true)
+//								  {
+//									  if (_opt.api_running)
+//									  {
+										  std::cout << "API THREAD RUNNING" << std::endl;
+//										  if (_opt.api_running)
+//											  for (auto &api: _apis)
+//												  api->step(0.02);
+//									  }
+//								  }
+//							  });
+//	_api_thread.detach();
 }
 void Kasumi::Renderer::update(double dt)
 {
