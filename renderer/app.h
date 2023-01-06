@@ -10,10 +10,6 @@
 // kasumi includes
 #include "scene/scene.h"
 #include "gui/manager.h"
-
-// system includes
-#include <thread>
-
 namespace Kasumi
 {
 class Api;
@@ -62,7 +58,6 @@ private:
 	ScenePtr _scene;
 	std::vector<Kasumi::ApiPtr> _apis;
 	std::string _scene_file;
-	std::thread _api_thread;
 };
 using RendererPtr = std::shared_ptr<Renderer>;
 class Api
