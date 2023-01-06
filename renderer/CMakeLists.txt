@@ -12,7 +12,7 @@ file(GLOB_RECURSE WORKBENCH_FILES
         )
 
 add_library(Kasumi_renderer ${WORKBENCH_FILES})
-set_target_properties(Kasumi_renderer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
+set_target_properties(Kasumi_renderer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
 target_include_directories(Kasumi_renderer PUBLIC ${KASUMI_BACKEND_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../)
 target_include_directories(Kasumi_renderer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_renderer PUBLIC Kasumi_backend)

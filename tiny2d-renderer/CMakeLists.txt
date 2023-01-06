@@ -10,7 +10,7 @@ file(GLOB_RECURSE WORKBENCH_FILES
         )
 
 add_library(tiny_2D_renderer ${WORKBENCH_FILES})
-set_target_properties(tiny_2D_renderer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS OFF)
+set_target_properties(tiny_2D_renderer PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
 target_include_directories(tiny_2D_renderer PUBLIC ${KASUMI_BACKEND_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../)
 target_include_directories(tiny_2D_renderer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(tiny_2D_renderer PUBLIC Kasumi_backend)
