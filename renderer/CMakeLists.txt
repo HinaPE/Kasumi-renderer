@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.18)
 project(Kasumi_renderer VERSION 1.0.0 DESCRIPTION "Kasumi Workbench Renderer" LANGUAGES CXX)
 
 if (NOT TARGET Kasumi_backend)
