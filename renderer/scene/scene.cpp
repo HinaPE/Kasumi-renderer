@@ -71,32 +71,32 @@ void Kasumi::Scene::read_scene(const std::string &path)
 					iss >> color;
 					std::transform(color.begin(), color.end(), color.begin(), [](unsigned char c) { return std::toupper(c); });
 					if (color == "MIKU")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::MIKU));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::MIKU));
 					else if (color == "RED")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::RED));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::RED));
 					else if (color == "GREEN")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::GREEN));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::GREEN));
 					else if (color == "BLUE")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::BLUE));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::BLUE));
 					else if (color == "YELLOW")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::YELLOW));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::YELLOW));
 					else if (color == "PURPLE")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::PURPLE));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::PURPLE));
 					else if (color == "CYAN")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::CYAN));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::CYAN));
 					else if (color == "WHITE")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::WHITE));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::WHITE));
 					else if (color == "BLACK")
-						obj_id = add_object(std::make_shared<Model>(attrib, Color::BLACK));
+						obj_id = add_object(std::make_shared<Model>(attrib, HinaPE::Color::BLACK));
 					else // is texture
 						obj_id = add_object(std::make_shared<Model>(attrib, color));
 					get_object(obj_id)->_name = attrib;
 				} else if (attrib == "position")
-					iss >> position.x >> position.y >> position.z;
+					iss >> position.x() >> position.y() >> position.z();
 				else if (attrib == "rotation")
-					iss >> rotation.x >> rotation.y >> rotation.z;
+					iss >> rotation.x() >> rotation.y() >> rotation.z();
 				else if (attrib == "scale")
-					iss >> scale.x >> scale.y >> scale.z;
+					iss >> scale.x() >> scale.y() >> scale.z();
 			}
 			if (obj_id == std::numeric_limits<unsigned int>::max())
 				continue;
