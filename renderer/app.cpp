@@ -29,7 +29,7 @@ void Kasumi::Renderer::update(double dt)
 	// update plugin api scene (physics scene)
 	if (_opt.api_running)
 		for (auto &api: _apis)
-			api->step(dt);
+			api->step(static_cast<float>(dt));
 
 	// render ui
 	reset_state();
