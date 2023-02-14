@@ -10,6 +10,7 @@ namespace Kasumi
 {
 class Renderer3D : public App
 {
+public:
 };
 }
 
