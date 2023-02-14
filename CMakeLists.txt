@@ -6,4 +6,4 @@ if (NOT TARGET Kasumi_backend)
     add_subdirectory(${KASUMI_BACKEND_DIR} Kasumi_backend)
 endif ()
 
-add_subdirectory(renderer)
+#add_subdirectory(renderer)
