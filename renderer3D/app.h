@@ -1,17 +1,24 @@
-#ifndef HINAPE_APP_H
-#define HINAPE_APP_H
-
-#include "platform.h"
+#ifndef KASUMI_APP_H
+#define KASUMI_APP_H
 
 #include "camera.h"
 #include "mesh.h"
 
 namespace Kasumi
 {
-class Renderer3D : public App
+class Renderer3D
 {
 public:
-};
-}
+	void render_mesh(const UniversalMesh &mesh);
 
-#endif //HINAPE_APP_H
+
+public:
+	static auto instance() -> const Renderer3D &;
+
+	struct Opt
+	{
+	} _opt;
+};
+} // namespace Kasumi
+
+#endif //KASUMI_APP_H

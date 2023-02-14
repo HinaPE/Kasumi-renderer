@@ -7,6 +7,7 @@ endif ()
 
 file(GLOB_RECURSE src
         app.h app.cpp
+        object3D.h object3D.cpp
         )
 add_library(Kasumi_Render3D ${src})
 set_target_properties(Kasumi_Render3D PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
