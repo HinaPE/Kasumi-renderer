@@ -6,7 +6,6 @@ if (NOT TARGET Kasumi_Backends)
 endif ()
 
 file(GLOB_RECURSE src
-        app.h app.cpp
         object3D.h object3D.cpp
         scene.h scene.cpp
         )

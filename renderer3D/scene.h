@@ -14,9 +14,9 @@ public:
 	void draw();
 
 private:
-	std::map<unsigned int, Object3DPtr> _objects; // mesh / light
-	CameraPtr _camera;
+	std::map<unsigned int, Object3DPtr> _objects; // mesh, light
 };
+using Scene3DPtr = std::shared_ptr<Scene3D>;
 } // namespace Kasumi
 
 #endif //HINAPE_SCENE_H

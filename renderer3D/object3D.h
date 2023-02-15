@@ -11,13 +11,15 @@ class Object3D : public Inspector
 {
 public:
 	// opt & constructors
+	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
 	struct Opt
 	{
-		bool dirty = false;
+		bool dirty = true;
 		Pose pose;
 	} _opt;
-	explicit Object3D(const Opt &opt);
+	Object3D() : ID(ID_GLOBAL++) {}
+	virtual void sync_opt() {}
 
 protected:
 	// inspector
@@ -31,23 +33,41 @@ public:
 	// opt & constructors
 	struct Opt : public Object3D::Opt
 	{
-
+		std::string mesh_path = "cube";
+		std::string texture_path; // Default: don't use texture
+		mVector3 color = HinaPE::Color::RED;
 	} _opt;
-	explicit ObjectMesh3D(const Opt &opt);
+	ObjectMesh3D()
+	{
+		Renderable::_shader = Shader::DefaultMeshShader;
+	}
+	void sync_opt() override
+	{
+		if (_opt.dirty)
+		{
+			if (!_opt.texture_path.empty())
+				_mesh = std::make_shared<UniversalMesh>(_opt.mesh_path, _opt.texture_path);
+			else
+				_mesh = std::make_shared<UniversalMesh>(_opt.mesh_path, _opt.color);
+		}
+
+		Object3D::sync_opt();
+	}
 
 protected:
 	// renderable
 	void _draw() final;
-
+	auto _get_model() -> mMatrix4x4 final { return _opt.pose.get_model_matrix(); }
 	// inspector
-	void _inspect() final;
-
-private:
+	void _inspect() override;
+	// valid
+	void VALID() const override;
+	// fields
 	UniversalMeshPtr _mesh;
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 
-class CubeObject : public ObjectMesh3D
+class CubeObject final : public ObjectMesh3D
 {
 public:
 	struct Opt : public ObjectMesh3D::Opt
@@ -56,10 +76,22 @@ public:
 		real height = 1;
 		real depth = 1;
 	} _opt;
-	explicit CubeObject(const Opt &opt);
+	CubeObject() = default;
+	void sync_opt() final
+	{
+		_opt.mesh_path = std::string(BackendsModelDir) + "cube.obj";
+		_opt.pose.scale.x() = _opt.width;
+		_opt.pose.scale.y() = _opt.height;
+		_opt.pose.scale.z() = _opt.depth;
+
+		ObjectMesh3D::sync_opt();
+	}
+
+protected:
+	void _inspect() override;
 
 private:
-	HinaPE::Geom::Box3 _cube;
+	HinaPE::Geom::Box3 _cube; // NOT USED YET
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;
 } // namespace Kasumi
