@@ -26,4 +26,5 @@ private:
 };
 using ParticlesObjectPtr = std::shared_ptr<ParticlesObject>;
 } // namespace Kasumi
+
 #endif //KASUMI_PARTICLES_H

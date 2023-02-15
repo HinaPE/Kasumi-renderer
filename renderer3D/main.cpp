@@ -6,36 +6,40 @@ class App : public Kasumi::App
 protected:
 	void prepare() final
 	{
-		_scene = std::make_shared<Kasumi::Scene3D>();
+		Kasumi::LinesObject::Init();
 
-		{
-			auto cube = std::make_shared<Kasumi::CubeObject>();
-			cube->sync_opt();
-			_scene->add(cube);
-		}
-		{
-			auto sphere = std::make_shared<Kasumi::SphereObject>();
-			sphere->sync_opt();
-			_scene->add(sphere);
-		}
-		{
-			auto cup = std::make_shared<Kasumi::CupObject>();
-			cup->sync_opt();
-			_scene->add(cup);
-		}
-		{
-			auto particles = std::make_shared<Kasumi::ParticlesObject>();
-			Kasumi::Pose pose1;
-			pose1.position = {-5, 0, 0};
-			pose1.scale = {5, 5, 5};
-			Kasumi::Pose pose2;
-			pose2.position = {5, 0, 0};
-			pose2.scale = {5, 5, 5};
-			particles->_opt.poses.push_back(pose2);
-			particles->_opt.poses.push_back(pose1);
-			particles->sync_opt();
-			_scene->add(particles);
-		}
+		_scene = std::make_shared<Kasumi::Scene3D>();
+		_scene->add(Kasumi::LinesObject::DefaultLines);
+//		{
+//			auto cube = std::make_shared<Kasumi::CubeObject>();
+//			cube->sync_opt();
+//			_scene->add(cube);
+//		}
+//		{
+//			auto sphere = std::make_shared<Kasumi::SphereObject>();
+//			sphere->sync_opt();
+//			_scene->add(sphere);
+//		}
+//		{
+//			auto cup = std::make_shared<Kasumi::CupObject>();
+//			cup->sync_opt();
+//			_scene->add(cup);
+//		}
+//		{
+//			auto particles = std::make_shared<Kasumi::ParticlesObject>();
+//			Kasumi::Pose pose1;
+//			pose1.position = {-5, 0, 0};
+//			pose1.scale = {5, 5, 5};
+//			Kasumi::Pose pose2;
+//			pose2.position = {5, 0, 0};
+//			pose2.scale = {5, 5, 5};
+//			particles->_opt.poses.push_back(pose2);
+//			particles->_opt.poses.push_back(pose1);
+//			particles->sync_opt();
+//			_scene->add(particles);
+//		}
+
+		Kasumi::LinesObject::DefaultLines->add({-2, 0, 0}, {2, 0, 0}, HinaPE::Color::RED);
 
 		inspect(_scene);
 		_scene->VALID_CHECK();

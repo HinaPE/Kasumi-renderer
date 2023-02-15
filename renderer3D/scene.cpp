@@ -21,6 +21,10 @@ void Kasumi::Scene3D::VALID_CHECK() const
 void Kasumi::Scene3D::INSPECT()
 {
 	ImGui::Text("Scene Info");
+
+	if (_objects.empty())
+		return;
+
 	for (auto &pair: _objects)
 	{
 		ImGui::RadioButton(std::to_string(pair.first).c_str(), &selected, static_cast<int>(pair.first));
