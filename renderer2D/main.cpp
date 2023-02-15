@@ -9,9 +9,10 @@ protected:
 		_scene = std::make_shared<Kasumi::Scene2D>();
 
 		{
-			auto triangle = std::make_shared<Kasumi::Triangle2D>();
-//			triangle->sync_opt();
-			_scene->add(triangle);
+			auto lines = std::make_shared<Kasumi::Lines2DObject>();
+			lines->add({-0.9, 0}, {0.9, 0});
+			lines->add({0, -0.9}, {0, 0.9});
+			_scene->add(lines);
 		}
 
 
@@ -20,6 +21,7 @@ protected:
 	}
 	void update(double dt) final
 	{
+		_scene->draw();
 	}
 
 private:

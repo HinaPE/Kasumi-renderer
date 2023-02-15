@@ -14,10 +14,6 @@ public:
 	void add(const mVector3 &start, const mVector3 &end, const mVector3 &color = HinaPE::Color::PURPLE);
 
 public:
-	struct Opt
-	{
-		mVector3 color = HinaPE::Color::RED;
-	} _opt;
 	LinesObject() { _shader = Shader::DefaultLineShader; }
 	void sync_opt() final
 	{
