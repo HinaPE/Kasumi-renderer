@@ -9,10 +9,6 @@ namespace Kasumi
 class Renderer3D
 {
 public:
-	void render_mesh(const UniversalMesh &mesh);
-
-
-public:
 	static auto instance() -> const Renderer3D &;
 
 	struct Opt

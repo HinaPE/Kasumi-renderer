@@ -14,7 +14,7 @@ protected:
 	Pose _pose;
 	unsigned int ID;
 };
-class ObjectMesh3D final : public Object
+class ObjectMesh3D final : public Object, public Renderable
 {
 public:
 	friend class Renderer3D;
