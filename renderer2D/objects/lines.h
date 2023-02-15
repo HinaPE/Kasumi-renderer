@@ -5,13 +5,14 @@
 
 namespace Kasumi
 {
-class Lines2DObject final : public Object2D, public Renderable
+class Lines2DObject : public Object2D, public Renderable
 {
 public:
 	static void Init();
 	static std::shared_ptr<Lines2DObject> Default2DLines;
 
 	void add(const mVector2 &start, const mVector2 &end, const mVector3 &color = HinaPE::Color::PURPLE);
+	void clear();
 
 public:
 	struct Vertex
@@ -22,7 +23,7 @@ public:
 	Lines2DObject();
 
 protected:
-	void _draw() final;
+	void _draw() override;
 
 private:
 	unsigned int _vao, _vbo, _ebo;

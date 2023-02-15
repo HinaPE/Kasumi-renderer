@@ -4,6 +4,7 @@
 #include "objects/object2D.h"
 #include "objects/triangle.h"
 #include "objects/lines.h"
+#include "objects/points.h"
 
 namespace Kasumi
 {

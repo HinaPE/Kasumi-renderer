@@ -1,5 +1,5 @@
 #include "glad/glad.h"
-#include "lines.h"
+#include "points.h"
 
 #ifdef HINAPE_DOUBLE
 #define GL_REAL GL_DOUBLE
@@ -7,12 +7,7 @@
 #define GL_REAL GL_FLOAT
 #endif
 
-std::shared_ptr<Kasumi::Lines2DObject> Kasumi::Lines2DObject::Default2DLines = nullptr;
-void Kasumi::Lines2DObject::Init()
-{
-	Default2DLines = std::make_shared<Lines2DObject>();
-}
-Kasumi::Lines2DObject::Lines2DObject() : _vao(0), _vbo(0), _ebo(0)
+Kasumi::Points2DObject::Points2DObject() : _vao(0), _vbo(0), _ebo(0)
 {
 	_shader = Shader::Default2DShader;
 
@@ -29,31 +24,25 @@ Kasumi::Lines2DObject::Lines2DObject() : _vao(0), _vbo(0), _ebo(0)
 
 	glBindVertexArray(0);
 }
-void Kasumi::Lines2DObject::add(const mVector2 &start, const mVector2 &end, const mVector3 &color)
+void Kasumi::Points2DObject::add(const mVector2 &pt, const mVector3 &color)
 {
-	Vertex v1, v2;
-	v1.position = start;
-	v1.color = color;
-	v2.position = end;
-	v2.color = color;
-	_lines.push_back(v1);
-	_lines.push_back(v2);
+	Vertex v;
+	v.position = pt;
+	v.color = color;
+	_points.push_back(v);
 	_dirty = true;
 }
-void Kasumi::Lines2DObject::clear()
-{
-	_lines.clear();
-	_dirty = true;
-}
-void Kasumi::Lines2DObject::_draw()
+void Kasumi::Points2DObject::_draw()
 {
 	_shader->use();
+
+	glPointSize(25);
 
 	if (_dirty)
 	{
 		glBindVertexArray(_vao);
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, (GLsizei) (sizeof(Vertex) * _lines.size()), &_lines[0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, (GLsizei) (sizeof(Vertex) * _points.size()), &_points[0], GL_DYNAMIC_DRAW);
 		glBindVertexArray(0);
 		_dirty = false;
 	}
@@ -61,6 +50,6 @@ void Kasumi::Lines2DObject::_draw()
 	glLineWidth(1);
 	glEnable(GL_LINE_SMOOTH);
 	glBindVertexArray(_vao);
-	glDrawArrays(GL_LINES, 0, (GLsizei) _lines.size());
+	glDrawArrays(GL_POINTS, 0, (GLsizei) _points.size());
 	glBindVertexArray(0);
 }
