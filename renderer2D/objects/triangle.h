@@ -4,7 +4,7 @@
 #include "object2D.h"
 namespace Kasumi
 {
-class Triangle2D
+class Triangle2D : public Object2D
 {
 	struct Opt
 	{

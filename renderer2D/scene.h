@@ -2,6 +2,7 @@
 #define KASUMI_SCENE2_H
 
 #include "objects/object2D.h"
+#include "objects/triangle.h"
 
 namespace Kasumi
 {
