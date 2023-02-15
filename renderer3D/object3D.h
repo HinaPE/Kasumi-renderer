@@ -19,7 +19,7 @@ public:
 		Pose pose;
 	} _opt;
 	Object3D() : ID(ID_GLOBAL++) {}
-	virtual void sync_opt() {}
+	virtual void sync_opt() { _opt.dirty = false; }
 
 protected:
 	// inspector
@@ -31,22 +31,22 @@ class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
 	// opt & constructors
-	struct Opt : public Object3D::Opt
+	struct Opt
 	{
-		std::string mesh_path = "cube";
+		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::RED;
 	} _opt;
 	ObjectMesh3D() = default;
 	void sync_opt() override
 	{
-		if (_opt.dirty)
-		{
-			if (!_opt.texture_path.empty())
-				_mesh = std::make_shared<UniversalMesh>(_opt.mesh_path, _opt.texture_path);
-			else
-				_mesh = std::make_shared<UniversalMesh>(_opt.mesh_path, _opt.color);
-		}
+		if (!Object3D::_opt.dirty)
+			return;
+
+		if (!_opt.texture_path.empty())
+			_mesh = std::make_shared<UniversalMesh>(_opt.mesh_name, _opt.texture_path);
+		else
+			_mesh = std::make_shared<UniversalMesh>(_opt.mesh_name, _opt.color);
 
 		Object3D::sync_opt();
 	}
@@ -54,7 +54,7 @@ public:
 protected:
 	// renderable
 	void _draw() final;
-	auto _get_model() -> mMatrix4x4 final { return _opt.pose.get_model_matrix(); }
+	auto _get_model() -> mMatrix4x4 final { return Object3D::_opt.pose.get_model_matrix(); }
 	// inspector
 	void _inspect() override;
 	// valid
@@ -67,19 +67,21 @@ using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 class CubeObject final : public ObjectMesh3D
 {
 public:
-	struct Opt : public ObjectMesh3D::Opt
+	struct Opt
 	{
 		real width = 1;
 		real height = 1;
 		real depth = 1;
 	} _opt;
-	CubeObject() = default;
+	CubeObject() { ObjectMesh3D::_opt.mesh_name = "sphere"; }
 	void sync_opt() final
 	{
-		_opt.mesh_path = std::string(BackendsModelDir) + "cube.obj";
-		_opt.pose.scale.x() = _opt.width;
-		_opt.pose.scale.y() = _opt.height;
-		_opt.pose.scale.z() = _opt.depth;
+		if (!Object3D::_opt.dirty)
+			return;
+
+		Object3D::_opt.pose.scale.x() = _opt.width;
+		Object3D::_opt.pose.scale.y() = _opt.height;
+		Object3D::_opt.pose.scale.z() = _opt.depth;
 
 		ObjectMesh3D::sync_opt();
 	}
@@ -91,5 +93,25 @@ private:
 	HinaPE::Geom::Box3 _cube; // NOT USED YET
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;
+
+class SphereObject final : public ObjectMesh3D
+{
+public:
+	struct Opt : public ObjectMesh3D::Opt
+	{
+		real radius = 1;
+	} _opt;
+	SphereObject() = default;
+	void sync_opt() final
+	{
+		_opt.mesh_name = "sphere";
+		Object3D::_opt.pose.scale.x() = _opt.radius;
+		Object3D::_opt.pose.scale.y() = _opt.radius;
+		Object3D::_opt.pose.scale.z() = _opt.radius;
+		Object3D::_opt.dirty = true;
+
+		ObjectMesh3D::sync_opt();
+	}
+};
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H
