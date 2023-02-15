@@ -5,7 +5,7 @@
 #include "objects/sphere.h"
 #include "objects/cup.h"
 #include "objects/particles.h"
-#include "objects/line.h"
+#include "objects/lines.h"
 #include "camera.h"
 
 namespace Kasumi

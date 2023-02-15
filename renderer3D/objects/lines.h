@@ -1,5 +1,5 @@
-#ifndef HINAPE_LINE_H
-#define HINAPE_LINE_H
+#ifndef HINAPE_LINES_H
+#define HINAPE_LINES_H
 
 #include "object3D.h"
 
@@ -39,4 +39,4 @@ private:
 using LinesObjectPtr = std::shared_ptr<LinesObject>;
 } // namespace Kasumi
 
-#endif //HINAPE_LINE_H
+#endif //HINAPE_LINES_H

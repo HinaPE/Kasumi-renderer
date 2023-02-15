@@ -1,4 +1,4 @@
-#include "line.h"
+#include "lines.h"
 
 std::shared_ptr<Kasumi::LinesObject> Kasumi::LinesObject::DefaultLines = nullptr;
 void Kasumi::LinesObject::Init()
