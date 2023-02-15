@@ -5,7 +5,7 @@
 
 namespace Kasumi
 {
-class Scene
+class Scene3D
 {
 public:
 	void add(const Object3DPtr& object);

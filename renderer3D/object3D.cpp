@@ -1,9 +1,16 @@
 #include "object3D.h"
 static unsigned int ID_GLOBAL = 0;
-Kasumi::Object3D::Object3D() : ID(ID_GLOBAL++) {}
+Kasumi::Object3D::Object3D(const Opt &opt) : ID(ID_GLOBAL++), _opt(opt) {}
+Kasumi::ObjectMesh3D::ObjectMesh3D(const Opt &opt) : Object3D(opt)
+{
+}
+Kasumi::CubeObject::CubeObject(const Opt &opt) : ObjectMesh3D(opt)
+{
+//	_cube = HinaPE::Geom::Box3::
+}
 void Kasumi::Object3D::_inspect()
 {
-	_pose._inspect();
+	_opt.pose._inspect();
 }
 void Kasumi::ObjectMesh3D::_inspect()
 {

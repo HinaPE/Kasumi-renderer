@@ -10,22 +10,36 @@ namespace Kasumi
 class Object3D : public Inspector
 {
 public:
-	unsigned int ID;
-	Object3D();
+	// opt & constructors
+	const unsigned int ID;
+	struct Opt
+	{
+		bool dirty = false;
+		Pose pose;
+	} _opt;
+	explicit Object3D(const Opt &opt);
 
 protected:
+	// inspector
 	void _inspect() override;
-	Pose _pose;
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
-class ObjectMesh3D final : public Object3D, public Renderable
+class ObjectMesh3D : public Object3D, public Renderable
 {
 public:
-	friend class Renderer3D;
+	// opt & constructors
+	struct Opt : public Object3D::Opt
+	{
+
+	} _opt;
+	explicit ObjectMesh3D(const Opt &opt);
 
 protected:
+	// renderable
 	void _draw() final;
+
+	// inspector
 	void _inspect() final;
 
 private:
@@ -33,5 +47,20 @@ private:
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 
+class CubeObject : public ObjectMesh3D
+{
+public:
+	struct Opt : public ObjectMesh3D::Opt
+	{
+		real width = 1;
+		real height = 1;
+		real depth = 1;
+	} _opt;
+	explicit CubeObject(const Opt &opt);
+
+private:
+	HinaPE::Geom::Box3 _cube;
+};
+using CubeObjectPtr = std::shared_ptr<CubeObject>;
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H
