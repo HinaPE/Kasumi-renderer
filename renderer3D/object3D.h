@@ -3,11 +3,18 @@
 
 #include "mesh.h"
 #include "pose.h"
-#include "inspector.h"
+#include "api.h"
 
 namespace Kasumi
 {
-class Object3D final : protected Inspector
+class Object : public Inspector
+{
+protected:
+	void inspect() override;
+	Pose _pose;
+	unsigned int ID;
+};
+class ObjectMesh3D final : public Object
 {
 public:
 	friend class Renderer3D;
@@ -17,7 +24,6 @@ protected:
 
 private:
 	UniversalMeshPtr _mesh;
-	Pose _pose;
 };
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H
