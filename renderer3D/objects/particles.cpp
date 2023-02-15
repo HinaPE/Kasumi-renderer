@@ -17,9 +17,7 @@ void Kasumi::ParticlesObject::sync_opt()
 		_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.color));
 
 	for (auto &pose: _opt.poses)
-	{
 		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
-	}
 	_mesh->_opt.dirty = true;
 
 	Object3D::sync_opt();

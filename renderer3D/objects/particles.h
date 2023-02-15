@@ -10,7 +10,7 @@ class ParticlesObject final : public Object3D, public Renderable, public VALID_C
 public:
 	struct Opt
 	{
-		std::string mesh_name = "cube";
+		std::string mesh_name = "sphere";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::RED;
 		std::vector<Pose> poses;
