@@ -28,14 +28,13 @@ using Object3DPtr = std::shared_ptr<Object3D>;
 class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
-	// opt & constructors
 	struct Opt
 	{
 		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::RED;
 	} _opt;
-	ObjectMesh3D() = default;
+	ObjectMesh3D() { _shader = Shader::DefaultMeshShader; }
 	void sync_opt() override;
 
 protected:

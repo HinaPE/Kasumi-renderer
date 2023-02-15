@@ -21,11 +21,6 @@ void Kasumi::ObjectMesh3D::_draw()
 
 	_mesh->render(*_shader);
 }
-void Kasumi::ObjectMesh3D::VALID_CHECK() const
-{
-	if (_mesh == nullptr)
-		throw std::runtime_error("Mesh is nullptr");
-}
 void Kasumi::ObjectMesh3D::_update_uniform()
 {
 	Renderable::_update_uniform();
@@ -42,4 +37,9 @@ void Kasumi::ObjectMesh3D::sync_opt()
 		_mesh = std::make_shared<Mesh>(_opt.mesh_name, _opt.color);
 
 	Object3D::sync_opt();
+}
+void Kasumi::ObjectMesh3D::VALID_CHECK() const
+{
+	if (_mesh == nullptr)
+		throw std::runtime_error("Mesh is nullptr");
 }

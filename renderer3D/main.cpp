@@ -18,7 +18,6 @@ protected:
 			sphere->sync_opt();
 			_scene->add(sphere);
 		}
-
 		{
 			auto particles = std::make_shared<Kasumi::ParticlesObject>();
 			Kasumi::Pose pose1;
@@ -33,8 +32,8 @@ protected:
 			_scene->add(particles);
 		}
 
-		_scene->VALID_CHECK();
 		inspect(_scene);
+		_scene->VALID_CHECK();
 	}
 	void update(double dt) final { _scene->draw(); }
 
