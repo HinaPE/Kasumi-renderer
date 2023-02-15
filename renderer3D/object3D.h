@@ -7,7 +7,7 @@
 
 namespace Kasumi
 {
-class Object3D : public Inspector
+class Object3D : public INSPECTOR
 {
 public:
 	// opt & constructors
@@ -21,9 +21,7 @@ public:
 	Object3D() : ID(ID_GLOBAL++) {}
 	virtual void sync_opt() { _opt.dirty = false; }
 
-protected:
-	// inspector
-	void _inspect() override;
+	void INSPECT() override;
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
@@ -52,14 +50,11 @@ public:
 	}
 
 protected:
-	// renderable
 	void _draw() final;
 	auto _get_model() -> mMatrix4x4 final { return Object3D::_opt.pose.get_model_matrix(); }
-	// inspector
-	void _inspect() override;
-	// valid
+	void INSPECT() override;
 	void VALID_CHECK() const override;
-	// fields
+
 	UniversalMeshPtr _mesh;
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
@@ -85,9 +80,7 @@ public:
 
 		ObjectMesh3D::sync_opt();
 	}
-
-protected:
-	void _inspect() override;
+	void INSPECT() final;
 
 private:
 	HinaPE::Geom::Box3 _cube; // NOT USED YET

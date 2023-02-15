@@ -6,7 +6,7 @@
 
 namespace Kasumi
 {
-class Scene3D : public VALID_CHECKER
+class Scene3D : public VALID_CHECKER, public INSPECTOR
 {
 public:
 	void add(const Object3DPtr& object);
@@ -14,9 +14,11 @@ public:
 	void draw();
 
 	void VALID_CHECK() const final;
+	void INSPECT() final;
 
 private:
 	std::map<unsigned int, Object3DPtr> _objects; // mesh, light
+	int selected = 0;
 };
 using Scene3DPtr = std::shared_ptr<Scene3D>;
 } // namespace Kasumi

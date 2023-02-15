@@ -12,10 +12,15 @@ protected:
 			auto cube = std::make_shared<Kasumi::CubeObject>();
 			cube->sync_opt();
 			_scene->add(cube);
-			inspect(cube);
+		}
+		{
+			auto sphere = std::make_shared<Kasumi::SphereObject>();
+			sphere->sync_opt();
+			_scene->add(sphere);
 		}
 
 		_scene->VALID_CHECK();
+		inspect(_scene);
 	}
 	void update(double dt) final
 	{

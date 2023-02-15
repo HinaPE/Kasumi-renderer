@@ -18,3 +18,13 @@ void Kasumi::Scene3D::VALID_CHECK() const
 		if (need_valid_check(pair.second.get()))
 			as_valid_check(pair.second.get())->VALID_CHECK();
 }
+void Kasumi::Scene3D::INSPECT()
+{
+	ImGui::Text("Scene Info");
+	for (auto &pair: _objects)
+	{
+		ImGui::RadioButton(std::to_string(pair.first).c_str(), &selected, static_cast<int>(pair.first));
+	}
+	auto &obj = _objects[selected];
+	obj->INSPECT();
+}

@@ -1,12 +1,12 @@
 #include "object3D.h"
 unsigned int Kasumi::Object3D::ID_GLOBAL = 0;
-void Kasumi::Object3D::_inspect()
+void Kasumi::Object3D::INSPECT()
 {
-	_opt.pose._inspect();
+	_opt.pose.INSPECT();
 }
-void Kasumi::ObjectMesh3D::_inspect()
+void Kasumi::ObjectMesh3D::INSPECT()
 {
-	Object3D::_inspect();
+	Object3D::INSPECT();
 
 	if (_mesh == nullptr)
 		return;
@@ -14,13 +14,13 @@ void Kasumi::ObjectMesh3D::_inspect()
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Vertices: %zu", _mesh->vertices().size());
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Indices: %zu", _mesh->indices().size());
 }
-void Kasumi::CubeObject::_inspect()
+void Kasumi::CubeObject::INSPECT()
 {
-	ObjectMesh3D::_inspect();
+	ObjectMesh3D::INSPECT();
 
-	ImGui::Text("width: %f", _opt.width);
-	ImGui::Text("height: %f", _opt.height);
-	ImGui::Text("depth: %f", _opt.depth);
+	ImGui::Text("init width: %f", _opt.width);
+	ImGui::Text("init height: %f", _opt.height);
+	ImGui::Text("init depth: %f", _opt.depth);
 }
 void Kasumi::ObjectMesh3D::_draw()
 {
