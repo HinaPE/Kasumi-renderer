@@ -19,13 +19,19 @@ protected:
 			_scene->add(sphere);
 		}
 
+		{
+			auto particles = std::make_shared<Kasumi::ParticlesObject>();
+			Kasumi::Pose pose;
+			pose.position = {1, 0, 0};
+			particles->_opt.poses.push_back(pose);
+			particles->sync_opt();
+			_scene->add(particles);
+		}
+
 		_scene->VALID_CHECK();
 		inspect(_scene);
 	}
-	void update(double dt) final
-	{
-		_scene->draw();
-	}
+	void update(double dt) final { _scene->draw(); }
 
 private:
 	Kasumi::Scene3DPtr _scene;

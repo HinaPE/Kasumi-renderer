@@ -1,7 +1,9 @@
 #ifndef HINAPE_SCENE_H
 #define HINAPE_SCENE_H
 
-#include "object3D.h"
+#include "objects/cube.h"
+#include "objects/sphere.h"
+#include "objects/particles.h"
 #include "camera.h"
 
 namespace Kasumi
