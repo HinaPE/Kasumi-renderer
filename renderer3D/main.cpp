@@ -12,6 +12,7 @@ protected:
 			auto cube = std::make_shared<Kasumi::CubeObject>();
 			cube->sync_opt();
 			_scene->add(cube);
+			inspect(cube);
 		}
 
 		_scene->VALID_CHECK();

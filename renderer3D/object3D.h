@@ -73,7 +73,7 @@ public:
 		real height = 1;
 		real depth = 1;
 	} _opt;
-	CubeObject() { ObjectMesh3D::_opt.mesh_name = "sphere"; }
+	CubeObject() { ObjectMesh3D::_opt.mesh_name = "cube"; }
 	void sync_opt() final
 	{
 		if (!Object3D::_opt.dirty)
@@ -97,14 +97,13 @@ using CubeObjectPtr = std::shared_ptr<CubeObject>;
 class SphereObject final : public ObjectMesh3D
 {
 public:
-	struct Opt : public ObjectMesh3D::Opt
+	struct Opt
 	{
 		real radius = 1;
 	} _opt;
-	SphereObject() = default;
+	SphereObject() { ObjectMesh3D::_opt.mesh_name = "sphere"; }
 	void sync_opt() final
 	{
-		_opt.mesh_name = "sphere";
 		Object3D::_opt.pose.scale.x() = _opt.radius;
 		Object3D::_opt.pose.scale.y() = _opt.radius;
 		Object3D::_opt.pose.scale.z() = _opt.radius;
