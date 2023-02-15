@@ -2,7 +2,6 @@
 #define KASUMI_OBJECT2D_H
 
 #include "api.h"
-#include "pose.h"
 
 namespace Kasumi
 {
