@@ -12,3 +12,9 @@ void Kasumi::Scene3D::remove(unsigned int id)
 	if (it != _objects.end())
 		_objects.erase(it);
 }
+void Kasumi::Scene3D::VALID_CHECK() const
+{
+	for (auto &pair: _objects)
+		if (need_valid_check(pair.second.get()))
+			as_valid_check(pair.second.get())->VALID_CHECK();
+}

@@ -13,6 +13,8 @@ public:
 	void remove(unsigned int id);
 	void draw();
 
+	void VALID_CHECK() const final;
+
 private:
 	std::map<unsigned int, Object3DPtr> _objects; // mesh, light
 };

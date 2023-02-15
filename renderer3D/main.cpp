@@ -13,6 +13,8 @@ protected:
 			cube->sync_opt();
 			_scene->add(cube);
 		}
+
+		_scene->VALID_CHECK();
 	}
 	void update(double dt) final
 	{

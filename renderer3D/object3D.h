@@ -27,20 +27,17 @@ protected:
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
-class ObjectMesh3D : public Object3D, public Renderable
+class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
 	// opt & constructors
 	struct Opt : public Object3D::Opt
 	{
 		std::string mesh_path = "cube";
-		std::string texture_path; // Default: don't use texture
+		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::RED;
 	} _opt;
-	ObjectMesh3D()
-	{
-		Renderable::_shader = Shader::DefaultMeshShader;
-	}
+	ObjectMesh3D() = default;
 	void sync_opt() override
 	{
 		if (_opt.dirty)
@@ -61,7 +58,7 @@ protected:
 	// inspector
 	void _inspect() override;
 	// valid
-	void VALID() const override;
+	void VALID_CHECK() const override;
 	// fields
 	UniversalMeshPtr _mesh;
 };

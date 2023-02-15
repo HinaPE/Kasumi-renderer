@@ -29,9 +29,8 @@ void Kasumi::ObjectMesh3D::_draw()
 
 	_mesh->render(*_shader);
 }
-void Kasumi::ObjectMesh3D::VALID() const
+void Kasumi::ObjectMesh3D::VALID_CHECK() const
 {
-	Renderable::VALID();
 	if (_mesh == nullptr)
 		throw std::runtime_error("Mesh is nullptr");
 }
