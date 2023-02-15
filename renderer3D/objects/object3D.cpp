@@ -2,7 +2,20 @@
 unsigned int Kasumi::Object3D::ID_GLOBAL = 0;
 void Kasumi::Object3D::INSPECT()
 {
-	_opt.pose.INSPECT();
+	ImGui::Text("Transform");
+	auto sliders = [&](const std::string &label, mVector3 &data, float sens)
+	{
+#if HINAPE_DOUBLE
+		auto data_float = data.as_float();
+		ImGui::DragFloat3(label.c_str(), &data_float[0], sens);
+		data = data_float.as_double();
+#else
+		ImGui::DragFloat3(label.c_str(), &data[0], sens);
+#endif
+	};
+	sliders("Position", _opt.pose.position, 0.1f);
+	sliders("Rotation", _opt.pose.euler, 0.1f);
+	sliders("Scale", _opt.pose.scale, 0.031f);
 }
 void Kasumi::ObjectMesh3D::INSPECT()
 {

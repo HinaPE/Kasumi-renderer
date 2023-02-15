@@ -1,5 +1,5 @@
-#ifndef HINAPE_SCENE_H
-#define HINAPE_SCENE_H
+#ifndef KASUMI_SCENE3_H
+#define KASUMI_SCENE3_H
 
 #include "objects/cube.h"
 #include "objects/sphere.h"
@@ -27,4 +27,4 @@ private:
 using Scene3DPtr = std::shared_ptr<Scene3D>;
 } // namespace Kasumi
 
-#endif //HINAPE_SCENE_H
+#endif //KASUMI_SCENE3_H

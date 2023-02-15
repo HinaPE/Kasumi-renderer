@@ -1,9 +1,8 @@
 #ifndef KASUMI_OBJECT3D_H
 #define KASUMI_OBJECT3D_H
 
-#include "mesh.h"
-#include "pose.h"
 #include "api.h"
+#include "pose.h"
 
 namespace Kasumi
 {
