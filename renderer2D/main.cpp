@@ -8,12 +8,12 @@ protected:
 	{
 		_scene = std::make_shared<Kasumi::Scene2D>();
 
-//		{
-//			auto lines = std::make_shared<Kasumi::Lines2DObject>();
-//			lines->add({-0.9, 0}, {0.9, 0});
-//			lines->add({0, -0.9}, {0, 0.9});
-//			_scene->add(lines);
-//		}
+		{
+			auto lines = std::make_shared<Kasumi::Lines2DObject>();
+			lines->add({-0.9, 0}, {0.9, 0});
+			lines->add({0, -0.9}, {0, 0.9});
+			_scene->add(lines);
+		}
 
 		{
 			auto points = std::make_shared<Kasumi::Points2DObject>();
@@ -27,9 +27,17 @@ protected:
 			triangle->_opt.p2 = {0.5, -0.5};
 			triangle->_opt.p3 = {0, 0.5};
 			triangle->_opt.color = HinaPE::Color::RED;
+			triangle->_opt.dirty = true;
 			_scene->add(triangle);
 		}
 
+		{
+			auto circle = std::make_shared<Kasumi::Circles2DObject>();
+			circle->_opt.position = {0, 0};
+			circle->_opt.radius = 0.5;
+			circle->_opt.dirty = true;
+			_scene->add(circle);
+		}
 
 		inspect(_scene);
 		_scene->VALID_CHECK();
