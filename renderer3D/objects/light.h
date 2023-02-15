@@ -1,5 +1,5 @@
-#ifndef HINAPE_LIGHT_H
-#define HINAPE_LIGHT_H
+#ifndef KASUMI_LIGHT_H
+#define KASUMI_LIGHT_H
 
 #include "object3D.h"
 
@@ -11,4 +11,4 @@ class LightObject : public Object3D
 };
 } // namespace Kasumi
 
-#endif //HINAPE_LIGHT_H
+#endif //KASUMI_LIGHT_H

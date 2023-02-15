@@ -1,5 +1,5 @@
-#ifndef HINAPE_PARTICLES_H
-#define HINAPE_PARTICLES_H
+#ifndef KASUMI_PARTICLES_H
+#define KASUMI_PARTICLES_H
 
 #include "object3D.h"
 
@@ -26,4 +26,4 @@ private:
 };
 using ParticlesObjectPtr = std::shared_ptr<ParticlesObject>;
 } // namespace Kasumi
-#endif //HINAPE_PARTICLES_H
+#endif //KASUMI_PARTICLES_H

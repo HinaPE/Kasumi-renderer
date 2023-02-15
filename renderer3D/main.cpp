@@ -19,6 +19,11 @@ protected:
 			_scene->add(sphere);
 		}
 		{
+			auto cup = std::make_shared<Kasumi::CupObject>();
+			cup->sync_opt();
+			_scene->add(cup);
+		}
+		{
 			auto particles = std::make_shared<Kasumi::ParticlesObject>();
 			Kasumi::Pose pose1;
 			pose1.position = {-5, 0, 0};

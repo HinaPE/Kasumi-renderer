@@ -3,6 +3,7 @@
 
 #include "objects/cube.h"
 #include "objects/sphere.h"
+#include "objects/cup.h"
 #include "objects/particles.h"
 #include "camera.h"
 

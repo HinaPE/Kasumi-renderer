@@ -10,7 +10,6 @@ namespace Kasumi
 class Object3D : public INSPECTOR
 {
 public:
-	// opt & constructors
 	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
 	struct Opt
@@ -40,6 +39,7 @@ public:
 protected:
 	void _draw() final;
 	void _update_uniform() final;
+
 	void INSPECT() override;
 	void VALID_CHECK() const override;
 
