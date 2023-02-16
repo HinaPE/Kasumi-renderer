@@ -17,6 +17,11 @@ public:
 		_last_duration = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
 		std::cout << info << ": " << _last_duration << "s" << std::endl;
 	}
+	inline auto duration() -> float
+	{
+		_last_duration = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
+		return _last_duration;
+	}
 	inline void reset() { _starting_point = std::chrono::steady_clock::now(); }
 
 public:
