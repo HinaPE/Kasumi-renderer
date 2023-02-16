@@ -1,4 +1,5 @@
 #include "scene.h"
+
 void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object) { _objects[object->ID] = object; }
 void Kasumi::Scene3D::remove(unsigned int id)
 {
@@ -22,6 +23,12 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_wireframe();
 			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
 				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_wireframe();
+	}
+	if (key == GLFW_KEY_B && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects)
+			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_bbox();
 	}
 }
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }

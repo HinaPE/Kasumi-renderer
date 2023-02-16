@@ -28,6 +28,7 @@ class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
 	void switch_wireframe() const { _mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+	void switch_bbox() const { _mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 public:
 	struct Opt
