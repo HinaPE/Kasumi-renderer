@@ -12,6 +12,22 @@ void Kasumi::Scene3D::draw()
 		if (is_renderable(pair.second.get()))
 			as_renderable(pair.second.get())->render();
 }
+void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
+{
+	Kasumi::Camera::MainCamera->key(key, scancode, action, mods);
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects)
+			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_wireframe();
+			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_wireframe();
+	}
+}
+void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }
+void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
+void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos) { Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos); }
+
 void Kasumi::Scene3D::INSPECT()
 {
 	ImGui::Text("Scene Info");
@@ -21,7 +37,7 @@ void Kasumi::Scene3D::INSPECT()
 
 	for (auto &pair: _objects)
 	{
-		ImGui::RadioButton(std::to_string(pair.first).c_str(), &selected, static_cast<int>(pair.first));
+		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &selected, static_cast<int>(pair.first));
 	}
 	auto &obj = _objects[selected];
 	obj->INSPECT();

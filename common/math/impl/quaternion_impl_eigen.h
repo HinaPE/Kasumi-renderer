@@ -62,15 +62,13 @@ auto Quaternion<T>::operator=(const std::initializer_list<T> &lst) -> Quaternion
 template<typename T>
 Quaternion<T>::Quaternion(const Vector3<T> &axis, T angle) : _q(Eigen::AngleAxis<real>(angle * 2, axis._v.normalized()))
 {
-//	Vector3<T> normalized_axis = axis.normalized();
-//	T s = std::sin(angle / 2);
-//
-//	_q.x() = normalized_axis.x() * s;
-//	_q.y() = normalized_axis.y() * s;
-//	_q.z() = normalized_axis.z() * s;
-//	_q.w() = std::cos(angle / 2);
+	Vector3<T> normalized_axis = axis.normalized();
+	T s = std::sin(angle / 2);
 
-	assert(false); // NOTE: not tested
+	_q.x() = normalized_axis.x() * s;
+	_q.y() = normalized_axis.y() * s;
+	_q.z() = normalized_axis.z() * s;
+	_q.w() = std::cos(angle / 2);
 
 	_q.normalize();
 }

@@ -11,6 +11,7 @@ class Object3D : public INSPECTOR
 public:
 	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
+	std::string NAME = "Untitled";
 	struct Opt
 	{
 		bool dirty = true;
@@ -25,6 +26,9 @@ using Object3DPtr = std::shared_ptr<Object3D>;
 
 class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
+public:
+	void switch_wireframe() const { _mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+
 public:
 	struct Opt
 	{

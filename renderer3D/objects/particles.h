@@ -8,6 +8,9 @@ namespace Kasumi
 class ParticlesObject final : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
+	void switch_wireframe() const { _mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+
+public:
 	struct Opt
 	{
 		std::string mesh_name = "sphere";
