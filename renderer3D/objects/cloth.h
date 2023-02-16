@@ -11,13 +11,19 @@ public:
 	struct Opt
 	{
 	} _opt;
-	ClothObject() { ObjectMesh3D::_opt.mesh_name = "cloth"; }
+	ClothObject() { NAME = "cloth"; }
 	void sync_opt() final
 	{
 		if (!Object3D::_opt.dirty)
 			return;
-
-		ObjectMesh3D::sync_opt();
+	}
+	void init(std::vector<Mesh::Vertex> &&vertices, std::vector<Mesh::Index> &&indices, std::map<std::string, std::vector<TexturePtr>> &&textures);
+	void update(const std::vector<mVector3> &new_vertices)
+	{
+		auto &_v = _mesh->vertices();
+		assert(_v.size() == new_vertices.size());
+		for (int i = 0; i < _v.size(); ++i)
+			_v[i].position = new_vertices[i];
 	}
 };
 using ClothObjectPtr = std::shared_ptr<ClothObject>;

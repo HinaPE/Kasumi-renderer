@@ -15,6 +15,9 @@ public:
 	SphereObject() { ObjectMesh3D::_opt.mesh_name = "sphere"; }
 	void sync_opt() final
 	{
+		if (!Object3D::_opt.dirty)
+			return;
+
 		Object3D::_opt.pose.scale.x() = _opt.radius;
 		Object3D::_opt.pose.scale.y() = _opt.radius;
 		Object3D::_opt.pose.scale.z() = _opt.radius;
