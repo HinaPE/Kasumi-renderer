@@ -2,7 +2,7 @@
 
 void Kasumi::GridObject::init(const HinaPE::Geom::Grid3Ptr &grid)
 {
-	int scale = 4;
+	int scale = 15;
 	for (int i = -scale; i < scale; ++i)
 	{
 		for (int j = -scale; j < scale; ++j)
@@ -10,7 +10,7 @@ void Kasumi::GridObject::init(const HinaPE::Geom::Grid3Ptr &grid)
 			for (int k = -scale; k < scale; ++k)
 			{
 				Pose pose;
-				pose.position = mVector3(i, j, k);
+				pose.position = 0.1 * mVector3(i, j, k);
 				_poses.push_back(pose);
 			}
 		}
