@@ -1,5 +1,5 @@
-#ifndef HINAPE_LINES2D_H
-#define HINAPE_LINES2D_H
+#ifndef KASUMI_LINES2D_H
+#define KASUMI_LINES2D_H
 
 #include "object2D.h"
 
@@ -33,4 +33,4 @@ private:
 using Lines2DObjectPtr = std::shared_ptr<Lines2DObject>;
 } // namespace Kasumi
 
-#endif //HINAPE_LINES2D_H
+#endif //KASUMI_LINES2D_H

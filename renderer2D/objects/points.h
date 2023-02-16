@@ -1,5 +1,5 @@
-#ifndef HINAPE_POINTS_H
-#define HINAPE_POINTS_H
+#ifndef KASUMI_POINTS_H
+#define KASUMI_POINTS_H
 
 #include "object2D.h"
 
@@ -28,4 +28,4 @@ private:
 using Points2DObjectPtr = std::shared_ptr<Points2DObject>;
 } // namespace Kasumi
 
-#endif //HINAPE_POINTS_H
+#endif //KASUMI_POINTS_H

@@ -1,5 +1,5 @@
-#ifndef HINAPE_CIRCLES_H
-#define HINAPE_CIRCLES_H
+#ifndef KASUMI_CIRCLES_H
+#define KASUMI_CIRCLES_H
 
 #include "lines.h"
 
@@ -22,4 +22,4 @@ protected:
 using Circles2DObjectPtr = std::shared_ptr<Circles2DObject>;
 } // namespace Kasumi
 
-#endif //HINAPE_CIRCLES_H
+#endif //KASUMI_CIRCLES_H

@@ -1,7 +1,7 @@
 #include "glad/glad.h"
 #include "points.h"
 
-#ifdef HINAPE_DOUBLE
+#ifdef KASUMI_DOUBLE
 #define GL_REAL GL_DOUBLE
 #else
 #define GL_REAL GL_FLOAT
