@@ -29,6 +29,16 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
 				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_bbox();
+			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_bbox();
+	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects)
+			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_surface();
+			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_surface();
 	}
 }
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }

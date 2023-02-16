@@ -5,10 +5,12 @@
 
 namespace Kasumi
 {
-class ParticlesObject final : public Object3D, public Renderable, public VALID_CHECKER
+class ParticlesObject : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
-	void switch_wireframe() const { _mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+	void switch_surface() const { _mesh->_opt.dirty = true; _mesh->_opt.render_surface = !_mesh->_opt.render_surface; }
+	void switch_wireframe() const { _mesh->_opt.dirty = true; _mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+	void switch_bbox() const { _mesh->_opt.dirty = true; _mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 public:
 	struct Opt
@@ -24,7 +26,7 @@ public:
 protected:
 	void _draw() final;
 
-private:
+protected:
 	InstancedMeshPtr _mesh;
 };
 using ParticlesObjectPtr = std::shared_ptr<ParticlesObject>;

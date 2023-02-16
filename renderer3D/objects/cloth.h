@@ -8,15 +8,7 @@ namespace Kasumi
 class ClothObject final : public ObjectMesh3D
 {
 public:
-	struct Opt
-	{
-	} _opt;
 	ClothObject() { NAME = "cloth"; }
-	void sync_opt() final
-	{
-		if (!Object3D::_opt.dirty)
-			return;
-	}
 	void init(std::vector<Mesh::Vertex> &&vertices, std::vector<Mesh::Index> &&indices, std::map<std::string, std::vector<TexturePtr>> &&textures);
 	void update(const std::vector<mVector3> &new_vertices)
 	{

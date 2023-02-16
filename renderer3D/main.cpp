@@ -11,23 +11,29 @@ protected:
 		_scene = std::make_shared<Kasumi::Scene3D>();
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
+//		{
+//			auto cube = std::make_shared<Kasumi::CubeObject>();
+//			cube->NAME = "cube";
+//			cube->sync_opt();
+//			_scene->add(cube);
+//		}
+//		{
+//			auto sphere = std::make_shared<Kasumi::SphereObject>();
+//			sphere->NAME = "sphere";
+//			sphere->sync_opt();
+//			_scene->add(sphere);
+//		}
+//		{
+//			auto cup = std::make_shared<Kasumi::CupObject>();
+//			cup->NAME = "cup";
+//			cup->sync_opt();
+//			_scene->add(cup);
+//		}
 		{
-			auto cube = std::make_shared<Kasumi::CubeObject>();
-			cube->NAME = "cube";
-			cube->sync_opt();
-			_scene->add(cube);
-		}
-		{
-			auto sphere = std::make_shared<Kasumi::SphereObject>();
-			sphere->NAME = "sphere";
-			sphere->sync_opt();
-			_scene->add(sphere);
-		}
-		{
-			auto cup = std::make_shared<Kasumi::CupObject>();
-			cup->NAME = "cup";
-			cup->sync_opt();
-			_scene->add(cup);
+			auto grid = std::make_shared<Kasumi::GridObject>();
+			grid->NAME = "grid";
+			grid->init(nullptr);
+			_scene->add(grid);
 		}
 //		{
 //			auto particles = std::make_shared<Kasumi::ParticlesObject>();
