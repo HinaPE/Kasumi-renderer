@@ -38,6 +38,7 @@ void Kasumi::ObjectMesh3D::_update_uniform()
 {
 	Renderable::_update_uniform();
 	_shader->uniform("model", Object3D::_opt.pose.get_model_matrix());
+	Shader::DefaultLineShader->uniform("model", Object3D::_opt.pose.get_model_matrix());
 }
 void Kasumi::ObjectMesh3D::sync_opt()
 {
