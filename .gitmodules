@@ -1,3 +1,6 @@
 [submodule "backends"]
 	path = backends
 	url = https://github.com/HinaPE/backends.git
+[submodule "common"]
+	path = common
+	url = https://github.com/HinaPE/common.git
