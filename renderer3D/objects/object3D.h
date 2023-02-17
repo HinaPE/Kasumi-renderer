@@ -18,30 +18,19 @@ public:
 		Pose pose;
 	} _opt;
 	Object3D() : ID(ID_GLOBAL++) {}
-	virtual void sync_opt() { _opt.dirty = false; }
+	virtual void _rebuild_() { _opt.dirty = false; }
 
 	void INSPECT() override;
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
+// @formatter:off
 class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
-	void switch_surface() const
-	{
-		_mesh->_opt.dirty = true;
-		_mesh->_opt.render_surface = !_mesh->_opt.render_surface;
-	}
-	void switch_wireframe() const
-	{
-		_mesh->_opt.dirty = true;
-		_mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe;
-	}
-	void switch_bbox() const
-	{
-		_mesh->_opt.dirty = true;
-		_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox;
-	}
+	void switch_surface() const { _mesh->_opt.dirty = true;_mesh->_opt.render_surface = !_mesh->_opt.render_surface; }
+	void switch_wireframe() const { _mesh->_opt.dirty = true;_mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
+	void switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 public:
 	struct Opt
@@ -51,7 +40,7 @@ public:
 		mVector3 color = HinaPE::Color::RED;
 	} _opt;
 	ObjectMesh3D() { _shader = Shader::DefaultMeshShader; }
-	void sync_opt() override;
+	void _rebuild_() override;
 
 protected:
 	void _draw() final;
@@ -63,5 +52,7 @@ protected:
 	MeshPtr _mesh;
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
+// @formatter:on
+
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H

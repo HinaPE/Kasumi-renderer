@@ -16,7 +16,7 @@ public:
 		Pose2D pose;
 	} _opt;
 	Object2D() : ID(ID_GLOBAL++) {}
-	virtual void sync_opt() { _opt.dirty = false; }
+	virtual void _rebuild_() { _opt.dirty = false; }
 
 	void INSPECT() override;
 };

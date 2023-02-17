@@ -14,19 +14,19 @@ protected:
 //		{
 //			auto cube = std::make_shared<Kasumi::CubeObject>();
 //			cube->NAME = "cube";
-//			cube->sync_opt();
+//			cube->_rebuild_();
 //			_scene->add(cube);
 //		}
 //		{
 //			auto sphere = std::make_shared<Kasumi::SphereObject>();
 //			sphere->NAME = "sphere";
-//			sphere->sync_opt();
+//			sphere->_rebuild_();
 //			_scene->add(sphere);
 //		}
 //		{
 //			auto cup = std::make_shared<Kasumi::CupObject>();
 //			cup->NAME = "cup";
-//			cup->sync_opt();
+//			cup->_rebuild_();
 //			_scene->add(cup);
 //		}
 		{
@@ -46,7 +46,7 @@ protected:
 //			pose2.scale = {5, 5, 5};
 //			particles->_opt.poses.push_back(pose2);
 //			particles->_opt.poses.push_back(pose1);
-//			particles->sync_opt();
+//			particles->_rebuild_();
 //			_scene->add(particles);
 //		}
 

@@ -15,14 +15,14 @@ public:
 
 public:
 	LinesObject() { _shader = Shader::DefaultLineShader; }
-	void sync_opt() final
+	void _rebuild_() final
 	{
 		if (!Object3D::_opt.dirty)
 			return;
 
 		_lines = std::make_shared<Lines>();
 
-		Object3D::sync_opt();
+		Object3D::_rebuild_();
 	}
 
 protected:

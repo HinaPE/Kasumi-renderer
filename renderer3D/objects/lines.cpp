@@ -4,7 +4,7 @@ std::shared_ptr<Kasumi::LinesObject> Kasumi::LinesObject::DefaultLines = nullptr
 void Kasumi::LinesObject::Init()
 {
 	DefaultLines = std::make_shared<Kasumi::LinesObject>();
-	DefaultLines->sync_opt();
+	DefaultLines->_rebuild_();
 }
 void Kasumi::LinesObject::add(const mVector3 &start, const mVector3 &end, const mVector3 &color)
 {

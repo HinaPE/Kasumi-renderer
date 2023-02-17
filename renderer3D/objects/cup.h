@@ -11,12 +11,12 @@ public:
 	{
 	} _opt;
 	CupObject() { ObjectMesh3D::_opt.mesh_name = "cup"; }
-	void sync_opt() final
+	void _rebuild_() final
 	{
 		if (!Object3D::_opt.dirty)
 			return;
 
-		ObjectMesh3D::sync_opt();
+		ObjectMesh3D::_rebuild_();
 	}
 };
 using CupObjectPtr = std::shared_ptr<CupObject>;

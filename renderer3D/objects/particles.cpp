@@ -6,7 +6,7 @@ void Kasumi::ParticlesObject::_draw()
 
 	_mesh->render(*_shader);
 }
-void Kasumi::ParticlesObject::sync_opt()
+void Kasumi::ParticlesObject::_rebuild_()
 {
 	if (!Object3D::_opt.dirty)
 		return;
@@ -20,5 +20,5 @@ void Kasumi::ParticlesObject::sync_opt()
 		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
 	_mesh->_opt.dirty = true;
 
-	Object3D::sync_opt();
+	Object3D::_rebuild_();
 }

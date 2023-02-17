@@ -40,7 +40,7 @@ void Kasumi::ObjectMesh3D::_update_uniform()
 	_shader->uniform("model", Object3D::_opt.pose.get_model_matrix());
 	Shader::DefaultLineShader->uniform("model", Object3D::_opt.pose.get_model_matrix());
 }
-void Kasumi::ObjectMesh3D::sync_opt()
+void Kasumi::ObjectMesh3D::_rebuild_()
 {
 	if (!Object3D::_opt.dirty)
 		return;
@@ -50,7 +50,7 @@ void Kasumi::ObjectMesh3D::sync_opt()
 	else
 		_mesh = std::make_shared<Mesh>(_opt.mesh_name, _opt.color);
 
-	Object3D::sync_opt();
+	Object3D::_rebuild_();
 }
 void Kasumi::ObjectMesh3D::VALID_CHECK() const
 {

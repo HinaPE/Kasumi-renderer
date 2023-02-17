@@ -21,7 +21,7 @@ public:
 		std::vector<Pose> poses;
 	} _opt;
 	ParticlesObject() { _shader = Shader::DefaultInstanceShader; }
-	void sync_opt() final;
+	void _rebuild_() final;
 
 protected:
 	void _draw() final;
