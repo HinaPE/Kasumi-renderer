@@ -5,13 +5,7 @@ void Kasumi::Object3D::INSPECT()
 	ImGui::Text("Transform");
 	auto sliders = [&](const std::string &label, mVector3 &data, float sens)
 	{
-#if HINAPE_DOUBLE
-		auto data_float = data.as_float();
-		ImGui::DragFloat3(label.c_str(), &data_float[0], sens);
-		data = data_float.as_double();
-#else
-		ImGui::DragFloat3(label.c_str(), &data[0], sens);
-#endif
+		ImGui::DragScalarN(label.c_str(), ImGuiDataType_Real, &data[0], 3, sens);
 	};
 	sliders("Position", _opt.pose.position, 0.1f);
 	sliders("Rotation", _opt.pose.euler, 0.1f);
