@@ -10,7 +10,8 @@
 #include "objects/particles.h"
 #include "objects/lines.h"
 #include "objects/grid.h"
-#include "camera.h"
+
+#include "backends/api.h"
 
 namespace Kasumi
 {

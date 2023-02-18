@@ -17,5 +17,5 @@ target_link_libraries(Kasumi_Render2D PUBLIC Kasumi_Backends)
 # APP EXECUTABLE
 add_executable(Kasumi_Render2D_App main.cpp)
 set_target_properties(Kasumi_Render2D_App PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
-target_include_directories(Kasumi_Render2D_App PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Kasumi_Render2D_App PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../)
 target_link_libraries(Kasumi_Render2D_App PUBLIC Kasumi_Render2D)
