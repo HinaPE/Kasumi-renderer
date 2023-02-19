@@ -1,6 +1,9 @@
 #ifndef KASUMI_SCENE3_H
 #define KASUMI_SCENE3_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 

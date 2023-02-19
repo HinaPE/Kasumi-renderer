@@ -1,6 +1,9 @@
 #ifndef KASUMI_CIRCLES_H
 #define KASUMI_CIRCLES_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "lines.h"
 
 namespace Kasumi

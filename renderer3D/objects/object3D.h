@@ -1,6 +1,9 @@
 #ifndef KASUMI_OBJECT3D_H
 #define KASUMI_OBJECT3D_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "backends/api.h"
 
 namespace Kasumi

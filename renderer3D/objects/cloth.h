@@ -1,6 +1,9 @@
 #ifndef KASUMI_CLOTH_H
 #define KASUMI_CLOTH_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "object3D.h"
 
 namespace Kasumi

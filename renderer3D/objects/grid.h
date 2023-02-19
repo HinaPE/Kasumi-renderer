@@ -1,6 +1,9 @@
 #ifndef KASUMI_GRID_H
 #define KASUMI_GRID_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "object3D.h"
 #include "geom/grid.h"
 

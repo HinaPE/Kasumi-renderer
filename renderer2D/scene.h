@@ -1,6 +1,9 @@
 #ifndef KASUMI_SCENE2_H
 #define KASUMI_SCENE2_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "objects/object2D.h"
 #include "objects/circles.h"
 #include "objects/triangle.h"
