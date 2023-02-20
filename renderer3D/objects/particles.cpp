@@ -20,6 +20,8 @@ void Kasumi::ParticlesObject::_rebuild_()
 		_opt.inited = true;
 	}
 
+	_mesh->_opt.instance_matrices.clear();
+
 	for (auto &pose: _opt.poses)
 		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
 	_mesh->_opt.dirty = true;
