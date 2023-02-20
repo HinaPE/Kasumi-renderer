@@ -29,6 +29,7 @@ public:
 	}
 	void INSPECT() final;
 };
+using ArrowObjectPtr = std::shared_ptr<ArrowObject>;
 } // namespace Kasumi
 
 #endif //HINAPE_ARROW_H
