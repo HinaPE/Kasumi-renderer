@@ -8,9 +8,26 @@
 
 namespace Kasumi
 {
-class LightObject : public Object3D
+class DirectLightObject : public ObjectMesh3D
 {
-	// TODO: just a light model
+public:
+	struct Opt
+	{
+		mVector3 origin;
+		mVector3 direction;
+	} _opt;
+	DirectLightObject() { ObjectMesh3D::_opt.mesh_name = "arrow"; }
+	void _rebuild_() final
+	{
+		if (!Object3D::_opt.dirty)
+			return;
+
+		Object3D::_opt.pose.position = _opt.origin;
+		Object3D::_opt.pose.euler = mQuaternion(mVector3(0, 0, 1), _opt.direction).euler();
+
+		ObjectMesh3D::_rebuild_();
+	}
+	void INSPECT() final;
 };
 } // namespace Kasumi
 
