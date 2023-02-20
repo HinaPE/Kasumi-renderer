@@ -5,7 +5,8 @@ void Kasumi::Object3D::INSPECT()
 	ImGui::Text("Transform");
 	auto sliders = [&](const std::string &label, mVector3 &data, float sens)
 	{
-		ImGui::DragScalarN(label.c_str(), ImGuiDataType_Real, &data[0], 3, sens, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f");
+		if (ImGui::DragScalarN(label.c_str(), ImGuiDataType_Real, &data[0], 3, sens, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f"))
+			_opt.dirty = true;
 	};
 	sliders("Position", _opt.pose.position, 0.1f);
 	sliders("Rotation", _opt.pose.euler, 0.1f);

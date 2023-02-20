@@ -18,6 +18,7 @@ public:
 public:
 	struct Opt
 	{
+		bool inited = false;
 		std::string mesh_name = "sphere";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::RED;
