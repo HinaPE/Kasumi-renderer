@@ -24,6 +24,7 @@ public:
 
 		Object3D::_opt.pose.position = _opt.origin;
 		Object3D::_opt.pose.euler = mQuaternion(mVector3(0, 0, 1), _opt.direction).euler();
+		Object3D::_opt.pose.scale = mVector3(0.2, 0.5, 0.2);
 
 		ObjectMesh3D::_rebuild_();
 	}
