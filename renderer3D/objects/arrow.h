@@ -8,13 +8,13 @@
 
 namespace Kasumi
 {
-class ArrowObject final : public ObjectMesh3D
+class ArrowObject : public ObjectMesh3D
 {
 public:
 	struct Opt
 	{
-		mVector3 origin;
-		mVector3 direction;
+		mVector3 origin = mVector3::Zero();
+		mVector3 direction = mVector3::UnitZ();
 	} _opt;
 	ArrowObject() { ObjectMesh3D::_opt.mesh_name = "arrow"; }
 	void _rebuild_() final
@@ -27,7 +27,7 @@ public:
 
 		ObjectMesh3D::_rebuild_();
 	}
-	void INSPECT() final;
+	void INSPECT() override;
 };
 using ArrowObjectPtr = std::shared_ptr<ArrowObject>;
 } // namespace Kasumi
