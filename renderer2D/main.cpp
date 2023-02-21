@@ -39,7 +39,7 @@ protected:
 			_scene->add(circle);
 		}
 
-		inspect(_scene);
+		inspect(_scene.get());
 		_scene->VALID_CHECK();
 	}
 	void update(double dt) final
