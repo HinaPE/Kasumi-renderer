@@ -39,7 +39,7 @@ public:
 	{
 		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
-		mVector3 color = HinaPE::Color::RED;
+		mVector3 color = HinaPE::Color::CYAN;
 	} _opt;
 	ObjectMesh3D() { _shader = Shader::DefaultMeshShader; }
 	void _rebuild_() override;

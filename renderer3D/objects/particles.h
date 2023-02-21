@@ -21,7 +21,7 @@ public:
 		bool inited = false;
 		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
-		mVector3 color = HinaPE::Color::BLUE;
+		mVector3 color = HinaPE::Color::ORANGE;
 		std::vector<Pose> poses;
 	} _opt;
 	ParticlesObject() { _shader = Shader::DefaultInstanceShader; }
