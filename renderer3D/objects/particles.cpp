@@ -28,3 +28,9 @@ void Kasumi::ParticlesObject::_rebuild_()
 
 	Object3D::_rebuild_();
 }
+void Kasumi::ParticlesObject::INSPECT()
+{
+	Object3D::INSPECT();
+
+	ImGui::Text("Particles: %zd", _opt.poses.size());
+}
