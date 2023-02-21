@@ -7,7 +7,7 @@
 #include "object3D.h"
 namespace Kasumi
 {
-class CubeObject final : public ObjectMesh3D
+class CubeObject : public ObjectMesh3D
 {
 public:
 	struct Opt
@@ -28,7 +28,7 @@ public:
 
 		ObjectMesh3D::_rebuild_();
 	}
-	void INSPECT() final;
+	void INSPECT() override;
 
 private:
 	HinaPE::Geom::Box3 _cube; // NOT USED YET
