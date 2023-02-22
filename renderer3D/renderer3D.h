@@ -67,7 +67,7 @@ protected:
 	}
 	void update(double dt) final
 	{
-		step(dt);
+		HINA_TRACK(step(dt), "Step");
 		HINA_TRACK(_scene->draw(), "Rendering");
 	}
 	void key(int key, int scancode, int action, int mods) override { _scene->key(key, scancode, action, mods); }
