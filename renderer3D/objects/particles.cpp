@@ -21,6 +21,7 @@ void Kasumi::ParticlesObject::_rebuild_()
 	}
 
 	_mesh->_opt.instance_matrices.clear();
+	_mesh->_opt.instance_matrices.reserve(_opt.poses.size());
 
 	for (auto &pose: _opt.poses)
 		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
