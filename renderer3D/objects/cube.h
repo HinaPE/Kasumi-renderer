@@ -29,12 +29,8 @@ public:
 		ObjectMesh3D::_rebuild_();
 	}
 	void INSPECT() override;
-
-private:
-	HinaPE::Geom::Box3 _cube; // NOT USED YET
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;
-
 } // namespace Kasumi
 
 #endif //KASUMI_CUBE_H
