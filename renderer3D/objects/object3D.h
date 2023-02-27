@@ -37,6 +37,8 @@ public:
 public:
 	struct Opt
 	{
+		bool dirty = true;
+
 		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::CYAN;

@@ -37,7 +37,9 @@ void Kasumi::ObjectMesh3D::_update_uniform()
 }
 void Kasumi::ObjectMesh3D::_rebuild_()
 {
-	if (!Object3D::_opt.dirty)
+	Object3D::_rebuild_();
+
+	if (!_opt.dirty)
 		return;
 
 	if (!_opt.texture_path.empty())
@@ -45,7 +47,7 @@ void Kasumi::ObjectMesh3D::_rebuild_()
 	else
 		_mesh = std::make_shared<Mesh>(_opt.mesh_name, _opt.color);
 
-	Object3D::_rebuild_();
+	_opt.dirty = false;
 }
 void Kasumi::ObjectMesh3D::VALID_CHECK() const
 {
