@@ -11,6 +11,9 @@ namespace Kasumi
 class PlaneObject : public ObjectMesh3D
 {
 public:
+
+
+public:
 	struct Opt
 	{
 		real width = 1;

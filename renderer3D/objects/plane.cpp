@@ -9,6 +9,5 @@ void Kasumi::PlaneObject::INSPECT()
 
 void Kasumi::PlaneObject::_rebuild_()
 {
-	if (!Object3D::_opt.dirty)
-		return;
+	ObjectMesh3D::_rebuild_();
 }

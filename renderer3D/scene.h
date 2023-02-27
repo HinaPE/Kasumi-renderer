@@ -13,6 +13,7 @@
 #include "objects/particles.h"
 #include "objects/lines.h"
 #include "objects/grid.h"
+#include "objects/plane.h"
 
 #include "backends/api.h"
 
