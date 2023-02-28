@@ -5,7 +5,6 @@
 // MPL-2.0 license
 
 #include "object3D.h"
-
 namespace Kasumi
 {
 class LinesObject final : public Object3D, public Renderable, public VALID_CHECKER
@@ -30,7 +29,7 @@ public:
 
 protected:
 	void _draw() final;
-	void _update_uniform() override;
+	void _update_uniform() final;
 
 private:
 	LinesPtr _lines;
