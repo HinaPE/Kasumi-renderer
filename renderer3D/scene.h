@@ -11,6 +11,7 @@
 #include "objects/sphere.h"
 #include "objects/cup.h"
 #include "objects/particles.h"
+#include "objects/points.h"
 #include "objects/lines.h"
 #include "objects/grid.h"
 #include "objects/plane.h"
