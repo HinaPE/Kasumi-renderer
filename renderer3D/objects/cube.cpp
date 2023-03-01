@@ -23,4 +23,6 @@ void Kasumi::CubeObject::sync_opt()
 	_pose.scale.x() = _opt.width;
 	_pose.scale.y() = _opt.height;
 	_pose.scale.z() = _opt.depth;
+
+	_dirty = false;
 }
