@@ -18,15 +18,15 @@ public:
 public:
 	struct Opt
 	{
-		bool inited = false;
 		std::string mesh_name = "cube";
 		std::string texture_path; // Default: not
 		mVector3 color = HinaPE::Color::ORANGE;
 		std::vector<Pose> poses;
 	} _opt;
-	ParticlesObject() { _shader = Shader::DefaultInstanceShader; }
+	ParticlesObject();
+	void init();
 	void INSPECT() override;
-	void _rebuild_() final;
+	void _rebuild_();
 
 protected:
 	void _draw() final;

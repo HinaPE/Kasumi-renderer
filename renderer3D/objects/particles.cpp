@@ -1,4 +1,14 @@
 #include "particles.h"
+
+Kasumi::ParticlesObject::ParticlesObject()
+{
+	NAME = "Cup" + std::to_string(ID);
+	_shader = Shader::DefaultInstanceShader;
+	if (!_opt.texture_path.empty())
+		_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.texture_path));
+	else
+		_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.color));
+}
 void Kasumi::ParticlesObject::_draw()
 {
 	if (_mesh == nullptr)
@@ -8,17 +18,8 @@ void Kasumi::ParticlesObject::_draw()
 }
 void Kasumi::ParticlesObject::_rebuild_()
 {
-	if (!Object3D::_opt.dirty)
+	if (!_dirty)
 		return;
-
-	if (!_opt.inited)
-	{
-		if (!_opt.texture_path.empty())
-			_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.texture_path));
-		else
-			_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.color));
-		_opt.inited = true;
-	}
 
 	_mesh->_opt.instance_matrices.clear();
 	_mesh->_opt.instance_matrices.reserve(_opt.poses.size());
@@ -26,8 +27,6 @@ void Kasumi::ParticlesObject::_rebuild_()
 	for (auto &pose: _opt.poses)
 		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
 	_mesh->_opt.dirty = true;
-
-	Object3D::_rebuild_();
 }
 void Kasumi::ParticlesObject::INSPECT()
 {

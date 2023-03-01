@@ -1,5 +1,10 @@
 #include "grid.h"
 
+Kasumi::GridObject::GridObject()
+{
+	NAME = "Grid" + std::to_string(ID);
+	_shader = Shader::DefaultInstanceLineShader;
+}
 void Kasumi::GridObject::init(const HinaPE::Geom::Grid3Ptr &grid)
 {
 	int scale = 15;

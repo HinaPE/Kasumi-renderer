@@ -6,11 +6,11 @@ void Kasumi::Object3D::INSPECT()
 	auto sliders = [&](const std::string &label, mVector3 &data, float sens)
 	{
 		if (ImGui::DragScalarN(label.c_str(), ImGuiDataType_Real, &data[0], 3, sens, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f"))
-			_opt.dirty = true;
+			_dirty = true;
 	};
-	sliders("Position", _opt.pose.position, 0.1f);
-	sliders("Rotation", _opt.pose.euler, 0.1f);
-	sliders("Scale", _opt.pose.scale, 0.031f);
+	sliders("Position", _pose.position, 0.1f);
+	sliders("Rotation", _pose.euler, 0.1f);
+	sliders("Scale", _pose.scale, 0.031f);
 }
 void Kasumi::ObjectMesh3D::INSPECT()
 {
@@ -32,25 +32,18 @@ void Kasumi::ObjectMesh3D::_draw()
 void Kasumi::ObjectMesh3D::_update_uniform()
 {
 	Renderable::_update_uniform();
-	_shader->uniform("model", Object3D::_opt.pose.get_model_matrix());
-	Shader::DefaultLineShader->uniform("model", Object3D::_opt.pose.get_model_matrix());
-}
-void Kasumi::ObjectMesh3D::_rebuild_()
-{
-	Object3D::_rebuild_();
-
-	if (!_opt.dirty)
-		return;
-
-	if (!_opt.texture_path.empty())
-		_mesh = std::make_shared<Mesh>(_opt.mesh_name, _opt.texture_path);
-	else
-		_mesh = std::make_shared<Mesh>(_opt.mesh_name, _opt.color);
-
-	_opt.dirty = false;
+	_shader->uniform("model", _pose.get_model_matrix());
+	Shader::DefaultLineShader->uniform("model", _pose.get_model_matrix());
 }
 void Kasumi::ObjectMesh3D::VALID_CHECK() const
 {
 	if (_mesh == nullptr)
 		throw std::runtime_error("Mesh is nullptr");
+}
+void Kasumi::ObjectMesh3D::init()
+{
+	if (!TEXTURE.empty())
+		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
+	else
+		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
 }

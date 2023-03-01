@@ -62,12 +62,12 @@ protected:
 //			_scene->add(particles);
 //		}
 
-		{
-			auto plane = std::make_shared<Kasumi::PlaneObject>();
-			plane->NAME = "plane";
-			plane->_rebuild_();
-			_scene->add(plane);
-		}
+//		{
+//			auto plane = std::make_shared<Kasumi::PlaneObject>();
+//			plane->NAME = "plane";
+//			plane->_rebuild_();
+//			_scene->add(plane);
+//		}
 
 		Kasumi::PointsObject::DefaultPoints->add({0, 0, 0}, HinaPE::Color::RED);
 //		Kasumi::LinesObject::DefaultLines->add({-2, 0, 0}, {2, 0, 0}, HinaPE::Color::RED);

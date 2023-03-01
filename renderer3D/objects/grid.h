@@ -16,7 +16,7 @@ public:
 	{
 		mVector3 color = HinaPE::Color::PURPLE;
 	} _opt;
-	GridObject() { _shader = Shader::DefaultInstanceLineShader; }
+	GridObject();
 	void init(const HinaPE::Geom::Grid3Ptr &grid);
 	void update();
 

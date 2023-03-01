@@ -16,18 +16,8 @@ public:
 		real height = 1;
 		real depth = 1;
 	} _opt;
-	CubeObject() { ObjectMesh3D::_opt.mesh_name = "cube"; }
-	void _rebuild_() final
-	{
-		if (!Object3D::_opt.dirty)
-			return;
-
-		Object3D::_opt.pose.scale.x() = _opt.width;
-		Object3D::_opt.pose.scale.y() = _opt.height;
-		Object3D::_opt.pose.scale.z() = _opt.depth;
-
-		ObjectMesh3D::_rebuild_();
-	}
+	CubeObject();
+	void sync_opt() final;
 	void INSPECT() override;
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;

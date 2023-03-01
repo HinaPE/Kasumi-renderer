@@ -17,14 +17,12 @@ public:
 
 public:
 	PointsObject() { _shader = Shader::DefaultPointShader; }
-	void _rebuild_() final
+	void _rebuild_()
 	{
-		if (!Object3D::_opt.dirty)
+		if (!_dirty)
 			return;
 
 		_points = std::make_shared<Points>();
-
-		Object3D::_rebuild_();
 	}
 
 protected:

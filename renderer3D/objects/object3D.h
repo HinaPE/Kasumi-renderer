@@ -5,24 +5,24 @@
 // MPL-2.0 license
 
 #include "backends/api.h"
+#include "geom/collider3.h"
+#include "geom/surface3.h"
 
 namespace Kasumi
 {
 class Object3D : public INSPECTOR
 {
 public:
+	Object3D() : ID(ID_GLOBAL++) {}
+
+	void INSPECT() override;
+
+public:
 	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
 	std::string NAME = "Untitled";
-	struct Opt
-	{
-		bool dirty = true;
-		Pose pose;
-	} _opt;
-	Object3D() : ID(ID_GLOBAL++) {}
-	virtual void _rebuild_() { _opt.dirty = false; }
-
-	void INSPECT() override;
+	Pose _pose;
+	bool _dirty{false};
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
@@ -35,16 +35,8 @@ public:
 	void switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 public:
-	struct Opt
-	{
-		bool dirty = true;
-
-		std::string mesh_name = "cube";
-		std::string texture_path; // Default: not
-		mVector3 color = HinaPE::Color::CYAN;
-	} _opt;
-	ObjectMesh3D() { _shader = Shader::DefaultMeshShader; }
-	void _rebuild_() override;
+	void init();
+	virtual void sync_opt() = 0;
 
 protected:
 	void _draw() final;
@@ -54,6 +46,12 @@ protected:
 	void VALID_CHECK() const override;
 
 	MeshPtr _mesh;
+	HinaPE::Geom::RigidBodyCollider3Ptr _collider;
+
+protected:
+	std::string MESH = "cube";
+	std::string TEXTURE; // Default: not
+	mVector3 COLOR = HinaPE::Color::CYAN;
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 // @formatter:on

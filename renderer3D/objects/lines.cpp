@@ -1,10 +1,15 @@
 #include "lines.h"
 
 std::shared_ptr<Kasumi::LinesObject> Kasumi::LinesObject::DefaultLines = nullptr;
+Kasumi::LinesObject::LinesObject()
+{
+	NAME = "Light" + std::to_string(ID);
+	_shader = Shader::DefaultLineShader;
+	_lines = std::make_shared<Lines>();
+}
 void Kasumi::LinesObject::Init()
 {
 	DefaultLines = std::make_shared<Kasumi::LinesObject>();
-	DefaultLines->_rebuild_();
 }
 void Kasumi::LinesObject::add(const mVector3 &start, const mVector3 &end, const mVector3 &color)
 {
@@ -20,5 +25,5 @@ void Kasumi::LinesObject::_draw()
 void Kasumi::LinesObject::_update_uniform()
 {
 	Renderable::_update_uniform();
-	_shader->uniform("model", Object3D::_opt.pose.get_model_matrix());
+	_shader->uniform("model", _pose.get_model_matrix());
 }

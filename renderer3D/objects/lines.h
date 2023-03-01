@@ -16,16 +16,7 @@ public:
 	void add(const mVector3 &start, const mVector3 &end, const mVector3 &color = HinaPE::Color::PURPLE);
 
 public:
-	LinesObject() { _shader = Shader::DefaultLineShader; }
-	void _rebuild_() final
-	{
-		if (!Object3D::_opt.dirty)
-			return;
-
-		_lines = std::make_shared<Lines>();
-
-		Object3D::_rebuild_();
-	}
+	LinesObject();
 
 protected:
 	void _draw() final;

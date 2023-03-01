@@ -5,22 +5,18 @@
 // MPL-2.0 license
 
 #include "object3D.h"
-#include "geom/surface3.h"
 namespace Kasumi
 {
 class PlaneObject : public ObjectMesh3D
 {
-public:
-
-
 public:
 	struct Opt
 	{
 		real width = 1;
 		real height = 1;
 	} _opt;
-	PlaneObject() { ObjectMesh3D::_opt.mesh_name = "plane"; }
-	void _rebuild_() final;
+	PlaneObject();
+	void sync_opt() final {}
 	void INSPECT() override;
 };
 } // namespace Kasumi
