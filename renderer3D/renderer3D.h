@@ -23,12 +23,9 @@ protected:
 		Kasumi::LinesObject::Init();
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
-//		{
-//			auto cube = std::make_shared<Kasumi::CubeObject>();
-//			cube->NAME = "cube";
-//			cube->_rebuild_();
-//			_scene->add(cube);
-//		}
+		{
+			_scene->add(std::make_shared<Kasumi::CubeObject>());
+		}
 //		{
 //			auto sphere = std::make_shared<Kasumi::SphereObject>();
 //			sphere->NAME = "sphere";
@@ -69,7 +66,7 @@ protected:
 //			_scene->add(plane);
 //		}
 
-		Kasumi::PointsObject::DefaultPoints->add({0, 0, 0}, HinaPE::Color::RED);
+//		Kasumi::PointsObject::DefaultPoints->add({0, 0, 0}, HinaPE::Color::RED);
 //		Kasumi::LinesObject::DefaultLines->add({-2, 0, 0}, {2, 0, 0}, HinaPE::Color::RED);
 
 //		inspect(_scene);

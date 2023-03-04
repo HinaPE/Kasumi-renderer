@@ -25,6 +25,7 @@ void Kasumi::ObjectMesh3D::INSPECT()
 auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
+	auto pos = _mesh->asEigenMatrixXMap();
 	return res;
 }
 void Kasumi::ObjectMesh3D::_draw()
@@ -50,5 +51,5 @@ void Kasumi::ObjectMesh3D::init()
 	if (!TEXTURE.empty())
 		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
 	else
-		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
+		_mesh = std::make_shared<Mesh>(MESH, COLOR);
 }
