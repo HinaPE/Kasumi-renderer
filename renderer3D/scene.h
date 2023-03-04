@@ -35,7 +35,7 @@ public:
 	void INSPECT() final;
 	void VALID_CHECK() const final;
 
-private:
+public: // scene query
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
 
 private:
