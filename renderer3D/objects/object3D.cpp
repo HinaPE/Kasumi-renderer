@@ -22,6 +22,11 @@ void Kasumi::ObjectMesh3D::INSPECT()
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Vertices: %zu", _mesh->vertices().size());
 	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Indices: %zu", _mesh->indices().size());
 }
+auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::SurfaceRayIntersection3
+{
+	HinaPE::Geom::SurfaceRayIntersection3 res;
+	return res;
+}
 void Kasumi::ObjectMesh3D::_draw()
 {
 	if (_mesh == nullptr)

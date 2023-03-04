@@ -30,6 +30,7 @@ using Object3DPtr = std::shared_ptr<Object3D>;
 class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
+	auto ray_cast(const mRay3 & ray) const -> HinaPE::Geom::SurfaceRayIntersection3;
 	void switch_surface() const { _mesh->_opt.dirty = true;_mesh->_opt.render_surface = !_mesh->_opt.render_surface; }
 	void switch_wireframe() const { _mesh->_opt.dirty = true;_mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
 	void switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
@@ -55,6 +56,5 @@ protected:
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 // @formatter:on
-
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H

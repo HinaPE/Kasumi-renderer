@@ -65,3 +65,18 @@ void Kasumi::Scene3D::VALID_CHECK() const
 		if (need_valid_check(pair.second.get()))
 			as_valid_check(pair.second.get())->VALID_CHECK();
 }
+auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
+{
+	HinaPE::Geom::SurfaceRayIntersection3 res;
+	for (auto &o: _objects)
+	{
+		if (is<ObjectMesh3D>(o.second.get()))
+		{
+			auto mesh_obj = as<ObjectMesh3D>(o.second.get());
+			auto hit = mesh_obj->ray_cast(ray);
+			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
+				res = hit;
+		}
+	}
+	return res;
+}

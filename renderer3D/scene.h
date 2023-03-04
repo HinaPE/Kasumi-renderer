@@ -20,7 +20,7 @@
 
 namespace Kasumi
 {
-class Scene3D : public VALID_CHECKER, public INSPECTOR
+class Scene3D final : public VALID_CHECKER, public INSPECTOR
 {
 public:
 	void add(const Object3DPtr &object);
@@ -34,6 +34,9 @@ public:
 
 	void INSPECT() final;
 	void VALID_CHECK() const final;
+
+private:
+	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
 
 private:
 	std::map<unsigned int, Object3DPtr> _objects;
