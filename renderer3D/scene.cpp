@@ -5,7 +5,11 @@ Kasumi::Scene3D::Scene3D()
 	_ray = std::make_shared<LinesObject>();
 	_ray_hit = std::make_shared<PointsObject>();
 }
-void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object) { _objects[object->ID] = object; }
+void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object)
+{
+	_objects[object->ID] = object;
+	selected = (int) object->ID;
+}
 void Kasumi::Scene3D::remove(unsigned int id)
 {
 	auto it = _objects.find(id);
@@ -51,6 +55,23 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
 				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_surface();
 	}
+	if (key == GLFW_KEY_R && action == GLFW_PRESS)
+	{
+		_ray_enable = true;
+		auto ray = Kasumi::Camera::MainCamera->get_ray(mVector2::Zero());
+		_ray_hit_info = ray_cast(ray);
+		if (_ray_hit_info.is_intersecting)
+		{
+			_ray->add(Kasumi::Camera::MainCamera->_opt.position, _ray_hit_info.point);
+			_ray_hit->add(_ray_hit_info.point);
+		}
+	}
+	if (key == GLFW_KEY_R && action == GLFW_RELEASE)
+	{
+		_ray_enable = false;
+		_ray->clear();
+		_ray_hit->clear();
+	}
 }
 
 void Kasumi::Scene3D::INSPECT()
@@ -66,6 +87,15 @@ void Kasumi::Scene3D::INSPECT()
 	}
 	auto &obj = _objects[selected];
 	obj->INSPECT();
+
+	if (_ray_enable)
+	{
+		ImGui::Separator();
+		ImGui::Text("Ray Hit: %d", _ray_hit_info.is_intersecting);
+		ImGui::Text("Ray Hit Point: (%.3f, %.3f, %.3f)", _ray_hit_info.point.x(), _ray_hit_info.point.y(), _ray_hit_info.point.z());
+		ImGui::Text("Ray Hit Normal: (%.3f, %.3f, %.3f)", _ray_hit_info.normal.x(), _ray_hit_info.normal.y(), _ray_hit_info.normal.z());
+		ImGui::Text("Ray Hit Distance: %.3f", _ray_hit_info.distance);
+	}
 }
 void Kasumi::Scene3D::VALID_CHECK() const
 {
@@ -90,26 +120,7 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 }
 
 // @formatter:off
-void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); _ray_mouse_button(button, action, mods); }
+void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }
 void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos) { Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos); }
 // @formatter:on
-void Kasumi::Scene3D::_ray_mouse_button(int button, int action, int mods)
-{
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-	{
-		_ray_enable = true;
-		auto ray = Kasumi::Camera::MainCamera->get_ray(mVector2::Zero());
-		auto hit = ray_cast(ray);
-		if (hit.is_intersecting) {
-			_ray->add(Kasumi::Camera::MainCamera->_opt.position, hit.point);
-			_ray_hit->add(hit.point);
-		}
-	}
-	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
-	{
-		_ray_enable = false;
-		_ray->clear();
-		_ray_hit->clear();
-	}
-}

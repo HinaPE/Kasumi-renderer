@@ -23,52 +23,12 @@ protected:
 		Kasumi::LinesObject::Init();
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
-//		_scene->add(std::make_shared<Kasumi::CubeObject>());
 		_scene->add(std::make_shared<Kasumi::SphereObject>());
-//		{
-//			auto sphere = std::make_shared<Kasumi::SphereObject>();
-//			sphere->NAME = "sphere";
-//			sphere->_rebuild_();
-//			_scene->add(sphere);
-//		}
-//		{
-//			auto cup = std::make_shared<Kasumi::CupObject>();
-//			cup->NAME = "cup";
-//			cup->_rebuild_();
-//			_scene->add(cup);
-//		}
-//		{
-//			auto grid = std::make_shared<Kasumi::GridObject>();
-//			grid->NAME = "grid";
-//			grid->init(nullptr);
-//			_scene->add(grid);
-//		}
-//		{
-//			auto particles = std::make_shared<Kasumi::ParticlesObject>();
-//			particles->NAME = "particles";
-//			Kasumi::Pose pose1;
-//			pose1.position = {-5, 0, 0};
-//			pose1.scale = {5, 5, 5};
-//			Kasumi::Pose pose2;
-//			pose2.position = {5, 0, 0};
-//			pose2.scale = {5, 5, 5};
-//			particles->_opt.poses.push_back(pose2);
-//			particles->_opt.poses.push_back(pose1);
-//			particles->_rebuild_();
-//			_scene->add(particles);
-//		}
-
-//		{
-//			auto plane = std::make_shared<Kasumi::PlaneObject>();
-//			plane->NAME = "plane";
-//			plane->_rebuild_();
-//			_scene->add(plane);
-//		}
 
 //		Kasumi::PointsObject::DefaultPoints->add({0, 0, 0}, HinaPE::Color::RED);
 //		Kasumi::LinesObject::DefaultLines->add({-2, 0, 0}, {2, 0, 0}, HinaPE::Color::RED);
 
-//		inspect(_scene);
+		inspect(_scene.get());
 //		_scene->VALID_CHECK();
 	}
 	void update(double dt) final
