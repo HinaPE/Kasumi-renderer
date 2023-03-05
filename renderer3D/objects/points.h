@@ -14,16 +14,10 @@ public:
 	static std::shared_ptr<PointsObject> DefaultPoints;
 
 	void add(const mVector3 &point, const mVector3 &color = HinaPE::Color::PURPLE);
+	void clear();
 
 public:
-	PointsObject() { _shader = Shader::DefaultPointShader; }
-	void _rebuild_()
-	{
-		if (!_dirty)
-			return;
-
-		_points = std::make_shared<Points>();
-	}
+	PointsObject();
 
 protected:
 	void _draw() final;
@@ -32,6 +26,7 @@ protected:
 private:
 	PointsPtr _points;
 };
+using PointsObjectPtr = std::shared_ptr<PointsObject>;
 } // namespace Kasumi
 
 #endif //KASUMI_POINTS_H

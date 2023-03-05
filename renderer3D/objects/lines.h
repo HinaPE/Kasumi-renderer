@@ -14,6 +14,7 @@ public:
 	static std::shared_ptr<LinesObject> DefaultLines;
 
 	void add(const mVector3 &start, const mVector3 &end, const mVector3 &color = HinaPE::Color::PURPLE);
+	void clear();
 
 public:
 	LinesObject();

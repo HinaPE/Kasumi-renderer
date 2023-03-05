@@ -23,9 +23,8 @@ protected:
 		Kasumi::LinesObject::Init();
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
-		{
-			_scene->add(std::make_shared<Kasumi::CubeObject>());
-		}
+//		_scene->add(std::make_shared<Kasumi::CubeObject>());
+		_scene->add(std::make_shared<Kasumi::SphereObject>());
 //		{
 //			auto sphere = std::make_shared<Kasumi::SphereObject>();
 //			sphere->NAME = "sphere";

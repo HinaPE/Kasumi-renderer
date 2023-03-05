@@ -3,7 +3,7 @@
 std::shared_ptr<Kasumi::LinesObject> Kasumi::LinesObject::DefaultLines = nullptr;
 Kasumi::LinesObject::LinesObject()
 {
-	NAME = "Light" + std::to_string(ID);
+	NAME = "Line" + std::to_string(ID);
 	_shader = Shader::DefaultLineShader;
 	_lines = std::make_shared<Lines>();
 }
@@ -14,6 +14,10 @@ void Kasumi::LinesObject::Init()
 void Kasumi::LinesObject::add(const mVector3 &start, const mVector3 &end, const mVector3 &color)
 {
 	_lines->add(start, end, color);
+}
+void Kasumi::LinesObject::clear()
+{
+	_lines->clear();
 }
 void Kasumi::LinesObject::_draw()
 {

@@ -35,12 +35,22 @@ public:
 	void INSPECT() final;
 	void VALID_CHECK() const final;
 
-public: // scene query
-	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
+public:
+	Scene3D();
+
+private:
+	void _ray_mouse_button(int button, int action, int mods);
 
 private:
 	std::map<unsigned int, Object3DPtr> _objects;
 	int selected = 0;
+
+
+private: // scene query
+	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
+	LinesObjectPtr _ray; // scene ray
+	PointsObjectPtr _ray_hit; // scene ray hit point
+	bool _ray_enable = true;
 };
 using Scene3DPtr = std::shared_ptr<Scene3D>;
 } // namespace Kasumi

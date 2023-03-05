@@ -36,10 +36,12 @@ auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::Sur
 	Eigen::MatrixXd verts_world_3 = verts_world.block(0, 0, verts_world.rows(), 3);
 
 	std::vector<igl::Hit> hits;
-	bool is = igl::ray_mesh_intersect(ray._origin._v, ray._direction._v, verts_world_3, idxs, hits);
+	res.is_intersecting = igl::ray_mesh_intersect(ray._origin._v, ray._direction._v, verts_world_3, idxs, hits);
 	for (auto const &hit: hits)
 	{
-		std::cout << hit.t << std::endl;
+		res.point = ray._origin + (real) (hit.t) * ray._direction;
+		res.distance = ((real) (hit.t) * ray._direction).length();
+		return res;
 	}
 	return res;
 }
