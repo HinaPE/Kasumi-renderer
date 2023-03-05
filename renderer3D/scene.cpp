@@ -1,5 +1,4 @@
 #include "scene.h"
-#include "igl/ray_mesh_intersect.h"
 
 void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object) { _objects[object->ID] = object; }
 void Kasumi::Scene3D::remove(unsigned int id)

@@ -1,4 +1,6 @@
 #include "object3D.h"
+#include "igl/ray_mesh_intersect.h"
+
 unsigned int Kasumi::Object3D::ID_GLOBAL = 0;
 void Kasumi::Object3D::INSPECT()
 {
@@ -25,7 +27,12 @@ void Kasumi::ObjectMesh3D::INSPECT()
 auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
-	auto pos = _mesh->asEigenMatrixXMap();
+	const auto &verts_local = _mesh->_verts_eigen4;
+	const auto &idxs = _mesh->_idxs_eigen;
+	auto verts_world = _pose.get_model_matrix()._m * verts_local;
+
+	std::vector<igl::Hit> hits;
+	igl::ray_mesh_intersect(ray._origin._v, ray._direction._v, verts_world, idxs, hits);
 	return res;
 }
 void Kasumi::ObjectMesh3D::_draw()
