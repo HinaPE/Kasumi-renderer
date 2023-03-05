@@ -8,8 +8,8 @@ Kasumi::SphereObject::SphereObject()
 }
 void Kasumi::SphereObject::sync_opt()
 {
-	_pose.scale.x() = _opt.radius;
-	_pose.scale.y() = _opt.radius;
-	_pose.scale.z() = _opt.radius;
+	POSE.scale.x() = _opt.radius;
+	POSE.scale.y() = _opt.radius;
+	POSE.scale.z() = _opt.radius;
 	_dirty = true;
 }

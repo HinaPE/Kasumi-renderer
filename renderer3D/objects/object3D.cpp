@@ -10,9 +10,9 @@ void Kasumi::Object3D::INSPECT()
 		if (ImGui::DragScalarN(label.c_str(), ImGuiDataType_Real, &data[0], 3, sens, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f"))
 			_dirty = true;
 	};
-	sliders("Position", _pose.position, 0.1f);
-	sliders("Rotation", _pose.euler, 0.1f);
-	sliders("Scale", _pose.scale, 0.031f);
+	sliders("Position", POSE.position, 0.1f);
+	sliders("Rotation", POSE.euler, 0.1f);
+	sliders("Scale", POSE.scale, 0.031f);
 }
 void Kasumi::ObjectMesh3D::INSPECT()
 {
@@ -29,7 +29,7 @@ auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::Sur
 	HinaPE::Geom::SurfaceRayIntersection3 res;
 	const auto &verts_local = _mesh->_verts_eigen4;
 	const auto &idxs = _mesh->_idxs_eigen;
-	auto model = _pose.get_model_matrix()._m;
+	auto model = POSE.get_model_matrix()._m;
 	auto t = (model * verts_local.transpose());
 	Eigen::MatrixXd verts_world = t.transpose();
 
@@ -55,8 +55,8 @@ void Kasumi::ObjectMesh3D::_draw()
 void Kasumi::ObjectMesh3D::_update_uniform()
 {
 	Renderable::_update_uniform();
-	_shader->uniform("model", _pose.get_model_matrix());
-	Shader::DefaultLineShader->uniform("model", _pose.get_model_matrix());
+	_shader->uniform("model", POSE.get_model_matrix());
+	Shader::DefaultLineShader->uniform("model", POSE.get_model_matrix());
 }
 void Kasumi::ObjectMesh3D::VALID_CHECK() const
 {

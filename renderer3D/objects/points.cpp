@@ -29,5 +29,5 @@ void Kasumi::PointsObject::_draw()
 void Kasumi::PointsObject::_update_uniform()
 {
 	Renderable::_update_uniform();
-	_shader->uniform("model", _pose.get_model_matrix());
+	_shader->uniform("model", POSE.get_model_matrix());
 }

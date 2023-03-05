@@ -24,9 +24,9 @@ protected:
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
 		auto sphere = std::make_shared<Kasumi::SphereObject>();
-		sphere->_pose.position = {0, 1, 0};
-		sphere->_pose.euler = {0, 1, 0};
-		sphere->_pose.scale = {2, 3, 1};
+		sphere->POSE.position = {0, 1, 0};
+		sphere->POSE.euler = {0, 1, 0};
+		sphere->POSE.scale = {2, 3, 1};
 
 		sphere->_opt.radius = 1;
 		sphere->sync_opt();

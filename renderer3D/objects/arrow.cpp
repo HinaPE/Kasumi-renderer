@@ -19,9 +19,9 @@ void Kasumi::ArrowObject::sync_opt()
 	if (!_dirty)
 		return;
 
-	_pose.position = _opt.origin;
-	_pose.euler = mQuaternion(mVector3(0, 0, 1), _opt.direction).euler();
-	_pose.scale = mVector3(0.2, 0.3, 0.2);
+	POSE.position = _opt.origin;
+	POSE.euler = mQuaternion(mVector3(0, 0, 1), _opt.direction).euler();
+	POSE.scale = mVector3(0.2, 0.3, 0.2);
 
 	_dirty = false;
 }

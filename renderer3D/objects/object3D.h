@@ -21,7 +21,7 @@ public:
 	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
 	std::string NAME = "Untitled";
-	Pose _pose;
+	Pose POSE;
 	bool _dirty{false};
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
