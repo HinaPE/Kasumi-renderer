@@ -5,7 +5,7 @@ Kasumi::CubeObject::CubeObject()
 	NAME = "Cube" + std::to_string(ID);
 	MESH = "cube";
 	_shader = Shader::DefaultMeshShader;
-	init();
+	_init();
 }
 void Kasumi::CubeObject::INSPECT()
 {

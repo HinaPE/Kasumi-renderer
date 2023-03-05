@@ -12,7 +12,7 @@ Kasumi::ArrowObject::ArrowObject()
 	NAME = "Arrow" + std::to_string(ID);
 	MESH = "arrow";
 	_shader = Shader::DefaultMeshShader;
-	init();
+	_init();
 }
 void Kasumi::ArrowObject::sync_opt()
 {

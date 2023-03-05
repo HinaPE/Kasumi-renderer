@@ -26,7 +26,9 @@ public:
 	void add(const Object3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
+	Scene3D();
 
+public:
 	void key(int key, int scancode, int action, int mods);
 	void mouse_button(int button, int action, int mods);
 	void mouse_scroll(double x_offset, double y_offset);
@@ -34,9 +36,6 @@ public:
 
 	void INSPECT() final;
 	void VALID_CHECK() const final;
-
-public:
-	Scene3D();
 
 private:
 	std::map<unsigned int, Object3DPtr> _objects;

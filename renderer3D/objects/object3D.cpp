@@ -63,7 +63,7 @@ void Kasumi::ObjectMesh3D::VALID_CHECK() const
 	if (_mesh == nullptr)
 		throw std::runtime_error("Mesh is nullptr");
 }
-void Kasumi::ObjectMesh3D::init()
+void Kasumi::ObjectMesh3D::_init()
 {
 	if (!TEXTURE.empty())
 		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);

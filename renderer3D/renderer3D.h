@@ -23,7 +23,14 @@ protected:
 		Kasumi::LinesObject::Init();
 		_scene->add(Kasumi::LinesObject::DefaultLines);
 
-		_scene->add(std::make_shared<Kasumi::SphereObject>());
+		auto sphere = std::make_shared<Kasumi::SphereObject>();
+		sphere->_pose.position = {0, 1, 0};
+		sphere->_pose.euler = {0, 1, 0};
+		sphere->_pose.scale = {2, 3, 1};
+
+		sphere->_opt.radius = 1;
+		sphere->sync_opt();
+		_scene->add(sphere);
 
 //		Kasumi::PointsObject::DefaultPoints->add({0, 0, 0}, HinaPE::Color::RED);
 //		Kasumi::LinesObject::DefaultLines->add({-2, 0, 0}, {2, 0, 0}, HinaPE::Color::RED);

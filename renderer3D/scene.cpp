@@ -35,25 +35,25 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 	{
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_wireframe();
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_wireframe();
 			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_wireframe();
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_wireframe();
 	}
 	if (key == GLFW_KEY_B && action == GLFW_PRESS)
 	{
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_bbox();
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_bbox();
 			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_bbox();
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_bbox();
 	}
 	if (key == GLFW_KEY_S && action == GLFW_PRESS)
 	{
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->switch_surface();
+				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_surface();
 			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->switch_surface();
+				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_surface();
 	}
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
@@ -85,8 +85,9 @@ void Kasumi::Scene3D::INSPECT()
 	{
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &selected, static_cast<int>(pair.first));
 	}
-	auto &obj = _objects[selected];
-	obj->INSPECT();
+	if (!_objects.contains(selected))
+		selected = (int) _objects.rbegin()->first;
+	_objects[selected]->INSPECT();
 
 	if (_ray_enable)
 	{

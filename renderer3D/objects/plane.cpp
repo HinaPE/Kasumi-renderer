@@ -5,7 +5,7 @@ Kasumi::PlaneObject::PlaneObject()
 	NAME = "Plane" + std::to_string(ID);
 	MESH = "plane";
 	_shader = Shader::DefaultMeshShader;
-	init();
+	_init();
 }
 void Kasumi::PlaneObject::INSPECT()
 {
