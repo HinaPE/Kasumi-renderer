@@ -91,10 +91,13 @@ void Kasumi::Scene3D::INSPECT()
 	if (_ray_enable)
 	{
 		ImGui::Separator();
-		ImGui::Text("Ray Hit: %d", _ray_hit_info.is_intersecting);
-		ImGui::Text("Ray Hit Point: (%.3f, %.3f, %.3f)", _ray_hit_info.point.x(), _ray_hit_info.point.y(), _ray_hit_info.point.z());
-		ImGui::Text("Ray Hit Normal: (%.3f, %.3f, %.3f)", _ray_hit_info.normal.x(), _ray_hit_info.normal.y(), _ray_hit_info.normal.z());
-		ImGui::Text("Ray Hit Distance: %.3f", _ray_hit_info.distance);
+		ImGui::Text("Ray Hit: %s", _ray_hit_info.is_intersecting ? "true" : "false");
+		if (_ray_hit_info.is_intersecting)
+		{
+			ImGui::Text("Ray Hit Point: (%.3f, %.3f, %.3f)", _ray_hit_info.point.x(), _ray_hit_info.point.y(), _ray_hit_info.point.z());
+			ImGui::Text("Ray Hit Normal: (%.3f, %.3f, %.3f)", _ray_hit_info.normal.x(), _ray_hit_info.normal.y(), _ray_hit_info.normal.z());
+			ImGui::Text("Ray Hit Distance: %.3f", _ray_hit_info.distance);
+		}
 	}
 }
 void Kasumi::Scene3D::VALID_CHECK() const
