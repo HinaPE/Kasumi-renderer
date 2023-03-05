@@ -31,7 +31,6 @@ class ObjectMesh3D : public Object3D, public Renderable, public VALID_CHECKER
 {
 public:
 	auto ray_cast(const mRay3 & ray) const -> HinaPE::Geom::SurfaceRayIntersection3;
-
 	virtual void sync_opt() = 0;
 
 protected:
