@@ -2,7 +2,7 @@
 //
 //Kasumi::ClothObject::ClothObject()
 //{
-//	NAME = "Cloth" + std::to_string(ID);
+//	NAME = "Cloth";
 //	_shader = Shader::DefaultMeshShader;
 //}
 //void Kasumi::ClothObject::init(std::vector<Mesh::Vertex> &&vertices, std::vector<Mesh::Index> &&indices, std::map<std::string, std::vector<TexturePtr>> &&textures)

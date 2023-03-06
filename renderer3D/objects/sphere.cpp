@@ -1,10 +1,9 @@
 #include "sphere.h"
 Kasumi::SphereObject::SphereObject()
 {
-	NAME = "Sphere" + std::to_string(ID);
-	MESH = "sphere";
+	NAME = "Sphere";
 	_shader = Shader::DefaultMeshShader;
-	_init();
+	_init("sphere", "");
 }
 void Kasumi::SphereObject::sync_opt()
 {

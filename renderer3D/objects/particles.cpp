@@ -2,7 +2,7 @@
 //
 //Kasumi::ParticlesObject::ParticlesObject()
 //{
-//	NAME = "Cup" + std::to_string(ID);
+//	NAME = "Cup";
 //	_shader = Shader::DefaultInstanceShader;
 //	if (!_opt.texture_path.empty())
 //		_mesh = std::make_shared<InstancedMesh>(std::make_shared<Mesh>(_opt.mesh_name, _opt.texture_path));

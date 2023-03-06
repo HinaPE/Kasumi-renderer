@@ -2,10 +2,9 @@
 
 Kasumi::PlaneObject::PlaneObject()
 {
-	NAME = "Plane" + std::to_string(ID);
-	MESH = "plane";
+	NAME = "Plane";
 	_shader = Shader::DefaultMeshShader;
-	_init();
+	_init("plane", "");
 }
 void Kasumi::PlaneObject::INSPECT()
 {

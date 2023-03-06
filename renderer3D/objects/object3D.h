@@ -23,7 +23,7 @@ public:
 	virtual void sync_opt() = 0;
 
 protected:
-	virtual void _init() final;
+	void _init(const std::string& MESH,const std::string& TEXTURE,const mVector3& COLOR = HinaPE::Color::CYAN);
 	void _draw() final;
 	void _update_uniform() final;
 
@@ -33,17 +33,12 @@ protected:
 	void _switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 protected:
-	std::string MESH = "cube";
-	std::string TEXTURE; // Default: not
-	mVector3 COLOR = HinaPE::Color::CYAN;
-
 	MeshPtr _mesh;
 	HinaPE::Geom::RigidBodyCollider3Ptr _collider;
 
 	void INSPECT() override;
 	void VALID_CHECK() const override;
 };
-using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 // @formatter:on
 
 class ObjectLines3D :
@@ -68,7 +63,6 @@ protected:
 private:
 	LinesPtr _lines;
 };
-using ObjectLines3DPtr = std::shared_ptr<ObjectLines3D>;
 
 class ObjectPoints3D :
 		public Renderable,
@@ -92,6 +86,9 @@ protected:
 private:
 	PointsPtr _points;
 };
+
+using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
+using ObjectLines3DPtr = std::shared_ptr<ObjectLines3D>;
 using ObjectPoints3DPtr = std::shared_ptr<ObjectPoints3D>;
 } // namespace Kasumi
 #endif //KASUMI_OBJECT3D_H

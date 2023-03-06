@@ -2,7 +2,7 @@
 //
 //Kasumi::GridObject::GridObject()
 //{
-//	NAME = "Grid" + std::to_string(ID);
+//	NAME = "Grid";
 //	_shader = Shader::DefaultInstanceLineShader;
 //}
 //void Kasumi::GridObject::init(const HinaPE::Geom::Grid3Ptr &grid)

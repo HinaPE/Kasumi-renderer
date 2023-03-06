@@ -9,7 +9,7 @@
 //}
 //Kasumi::ArrowObject::ArrowObject()
 //{
-//	NAME = "Arrow" + std::to_string(ID);
+//	NAME = "Arrow";
 //	MESH = "arrow";
 //	_shader = Shader::DefaultMeshShader;
 //	_init();

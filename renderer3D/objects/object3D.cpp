@@ -55,7 +55,7 @@ void Kasumi::ObjectMesh3D::VALID_CHECK() const
 	if (_mesh == nullptr)
 		throw std::runtime_error("Mesh is nullptr");
 }
-void Kasumi::ObjectMesh3D::_init()
+void Kasumi::ObjectMesh3D::_init(const std::string &MESH, const std::string &TEXTURE, const mVector3 &COLOR)
 {
 	if (!TEXTURE.empty())
 		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
@@ -66,7 +66,7 @@ void Kasumi::ObjectMesh3D::_init()
 // ==================== ObjectLines3D ====================
 Kasumi::ObjectLines3D::ObjectLines3D()
 {
-	NAME = "Line" + std::to_string(ID);
+	NAME = "Line";
 	_shader = Shader::DefaultLineShader;
 	_lines = std::make_shared<Lines>();
 }
@@ -87,7 +87,7 @@ void Kasumi::ObjectLines3D::_update_uniform()
 // ==================== ObjectPoints3D ====================
 Kasumi::ObjectPoints3D::ObjectPoints3D()
 {
-	NAME = "Points" + std::to_string(ID);
+	NAME = "Points";
 	_shader = Shader::DefaultPointShader;
 	_points = std::make_shared<Points>();
 }
