@@ -19,8 +19,10 @@ protected:
 	void prepare() final
 	{
 		init();
-//		Kasumi::LinesObject::Init(); _scene->_line_enable = true;
-//		Kasumi::PointsObject::Init(); _scene->_point_enable = true;
+		ObjectLines3D::Init(); _scene->_line_enable = true;
+		ObjectPoints3D::Init(); _scene->_point_enable = true;
+
+		_scene->add(std::make_shared<Kasumi::SphereObject>());
 
 		inspect(_scene.get());
 		_scene->VALID_CHECK();
