@@ -7,20 +7,11 @@
 #include "object3D.h"
 namespace Kasumi
 {
-class CubeObject : public ObjectMesh3D
+class CubeObject : public ObjectMesh3D, public HinaPE::Geom::Box3
 {
 public:
-	struct Opt
-	{
-		real width = 1;
-		real height = 1;
-		real depth = 1;
-	} _opt;
 	CubeObject();
-	void sync_opt() final;
-
-protected:
-	void INSPECT() override;
+	void sync_opt() final {}
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;
 } // namespace Kasumi

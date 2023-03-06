@@ -6,16 +6,6 @@ std::shared_ptr<Kasumi::ObjectLines3D> Kasumi::ObjectLines3D::DefaultLines = nul
 std::shared_ptr<Kasumi::ObjectPoints3D> Kasumi::ObjectPoints3D::DefaultPoints = nullptr;
 
 // ==================== Object3D ====================
-void Kasumi::ObjectMesh3D::INSPECT()
-{
-	PoseBase::INSPECT();
-
-	if (_mesh == nullptr)
-		return;
-
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Vertices: %zu", _mesh->vertices().size());
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Indices: %zu", _mesh->indices().size());
-}
 auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
@@ -50,17 +40,29 @@ void Kasumi::ObjectMesh3D::_update_uniform()
 	_shader->uniform("model", POSE.get_model_matrix());
 	Shader::DefaultLineShader->uniform("model", POSE.get_model_matrix());
 }
-void Kasumi::ObjectMesh3D::VALID_CHECK() const
-{
-	if (_mesh == nullptr)
-		throw std::runtime_error("Mesh is nullptr");
-}
 void Kasumi::ObjectMesh3D::_init(const std::string &MESH, const std::string &TEXTURE, const mVector3 &COLOR)
 {
 	if (!TEXTURE.empty())
 		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
 	else
 		_mesh = std::make_shared<Mesh>(MESH, COLOR);
+}
+void Kasumi::ObjectMesh3D::INSPECT()
+{
+	PoseBase::INSPECT();
+
+	if (_mesh == nullptr)
+		return;
+
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Vertices: %zu", _mesh->vertices().size());
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh Indices: %zu", _mesh->indices().size());
+}
+void Kasumi::ObjectMesh3D::VALID_CHECK() const
+{
+	if (_mesh == nullptr)
+		throw std::runtime_error("Mesh is nullptr");
+	if (_surface == nullptr)
+		throw std::runtime_error("Surface is nullptr");
 }
 
 // ==================== ObjectLines3D ====================

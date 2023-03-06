@@ -8,13 +8,9 @@
 
 namespace Kasumi
 {
-class SphereObject final : public ObjectMesh3D
+class SphereObject final : public ObjectMesh3D, public HinaPE::Geom::Sphere3
 {
 public:
-	struct Opt
-	{
-		real radius = 1;
-	} _opt;
 	SphereObject();
 	void sync_opt() final;
 };

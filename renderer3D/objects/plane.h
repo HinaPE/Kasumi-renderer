@@ -7,17 +7,11 @@
 #include "object3D.h"
 namespace Kasumi
 {
-class PlaneObject : public ObjectMesh3D
+class PlaneObject : public ObjectMesh3D, public HinaPE::Geom::Plane3
 {
 public:
-	struct Opt
-	{
-		real width = 1;
-		real height = 1;
-	} _opt;
 	PlaneObject();
 	void sync_opt() final {}
-	void INSPECT() override;
 };
 } // namespace Kasumi
 

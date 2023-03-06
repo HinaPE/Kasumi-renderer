@@ -6,7 +6,6 @@
 
 #include "backends/api.h"
 #include "geom/collider3.h"
-#include "geom/surface3.h"
 
 namespace Kasumi
 {
@@ -16,7 +15,8 @@ class ObjectMesh3D :
 		public IDBase,
 		public NameBase,
 		public PoseBase,
-		public VALID_CHECKER
+		public VALID_CHECKER,
+		public HinaPE::Geom::RigidBodyCollider3
 {
 public:
 	auto ray_cast(const mRay3 & ray) const -> HinaPE::Geom::SurfaceRayIntersection3;
@@ -33,13 +33,12 @@ protected:
 	void _switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
 protected:
-	MeshPtr _mesh;
-	HinaPE::Geom::RigidBodyCollider3Ptr _collider;
+	MeshPtr _mesh; // verts & idxs
 
 	void INSPECT() override;
-	void VALID_CHECK() const override;
+	void VALID_CHECK() const final;
 };
-// @formatter:on
+
 
 class ObjectLines3D :
 		public Renderable,
@@ -63,6 +62,7 @@ protected:
 private:
 	LinesPtr _lines;
 };
+
 
 class ObjectPoints3D :
 		public Renderable,
@@ -91,4 +91,5 @@ using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 using ObjectLines3DPtr = std::shared_ptr<ObjectLines3D>;
 using ObjectPoints3DPtr = std::shared_ptr<ObjectPoints3D>;
 } // namespace Kasumi
+// @formatter:on
 #endif //KASUMI_OBJECT3D_H
