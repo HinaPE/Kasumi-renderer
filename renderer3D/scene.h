@@ -7,10 +7,11 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "objects/cube.h"
-#include "objects/sphere.h"
+
+#include "backends/objects/cube.h"
+#include "backends/objects/sphere.h"
+#include "backends/objects/plane.h"
 #include "objects/cup.h"
-#include "objects/plane.h"
 
 #include "backends/api.h"
 
