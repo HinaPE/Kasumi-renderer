@@ -29,9 +29,7 @@ auto Kasumi::ObjectMesh3D::ray_cast(const mRay3 &ray) const -> HinaPE::Geom::Sur
 }
 void Kasumi::ObjectMesh3D::_draw()
 {
-	if (_mesh == nullptr)
-		return;
-
+	if (_mesh == nullptr) return;
 	_mesh->render(*_shader);
 }
 void Kasumi::ObjectMesh3D::_update_uniform()
@@ -42,10 +40,7 @@ void Kasumi::ObjectMesh3D::_update_uniform()
 }
 void Kasumi::ObjectMesh3D::_init(const std::string &MESH, const std::string &TEXTURE, const mVector3 &COLOR)
 {
-	if (!TEXTURE.empty())
-		_mesh = std::make_shared<Mesh>(MESH, TEXTURE);
-	else
-		_mesh = std::make_shared<Mesh>(MESH, COLOR);
+	_mesh = TEXTURE.empty() ? std::make_shared<Mesh>(MESH, COLOR) : _mesh = std::make_shared<Mesh>(MESH, TEXTURE);
 }
 void Kasumi::ObjectMesh3D::INSPECT()
 {
@@ -105,4 +100,44 @@ void Kasumi::ObjectPoints3D::_update_uniform()
 {
 	Renderable::_update_uniform();
 	_shader->uniform("model", POSE.get_model_matrix());
+}
+
+// ==================== ObjectParticles3D ====================
+Kasumi::ObjectParticles3D::ObjectParticles3D()
+{
+	NAME = "Particles";
+	_shader = Shader::DefaultInstanceShader;
+	_init("cube", "");
+	Pose pose;
+	_poses.push_back(pose);
+	pose.position = mVector3(1, 0, 0);
+	_poses.push_back(pose);
+	pose.position = mVector3(0, 1, 0);
+	_poses.push_back(pose);
+	pose.position = mVector3(0, 0, 1);
+	_poses.push_back(pose);
+}
+void Kasumi::ObjectParticles3D::_init(const std::string &MESH, const std::string &TEXTURE, const mVector3 &COLOR)
+{
+	_mesh = TEXTURE.empty() ? std::make_shared<InstancedMesh>(std::make_shared<Mesh>(MESH, COLOR)) : std::make_shared<InstancedMesh>(std::make_shared<Mesh>(MESH, TEXTURE));
+}
+void Kasumi::ObjectParticles3D::_draw()
+{
+	if (_mesh == nullptr) return;
+	if (_dirty) _update();
+	_mesh->render(*_shader);
+}
+void Kasumi::ObjectParticles3D::_update()
+{
+	_mesh->_opt.instance_matrices.clear();
+	_mesh->_opt.instance_matrices.reserve(_poses.size());
+
+	for (auto &pose: _poses)
+		_mesh->_opt.instance_matrices.push_back(pose.get_model_matrix());
+	_mesh->_opt.dirty = true;
+	_dirty = false;
+}
+void Kasumi::ObjectParticles3D::_update_uniform()
+{
+	Renderable::_update_uniform();
 }

@@ -4,6 +4,7 @@ Kasumi::Scene3D::Scene3D()
 {
 	_ray = std::make_shared<ObjectLines3D>();
 	_ray_hit = std::make_shared<ObjectPoints3D>();
+	_particles = std::make_shared<ObjectParticles3D>();
 }
 void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
@@ -32,34 +33,15 @@ void Kasumi::Scene3D::draw()
 
 	if (_point_enable)
 		ObjectPoints3D::DefaultPoints->render();
+
+	_particles->render();
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
 	Kasumi::Camera::MainCamera->key(key, scancode, action, mods);
-	if (key == GLFW_KEY_W && action == GLFW_PRESS)
-	{
-		for (auto &pair: _objects)
-			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_wireframe();
-//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_wireframe();
-	}
-	if (key == GLFW_KEY_B && action == GLFW_PRESS)
-	{
-		for (auto &pair: _objects)
-			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_bbox();
-//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_bbox();
-	}
-	if (key == GLFW_KEY_S && action == GLFW_PRESS)
-	{
-		for (auto &pair: _objects)
-			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
-				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_surface();
-//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_surface();
-	}
+	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); }
+	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); }
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); }
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
 		_ray_enable = true;

@@ -34,6 +34,7 @@ public:
 
 private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
+	ObjectParticles3DPtr _particles;
 	int selected = 0;
 
 private: // scene query
