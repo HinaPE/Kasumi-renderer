@@ -12,24 +12,25 @@ public:
 	void add_obj(const ObjectMesh3DPtr &obj) { _scene->add(obj); }
 	void remove_obj(unsigned int id) { _scene->remove(id); }
 	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
+	std::function<void(const Kasumi::Scene3DPtr &)> _init;
+	std::function<void(real)> _step;
 
 protected:
-	virtual void init() {}
-	virtual void step(real dt) {}
 	void prepare() final
 	{
-		init();
-		ObjectLines3D::Init(); _scene->_line_enable = true;
-		ObjectPoints3D::Init(); _scene->_point_enable = true;
+		if (_init) _init(_scene);
 
-		_scene->add(std::make_shared<Kasumi::SphereObject>());
+		ObjectLines3D::Init();
+		_scene->_line_enable = true;
+		ObjectPoints3D::Init();
+		_scene->_point_enable = true;
 
 		inspect(_scene.get());
 		_scene->VALID_CHECK();
 	}
 	void update(double dt) final
 	{
-		HINA_TRACK(step(dt), "Step");
+		if (_step) HINA_TRACK(_step(dt), "Step");
 		HINA_TRACK(_scene->draw(), "Rendering");
 	}
 	void key(int key, int scancode, int action, int mods) override { _scene->key(key, scancode, action, mods); }
