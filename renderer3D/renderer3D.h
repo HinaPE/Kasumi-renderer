@@ -10,12 +10,13 @@ namespace Kasumi
 class Renderer3D : public App
 {
 public:
-	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
 	void add_obj(const Object3DPtr &obj) { _scene->add(obj); }
-	virtual void init() {}
-	virtual void step(real dt) {}
+	void remove_obj(unsigned int id) { _scene->remove(id); }
+	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
 
 protected:
+	virtual void init() {}
+	virtual void step(real dt) {}
 	void prepare() final
 	{
 		init();

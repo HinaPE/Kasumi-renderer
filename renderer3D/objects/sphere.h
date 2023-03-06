@@ -20,4 +20,5 @@ public:
 };
 using SphereObjectPtr = std::shared_ptr<SphereObject>;
 } // namespace Kasumi
+
 #endif //KASUMI_SPHERE_H

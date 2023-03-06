@@ -20,7 +20,8 @@ public:
 	const unsigned int ID;
 	std::string NAME = "Untitled";
 	Pose POSE;
-	bool _dirty{false};
+	bool COLLIDER = false;
+	bool _dirty{false}; // TODO: remove it
 
 	void INSPECT() override;
 };

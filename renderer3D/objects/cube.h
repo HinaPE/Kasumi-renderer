@@ -18,6 +18,8 @@ public:
 	} _opt;
 	CubeObject();
 	void sync_opt() final;
+
+protected:
 	void INSPECT() override;
 };
 using CubeObjectPtr = std::shared_ptr<CubeObject>;
