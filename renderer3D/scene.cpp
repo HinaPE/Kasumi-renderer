@@ -36,8 +36,8 @@ void Kasumi::Scene3D::draw()
 	if (_point_enable)
 		ObjectPoints3D::DefaultPoints->render();
 
-	_particles->render();
-	_grid->render();
+//	_particles->render();
+//	_grid->render();
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
@@ -63,6 +63,27 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 		_ray_hit->clear();
 	}
 }
+auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
+{
+	HinaPE::Geom::SurfaceRayIntersection3 res;
+	for (auto &o: _objects)
+	{
+		if (is<ObjectMesh3D>(o.second.get()))
+		{
+			auto mesh_obj = as<ObjectMesh3D>(o.second.get());
+			auto hit = mesh_obj->ray_cast(ray);
+			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
+				res = hit;
+		}
+	}
+	return res;
+}
+
+// @formatter:off
+void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }
+void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
+void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos) { Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos); }
+// @formatter:on
 
 void Kasumi::Scene3D::INSPECT()
 {
@@ -97,24 +118,3 @@ void Kasumi::Scene3D::VALID_CHECK() const
 		if (need_valid_check(pair.second.get()))
 			as_valid_check(pair.second.get())->VALID_CHECK();
 }
-auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
-{
-	HinaPE::Geom::SurfaceRayIntersection3 res;
-	for (auto &o: _objects)
-	{
-		if (is<ObjectMesh3D>(o.second.get()))
-		{
-			auto mesh_obj = as<ObjectMesh3D>(o.second.get());
-			auto hit = mesh_obj->ray_cast(ray);
-			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
-				res = hit;
-		}
-	}
-	return res;
-}
-
-// @formatter:off
-void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }
-void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
-void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos) { Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos); }
-// @formatter:on
