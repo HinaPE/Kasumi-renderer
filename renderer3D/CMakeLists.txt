@@ -6,7 +6,6 @@ if (NOT TARGET Kasumi_Backends)
 endif ()
 
 file(GLOB_RECURSE src
-        objects/*.h objects/*.cpp
         scene.h scene.cpp
         )
 add_library(Kasumi_Render3D ${src})

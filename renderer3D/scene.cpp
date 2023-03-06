@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "GLFW/glfw3.h"
 
 Kasumi::Scene3D::Scene3D()
 {

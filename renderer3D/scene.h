@@ -4,16 +4,12 @@
 // Copyright (c) 2023 Xayah Hina
 // MPL-2.0 license
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
-
 #include "backends/objects/cube.h"
 #include "backends/objects/sphere.h"
 #include "backends/objects/plane.h"
-#include "objects/cup.h"
-
 #include "backends/api.h"
+
+#include "backends/objects/cup.h"
 
 namespace Kasumi
 {
