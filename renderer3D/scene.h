@@ -10,8 +10,6 @@
 #include "objects/cube.h"
 #include "objects/sphere.h"
 #include "objects/cup.h"
-#include "objects/particles.h"
-#include "objects/grid.h"
 #include "objects/plane.h"
 
 #include "backends/api.h"
@@ -35,6 +33,7 @@ public:
 private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	ObjectParticles3DPtr _particles;
+	ObjectGrid3DPtr _grid;
 	int selected = 0;
 
 private: // scene query

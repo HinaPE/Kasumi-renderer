@@ -141,3 +141,61 @@ void Kasumi::ObjectParticles3D::_update_uniform()
 {
 	Renderable::_update_uniform();
 }
+
+// ==================== ObjectGrid3D ====================
+Kasumi::ObjectGrid3D::ObjectGrid3D()
+{
+	NAME = "Grid";
+	_shader = Shader::DefaultInstanceLineShader;
+	_init();
+}
+void Kasumi::ObjectGrid3D::_init()
+{
+	int scale = 15;
+	for (int i = -scale; i < scale; ++i)
+	{
+		for (int j = -scale; j < scale; ++j)
+		{
+			for (int k = -scale; k < scale; ++k)
+			{
+				Pose pose;
+				pose.position = 0.1 * mVector3(i, j, k);
+				_poses.push_back(pose);
+			}
+		}
+	}
+
+	std::shared_ptr<Lines> _bbox_lines = std::make_shared<Lines>();
+	_bbox_lines->clear();
+	auto l = mVector3{-HinaPE::Constant::Half, -HinaPE::Constant::Half, -HinaPE::Constant::Half};
+	auto u = mVector3{HinaPE::Constant::Half, HinaPE::Constant::Half, HinaPE::Constant::Half};
+
+	mVector3 color = HinaPE::Color::PURPLE;
+
+	// bounding box lines
+	_bbox_lines->add(mVector3(l.x(), l.y(), l.z()), mVector3(u.x(), l.y(), l.z()), color);
+	_bbox_lines->add(mVector3(u.x(), l.y(), l.z()), mVector3(u.x(), u.y(), l.z()), color);
+	_bbox_lines->add(mVector3(u.x(), u.y(), l.z()), mVector3(l.x(), u.y(), l.z()), color);
+	_bbox_lines->add(mVector3(l.x(), u.y(), l.z()), mVector3(l.x(), l.y(), l.z()), color);
+
+	_bbox_lines->add(mVector3(l.x(), l.y(), u.z()), mVector3(u.x(), l.y(), u.z()), color);
+	_bbox_lines->add(mVector3(u.x(), l.y(), u.z()), mVector3(u.x(), u.y(), u.z()), color);
+	_bbox_lines->add(mVector3(u.x(), u.y(), u.z()), mVector3(l.x(), u.y(), u.z()), color);
+	_bbox_lines->add(mVector3(l.x(), u.y(), u.z()), mVector3(l.x(), l.y(), u.z()), color);
+
+	_bbox_lines->add(mVector3(l.x(), l.y(), l.z()), mVector3(l.x(), l.y(), u.z()), color);
+	_bbox_lines->add(mVector3(u.x(), l.y(), l.z()), mVector3(u.x(), l.y(), u.z()), color);
+	_bbox_lines->add(mVector3(u.x(), u.y(), l.z()), mVector3(u.x(), u.y(), u.z()), color);
+	_bbox_lines->add(mVector3(l.x(), u.y(), l.z()), mVector3(l.x(), u.y(), u.z()), color);
+
+	_grids = std::make_shared<InstancedLines>(_bbox_lines);
+
+	for (auto &pose: _poses)
+		_grids->_opt.instance_matrices.push_back(pose.get_model_matrix());
+	_grids->_opt.dirty = true;
+}
+void Kasumi::ObjectGrid3D::_draw()
+{
+	if (_grids == nullptr) return;
+	_grids->render(*_shader);
+}

@@ -5,6 +5,7 @@ Kasumi::Scene3D::Scene3D()
 	_ray = std::make_shared<ObjectLines3D>();
 	_ray_hit = std::make_shared<ObjectPoints3D>();
 	_particles = std::make_shared<ObjectParticles3D>();
+	_grid = std::make_shared<ObjectGrid3D>();
 }
 void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
@@ -35,6 +36,7 @@ void Kasumi::Scene3D::draw()
 		ObjectPoints3D::DefaultPoints->render();
 
 	_particles->render();
+	_grid->render();
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {

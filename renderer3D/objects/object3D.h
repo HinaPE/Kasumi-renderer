@@ -114,10 +114,31 @@ private:
 };
 
 
+class ObjectGrid3D :
+		public Renderable,
+		public IDBase,
+		public NameBase,
+		public PoseBase,
+		public VALID_CHECKER
+{
+public:
+	ObjectGrid3D();
+
+protected:
+	void _init();
+	void _draw() final;
+
+private:
+	InstancedLinesPtr _grids;
+	std::vector<Pose> _poses;
+};
+
+
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 using ObjectLines3DPtr = std::shared_ptr<ObjectLines3D>;
 using ObjectPoints3DPtr = std::shared_ptr<ObjectPoints3D>;
 using ObjectParticles3DPtr = std::shared_ptr<ObjectParticles3D>;
+using ObjectGrid3DPtr = std::shared_ptr<ObjectGrid3D>;
 } // namespace Kasumi
 // @formatter:on
 #endif //KASUMI_OBJECT3D_H
