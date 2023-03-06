@@ -34,20 +34,22 @@ public:
 	void mouse_scroll(double x_offset, double y_offset);
 	void mouse_cursor(double x_pos, double y_pos);
 
-	void INSPECT() final;
-	void VALID_CHECK() const final;
-
 private:
 	std::map<unsigned int, Object3DPtr> _objects;
 	int selected = 0;
 
-
 private: // scene query
+	friend class Renderer3D;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
 	LinesObjectPtr _ray; // scene ray
 	PointsObjectPtr _ray_hit; // scene ray hit point
 	HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
 	bool _ray_enable = false;
+	bool _line_enable = false;
+	bool _point_enable = false;
+
+	void INSPECT() final;
+	void VALID_CHECK() const final;
 };
 using Scene3DPtr = std::shared_ptr<Scene3D>;
 } // namespace Kasumi

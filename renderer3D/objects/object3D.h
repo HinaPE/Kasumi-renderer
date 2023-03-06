@@ -15,14 +15,14 @@ class Object3D : public INSPECTOR
 public:
 	Object3D() : ID(ID_GLOBAL++) {}
 
-	void INSPECT() override;
-
 public:
 	static unsigned int ID_GLOBAL;
 	const unsigned int ID;
 	std::string NAME = "Untitled";
 	Pose POSE;
 	bool _dirty{false};
+
+	void INSPECT() override;
 };
 using Object3DPtr = std::shared_ptr<Object3D>;
 
@@ -43,9 +43,6 @@ protected:
 	void _switch_wireframe() const { _mesh->_opt.dirty = true;_mesh->_opt.render_wireframe = !_mesh->_opt.render_wireframe; }
 	void _switch_bbox() const { _mesh->_opt.dirty = true;_mesh->_opt.render_bbox = !_mesh->_opt.render_bbox; }
 
-	void INSPECT() override;
-	void VALID_CHECK() const override;
-
 	MeshPtr _mesh;
 	HinaPE::Geom::RigidBodyCollider3Ptr _collider;
 
@@ -53,6 +50,9 @@ protected:
 	std::string MESH = "cube";
 	std::string TEXTURE; // Default: not
 	mVector3 COLOR = HinaPE::Color::CYAN;
+
+	void INSPECT() override;
+	void VALID_CHECK() const override;
 };
 using ObjectMesh3DPtr = std::shared_ptr<ObjectMesh3D>;
 // @formatter:on

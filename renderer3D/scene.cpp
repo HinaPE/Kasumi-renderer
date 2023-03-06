@@ -8,7 +8,7 @@ Kasumi::Scene3D::Scene3D()
 void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object)
 {
 	_objects[object->ID] = object;
-	selected = (int) object->ID;
+	selected = static_cast<int>(object->ID);
 }
 void Kasumi::Scene3D::remove(unsigned int id)
 {
@@ -27,6 +27,12 @@ void Kasumi::Scene3D::draw()
 		_ray->render();
 		_ray_hit->render();
 	}
+
+	if (_line_enable)
+		Kasumi::LinesObject::DefaultLines->render();
+
+	if (_point_enable)
+		Kasumi::PointsObject::DefaultPoints->render();
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
@@ -86,7 +92,7 @@ void Kasumi::Scene3D::INSPECT()
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &selected, static_cast<int>(pair.first));
 	}
 	if (!_objects.contains(selected))
-		selected = (int) _objects.rbegin()->first;
+		selected = static_cast<int>(_objects.rbegin()->first);
 	_objects[selected]->INSPECT();
 
 	if (_ray_enable)
