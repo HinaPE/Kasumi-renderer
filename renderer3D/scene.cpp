@@ -2,10 +2,10 @@
 
 Kasumi::Scene3D::Scene3D()
 {
-	_ray = std::make_shared<LinesObject>();
-	_ray_hit = std::make_shared<PointsObject>();
+	_ray = std::make_shared<ObjectLines3D>();
+	_ray_hit = std::make_shared<ObjectPoints3D>();
 }
-void Kasumi::Scene3D::add(const Kasumi::Object3DPtr &object)
+void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
 	_objects[object->ID] = object;
 	selected = static_cast<int>(object->ID);
@@ -19,8 +19,7 @@ void Kasumi::Scene3D::remove(unsigned int id)
 void Kasumi::Scene3D::draw()
 {
 	for (auto &pair: _objects)
-		if (is_renderable(pair.second.get()))
-			as_renderable(pair.second.get())->render();
+		pair.second->render();
 
 	if (_ray_enable)
 	{
@@ -29,10 +28,10 @@ void Kasumi::Scene3D::draw()
 	}
 
 	if (_line_enable)
-		Kasumi::LinesObject::DefaultLines->render();
+		ObjectLines3D::DefaultLines->render();
 
 	if (_point_enable)
-		Kasumi::PointsObject::DefaultPoints->render();
+		ObjectPoints3D::DefaultPoints->render();
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
@@ -42,24 +41,24 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
 				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_wireframe();
-			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_wireframe();
+//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_wireframe();
 	}
 	if (key == GLFW_KEY_B && action == GLFW_PRESS)
 	{
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
 				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_bbox();
-			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_bbox();
+//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_bbox();
 	}
 	if (key == GLFW_KEY_S && action == GLFW_PRESS)
 	{
 		for (auto &pair: _objects)
 			if (dynamic_cast<const ObjectMesh3D *>(pair.second.get()))
 				dynamic_cast<const ObjectMesh3D *>(pair.second.get())->_switch_surface();
-			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
-				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_surface();
+//			else if (dynamic_cast<const ParticlesObject *>(pair.second.get()))
+//				dynamic_cast<const ParticlesObject *>(pair.second.get())->_switch_surface();
 	}
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{

@@ -20,10 +20,10 @@
 
 namespace Kasumi
 {
-class Scene3D final : public VALID_CHECKER, public INSPECTOR
+class Scene3D final : public INSPECTOR, public VALID_CHECKER
 {
 public:
-	void add(const Object3DPtr &object);
+	void add(const ObjectMesh3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
 	Scene3D();
@@ -35,14 +35,14 @@ public:
 	void mouse_cursor(double x_pos, double y_pos);
 
 private:
-	std::map<unsigned int, Object3DPtr> _objects;
+	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	int selected = 0;
 
 private: // scene query
 	friend class Renderer3D;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
-	LinesObjectPtr _ray; // scene ray
-	PointsObjectPtr _ray_hit; // scene ray hit point
+	ObjectLines3DPtr _ray; // scene ray
+	ObjectPoints3DPtr _ray_hit; // scene ray hit point
 	HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
 	bool _ray_enable = false;
 	bool _line_enable = false;

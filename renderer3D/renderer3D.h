@@ -4,13 +4,12 @@
 #include "backends/api.h"
 #include "scene.h"
 
-// @formatter:off
 namespace Kasumi
 {
 class Renderer3D : public App
 {
 public:
-	void add_obj(const Object3DPtr &obj) { _scene->add(obj); }
+	void add_obj(const ObjectMesh3DPtr &obj) { _scene->add(obj); }
 	void remove_obj(unsigned int id) { _scene->remove(id); }
 	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
 
@@ -20,8 +19,9 @@ protected:
 	void prepare() final
 	{
 		init();
-		Kasumi::LinesObject::Init(); _scene->_line_enable = true;
-		Kasumi::PointsObject::Init(); _scene->_point_enable = true;
+//		Kasumi::LinesObject::Init(); _scene->_line_enable = true;
+//		Kasumi::PointsObject::Init(); _scene->_point_enable = true;
+
 		inspect(_scene.get());
 		_scene->VALID_CHECK();
 	}
