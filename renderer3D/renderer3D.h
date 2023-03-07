@@ -17,12 +17,14 @@ public:
 protected:
 	void prepare() final
 	{
-		if (_init) _init(_scene);
-
 		ObjectLines3D::Init();
 		_scene->_line_enable = true;
 		ObjectPoints3D::Init();
 		_scene->_point_enable = true;
+
+		if (_init) _init(_scene);
+
+		_scene->add(std::make_shared<Kasumi::SphereObject>());
 
 		inspect(_scene.get());
 		_scene->VALID_CHECK();

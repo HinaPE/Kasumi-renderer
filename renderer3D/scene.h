@@ -21,12 +21,6 @@ public:
 	void draw();
 	Scene3D();
 
-public:
-	void key(int key, int scancode, int action, int mods);
-	void mouse_button(int button, int action, int mods);
-	void mouse_scroll(double x_offset, double y_offset);
-	void mouse_cursor(double x_pos, double y_pos);
-
 private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	ObjectParticles3DPtr _particles;
@@ -43,6 +37,10 @@ private: // scene query
 	bool _line_enable = false;
 	bool _point_enable = false;
 
+	void key(int key, int scancode, int action, int mods);
+	void mouse_button(int button, int action, int mods);
+	void mouse_scroll(double x_offset, double y_offset);
+	void mouse_cursor(double x_pos, double y_pos);
 	void INSPECT() final;
 	void VALID_CHECK() const final;
 };

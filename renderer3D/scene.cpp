@@ -80,10 +80,47 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 }
 
 // @formatter:off
-void Kasumi::Scene3D::mouse_button(int button, int action, int mods) { Kasumi::Camera::MainCamera->mouse_button(button, action, mods); }
-void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
-void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos) { Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos); }
+static bool MOUSE_LEFT = false;
+static bool MOUSE_MID = false;
+static bool MOUSE_RIGHT = false;
+static bool FIRST_CLICK_LEFT = true;
+static bool FIRST_CLICK_MID = true;
+static bool FIRST_CLICK_RIGHT = true;
+static mVector2 PRE_MOUSE_POS = mVector2::Zero();
+void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
+{
+	Kasumi::Camera::MainCamera->mouse_button(button, action, mods);
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) { MOUSE_LEFT = true; }
+ 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) { MOUSE_LEFT = false; FIRST_CLICK_LEFT = true; }
+ 	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) { MOUSE_MID = true; }
+ 	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) { MOUSE_MID = false; FIRST_CLICK_MID = true; }
+ 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) { MOUSE_RIGHT = true; }
+ 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) { MOUSE_RIGHT = false; FIRST_CLICK_RIGHT = true; }
+}
 // @formatter:on
+void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
+void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
+{
+	Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos);
+	if (MOUSE_LEFT)
+	{
+		real u_x = x_pos / 1024.0 * 2 - 1;
+		real u_y = 1 - y_pos / 768.0 * 2;
+		auto ray = Camera::MainCamera->get_ray({u_x, u_y});
+		auto res = ray_cast(ray);
+		if (res.is_intersecting)
+		{
+			if (!FIRST_CLICK_LEFT)
+			{
+				auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
+				_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
+				_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+			}
+			PRE_MOUSE_POS = {u_x, u_y};
+			FIRST_CLICK_LEFT = false;
+		}
+	}
+}
 
 void Kasumi::Scene3D::INSPECT()
 {
