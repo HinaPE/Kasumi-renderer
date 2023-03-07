@@ -146,6 +146,7 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 				auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
 				_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
 				_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+				_objects[res.ID]->_dirty = true;
 			}
 			PRE_MOUSE_POS = {u_x, u_y};
 			FIRST_CLICK_LEFT = false;
