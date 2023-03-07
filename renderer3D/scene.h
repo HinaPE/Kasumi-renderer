@@ -26,17 +26,26 @@ private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	ObjectParticles3DPtr _particles;
 	ObjectGrid3DPtr _grid;
-	int selected = 0;
+	int _selected = 0;
 
-private: // scene query
+private:
+	// scene query
 	struct SceneOpt
 	{
+		// mouse ray cast
 		ObjectLines3DPtr _ray; // scene ray
 		ObjectPoints3DPtr _ray_hit; // scene ray hit point
 		HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
 		bool _ray_enable = false;
+
+		// support for line/point debugging
 		bool _line_enable = false;
 		bool _point_enable = false;
+
+		// surface debugging
+		mVector3 debug_point;
+		ObjectPoints3DPtr debug_point_obj;
+		bool inside = false;
 	} _scene_opt;
 	friend class Renderer3D;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;

@@ -9,11 +9,14 @@ Kasumi::Scene3D::Scene3D()
 	_particles = std::make_shared<ObjectParticles3D>();
 	_grid = std::make_shared<ObjectGrid3D>();
 //	read_scene();
+
+	// debug point
+	_scene_opt.debug_point_obj = std::make_shared<ObjectPoints3D>();
 }
 void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
 	_objects[object->ID] = object;
-	selected = static_cast<int>(object->ID);
+	_selected = static_cast<int>(object->ID);
 }
 void Kasumi::Scene3D::remove(unsigned int id)
 {
@@ -36,7 +39,12 @@ void Kasumi::Scene3D::draw()
 		ObjectLines3D::DefaultLines->render();
 
 	if (_scene_opt._point_enable)
+	{
 		ObjectPoints3D::DefaultPoints->render();
+		_scene_opt.debug_point_obj->clear();
+		_scene_opt.debug_point_obj->add(_scene_opt.debug_point);
+		_scene_opt.debug_point_obj->render();
+	}
 
 //	_particles->render();
 //	_grid->render();
@@ -134,7 +142,7 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 			}
 			PRE_MOUSE_POS = {u_x, u_y};
 			FIRST_CLICK_LEFT = false;
-			selected = static_cast<int>(res.ID);
+			_selected = static_cast<int>(res.ID);
 		}
 	}
 }
@@ -149,15 +157,44 @@ void Kasumi::Scene3D::INSPECT()
 
 	for (auto &pair: _objects)
 	{
-		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &selected, static_cast<int>(pair.first));
+		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
 	}
-	if (!_objects.contains(selected))
-		selected = static_cast<int>(_objects.rbegin()->first);
-	_objects[selected]->INSPECT();
+	if (!_objects.contains(_selected))
+		_selected = static_cast<int>(_objects.rbegin()->first);
+	_objects[_selected]->INSPECT();
 
+	ImGui::Separator();
+
+	// Debug Info Area
+	ImGui::BulletText("Debug Info");
+	ImGui::DragScalarN("Debug Point", ImGuiDataType_Real, &_scene_opt.debug_point[0], 3, 0.1, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f");
+	if (ImGui::Button("Show Closest Point"))
+	{
+		auto &o = _objects[_selected];
+		if (is<HinaPE::Geom::Surface3>(o.get()))
+		{
+			mVector3 p = as<HinaPE::Geom::Surface3>(o.get())->closest_point(_scene_opt.debug_point);
+			ObjectPoints3D::DefaultPoints->add(p);
+		}
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Clear"))
+	{
+		ObjectPoints3D::DefaultPoints->clear();
+	}
+	ImGui::Text("Inside: %s", _scene_opt.inside ? "true" : "false");
+	ImGui::SameLine();
+	if (ImGui::Button("Point inside"))
+	{
+		auto &o = _objects[_selected];
+		if (is<HinaPE::Geom::Surface3>(o.get()))
+			_scene_opt.inside = as<HinaPE::Geom::Surface3>(o.get())->is_inside(_scene_opt.debug_point);
+	}
+
+
+	ImGui::Separator();
 	if (_scene_opt._ray_enable)
 	{
-		ImGui::Separator();
 		ImGui::Text("Ray Hit: %s", _scene_opt._ray_hit_info.is_intersecting ? "true" : "false");
 		if (_scene_opt._ray_hit_info.is_intersecting)
 		{
