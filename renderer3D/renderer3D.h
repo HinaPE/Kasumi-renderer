@@ -1,8 +1,10 @@
 #ifndef HINAPE_RENDERER3D_H
 #define HINAPE_RENDERER3D_H
 
+#include "GLFW/glfw3.h"
 #include "scene.h"
 
+// @formatter:off
 namespace Kasumi
 {
 class Renderer3D : public App
@@ -29,18 +31,27 @@ protected:
 	}
 	void update(double dt) final
 	{
-		if (_step) HINA_TRACK(_step(dt), "Step");
+		if (_step) HINA_TRACK(if(_running) _step(dt), "Step");
 		HINA_TRACK(_scene->draw(), "Rendering");
 	}
-	void key(int key, int scancode, int action, int mods) override { _scene->key(key, scancode, action, mods); }
-	void mouse_button(int button, int action, int mods) override { _scene->mouse_button(button, action, mods); }
-	void mouse_scroll(double x_offset, double y_offset) override { _scene->mouse_scroll(x_offset, y_offset); }
-	void mouse_cursor(double x_pos, double y_pos) override { _scene->mouse_cursor(x_pos, y_pos); }
+	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); }
+	void mouse_button(int button, int action, int mods) override 	{ _scene->mouse_button(button, action, mods); }
+	void mouse_scroll(double x_offset, double y_offset) override 	{ _scene->mouse_scroll(x_offset, y_offset); }
+	void mouse_cursor(double x_pos, double y_pos) override 			{ _scene->mouse_cursor(x_pos, y_pos); }
 
 protected:
 	Kasumi::Scene3DPtr _scene;
-};
 
+private:
+	void _debug_key(int key, int scancode, int action, int mods)
+	{
+		if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+			_running = !_running;
+		if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+			_step(0.02);
+	}
+	bool _running = false;
+};
 using Renderer3DPtr = std::shared_ptr<Renderer3D>;
 } // namespace Kasumi
 // @formatter:on
