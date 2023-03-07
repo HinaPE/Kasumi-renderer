@@ -1,5 +1,6 @@
-#include "scene.h"
 #include "GLFW/glfw3.h"
+#include "scene.h"
+#include "json/json11.hpp"
 
 Kasumi::Scene3D::Scene3D()
 {
@@ -7,6 +8,7 @@ Kasumi::Scene3D::Scene3D()
 	_scene_opt._ray_hit = std::make_shared<ObjectPoints3D>();
 	_particles = std::make_shared<ObjectParticles3D>();
 	_grid = std::make_shared<ObjectGrid3D>();
+	read_scene();
 }
 void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
@@ -41,6 +43,16 @@ void Kasumi::Scene3D::draw()
 }
 void Kasumi::Scene3D::read_scene(const std::string &path)
 {
+	std::stringstream ss;
+	{
+		std::ifstream file(path);
+		ss << file.rdbuf();
+		file.close();
+	}
+	std::string src = ss.str();
+	std::string err;
+	auto scene = json11::Json::parse(src, err, json11::JsonParse::STANDARD);
+	scene.type();
 }
 void Kasumi::Scene3D::export_scene(const std::string &path)
 {
