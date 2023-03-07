@@ -173,6 +173,7 @@ void Kasumi::Scene3D::INSPECT()
 
 	ImGui::Separator();
 
+
 	// Debug Info Area
 	ImGui::BulletText("Debug Info");
 	ImGui::DragScalarN("Debug Point", ImGuiDataType_Real, &_scene_opt.debug_point[0], 3, 0.1, &HinaPE::Constant::I_REAL_MIN, &HinaPE::Constant::I_REAL_MAX, "%.2f");
