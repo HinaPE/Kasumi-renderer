@@ -18,9 +18,9 @@ protected:
 	void prepare() final
 	{
 		ObjectLines3D::Init();
-		_scene->_line_enable = true;
+		_scene->_scene_opt._line_enable = true;
 		ObjectPoints3D::Init();
-		_scene->_point_enable = true;
+		_scene->_scene_opt._point_enable = true;
 
 		if (_init) _init(_scene);
 

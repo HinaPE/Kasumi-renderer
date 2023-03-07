@@ -7,9 +7,8 @@
 #include "backends/objects/cube.h"
 #include "backends/objects/sphere.h"
 #include "backends/objects/plane.h"
-#include "backends/api.h"
-
 #include "backends/objects/cup.h"
+#include "backends/api.h"
 
 namespace Kasumi
 {
@@ -19,6 +18,8 @@ public:
 	void add(const ObjectMesh3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
+	void read_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json");
+	void export_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json");
 	Scene3D();
 
 private:
@@ -28,14 +29,17 @@ private:
 	int selected = 0;
 
 private: // scene query
+	struct SceneOpt
+	{
+		ObjectLines3DPtr _ray; // scene ray
+		ObjectPoints3DPtr _ray_hit; // scene ray hit point
+		HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
+		bool _ray_enable = false;
+		bool _line_enable = false;
+		bool _point_enable = false;
+	} _scene_opt;
 	friend class Renderer3D;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
-	ObjectLines3DPtr _ray; // scene ray
-	ObjectPoints3DPtr _ray_hit; // scene ray hit point
-	HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
-	bool _ray_enable = false;
-	bool _line_enable = false;
-	bool _point_enable = false;
 
 	void key(int key, int scancode, int action, int mods);
 	void mouse_button(int button, int action, int mods);

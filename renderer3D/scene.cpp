@@ -3,8 +3,8 @@
 
 Kasumi::Scene3D::Scene3D()
 {
-	_ray = std::make_shared<ObjectLines3D>();
-	_ray_hit = std::make_shared<ObjectPoints3D>();
+	_scene_opt._ray = std::make_shared<ObjectLines3D>();
+	_scene_opt._ray_hit = std::make_shared<ObjectPoints3D>();
 	_particles = std::make_shared<ObjectParticles3D>();
 	_grid = std::make_shared<ObjectGrid3D>();
 }
@@ -24,20 +24,26 @@ void Kasumi::Scene3D::draw()
 	for (auto &pair: _objects)
 		pair.second->render();
 
-	if (_ray_enable)
+	if (_scene_opt._ray_enable)
 	{
-		_ray->render();
-		_ray_hit->render();
+		_scene_opt._ray->render();
+		_scene_opt._ray_hit->render();
 	}
 
-	if (_line_enable)
+	if (_scene_opt._line_enable)
 		ObjectLines3D::DefaultLines->render();
 
-	if (_point_enable)
+	if (_scene_opt._point_enable)
 		ObjectPoints3D::DefaultPoints->render();
 
 //	_particles->render();
 //	_grid->render();
+}
+void Kasumi::Scene3D::read_scene(const std::string &path)
+{
+}
+void Kasumi::Scene3D::export_scene(const std::string &path)
+{
 }
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
@@ -47,20 +53,20 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); }
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
-		_ray_enable = true;
+		_scene_opt._ray_enable = true;
 		auto ray = Kasumi::Camera::MainCamera->get_ray(mVector2::Zero());
-		_ray_hit_info = ray_cast(ray);
-		if (_ray_hit_info.is_intersecting)
+		_scene_opt._ray_hit_info = ray_cast(ray);
+		if (_scene_opt._ray_hit_info.is_intersecting)
 		{
-			_ray->add(Kasumi::Camera::MainCamera->_opt.position, _ray_hit_info.point);
-			_ray_hit->add(_ray_hit_info.point);
+			_scene_opt._ray->add(Kasumi::Camera::MainCamera->_opt.position, _scene_opt._ray_hit_info.point);
+			_scene_opt._ray_hit->add(_scene_opt._ray_hit_info.point);
 		}
 	}
 	if (key == GLFW_KEY_R && action == GLFW_RELEASE)
 	{
-		_ray_enable = false;
-		_ray->clear();
-		_ray_hit->clear();
+		_scene_opt._ray_enable = false;
+		_scene_opt._ray->clear();
+		_scene_opt._ray_hit->clear();
 	}
 }
 auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
@@ -97,7 +103,6 @@ void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
  	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) { MOUSE_RIGHT = true; }
  	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) { MOUSE_RIGHT = false; FIRST_CLICK_RIGHT = true; }
 }
-// @formatter:on
 void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 {
@@ -118,9 +123,11 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 			}
 			PRE_MOUSE_POS = {u_x, u_y};
 			FIRST_CLICK_LEFT = false;
+			selected = static_cast<int>(res.ID);
 		}
 	}
 }
+// @formatter:on
 
 void Kasumi::Scene3D::INSPECT()
 {
@@ -137,15 +144,15 @@ void Kasumi::Scene3D::INSPECT()
 		selected = static_cast<int>(_objects.rbegin()->first);
 	_objects[selected]->INSPECT();
 
-	if (_ray_enable)
+	if (_scene_opt._ray_enable)
 	{
 		ImGui::Separator();
-		ImGui::Text("Ray Hit: %s", _ray_hit_info.is_intersecting ? "true" : "false");
-		if (_ray_hit_info.is_intersecting)
+		ImGui::Text("Ray Hit: %s", _scene_opt._ray_hit_info.is_intersecting ? "true" : "false");
+		if (_scene_opt._ray_hit_info.is_intersecting)
 		{
-			ImGui::Text("Ray Hit Point: (%.3f, %.3f, %.3f)", _ray_hit_info.point.x(), _ray_hit_info.point.y(), _ray_hit_info.point.z());
-			ImGui::Text("Ray Hit Normal: (%.3f, %.3f, %.3f)", _ray_hit_info.normal.x(), _ray_hit_info.normal.y(), _ray_hit_info.normal.z());
-			ImGui::Text("Ray Hit Distance: %.3f", _ray_hit_info.distance);
+			ImGui::Text("Ray Hit Point: (%.3f, %.3f, %.3f)", _scene_opt._ray_hit_info.point.x(), _scene_opt._ray_hit_info.point.y(), _scene_opt._ray_hit_info.point.z());
+			ImGui::Text("Ray Hit Normal: (%.3f, %.3f, %.3f)", _scene_opt._ray_hit_info.normal.x(), _scene_opt._ray_hit_info.normal.y(), _scene_opt._ray_hit_info.normal.z());
+			ImGui::Text("Ray Hit Distance: %.3f", _scene_opt._ray_hit_info.distance);
 		}
 	}
 }
