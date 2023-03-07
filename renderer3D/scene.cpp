@@ -217,4 +217,6 @@ void Kasumi::Scene3D::VALID_CHECK() const
 {
 	for (auto &pair: _objects)
 		pair.second->VALID_CHECK();
+	for (auto &pair: _particle_objects)
+		pair.second->VALID_CHECK();
 }
