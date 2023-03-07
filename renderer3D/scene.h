@@ -19,8 +19,8 @@ public:
 	void add(const ObjectParticles3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
-	void read_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json");
-	void export_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json");
+	void read_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json"); // NOT IMPLEMENTED
+	void export_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json"); // NOT IMPLEMENTED
 	Scene3D();
 
 private:
