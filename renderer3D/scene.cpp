@@ -18,6 +18,11 @@ void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 	_objects[object->ID] = object;
 	_selected = static_cast<int>(object->ID);
 }
+void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object)
+{
+	_particle_objects[object->ID] = object;
+	_selected = static_cast<int>(object->ID);
+}
 void Kasumi::Scene3D::remove(unsigned int id)
 {
 	auto it = _objects.find(id);
@@ -27,6 +32,8 @@ void Kasumi::Scene3D::remove(unsigned int id)
 void Kasumi::Scene3D::draw()
 {
 	for (auto &pair: _objects)
+		pair.second->render();
+	for (auto &pair: _particle_objects)
 		pair.second->render();
 
 	if (_scene_opt._ray_enable)
