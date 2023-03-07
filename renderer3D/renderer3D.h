@@ -24,8 +24,6 @@ protected:
 
 		if (_init) _init(_scene);
 
-		_scene->add(std::make_shared<Kasumi::SphereObject>());
-
 		inspect(_scene.get());
 		_scene->VALID_CHECK();
 	}
@@ -42,6 +40,8 @@ protected:
 protected:
 	Kasumi::Scene3DPtr _scene;
 };
+
+using Renderer3DPtr = std::shared_ptr<Renderer3D>;
 } // namespace Kasumi
 // @formatter:on
 #endif //HINAPE_RENDERER3D_H

@@ -8,7 +8,7 @@ Kasumi::Scene3D::Scene3D()
 	_scene_opt._ray_hit = std::make_shared<ObjectPoints3D>();
 	_particles = std::make_shared<ObjectParticles3D>();
 	_grid = std::make_shared<ObjectGrid3D>();
-	read_scene();
+//	read_scene();
 }
 void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
 {
@@ -52,7 +52,6 @@ void Kasumi::Scene3D::read_scene(const std::string &path)
 	std::string src = ss.str();
 	std::string err;
 	auto scene = json11::Json::parse(src, err, json11::JsonParse::STANDARD);
-	scene.type();
 }
 void Kasumi::Scene3D::export_scene(const std::string &path)
 {
@@ -171,6 +170,5 @@ void Kasumi::Scene3D::INSPECT()
 void Kasumi::Scene3D::VALID_CHECK() const
 {
 	for (auto &pair: _objects)
-		if (need_valid_check(pair.second.get()))
-			as_valid_check(pair.second.get())->VALID_CHECK();
+		pair.second->VALID_CHECK();
 }
