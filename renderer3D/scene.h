@@ -33,6 +33,7 @@ private:
 	ObjectParticles3DPtr _particles;
 	ObjectGrid3DPtr _grid;
 	int _selected = 0;
+	int _selected_particle = 0;
 
 private:
 	// scene query

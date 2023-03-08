@@ -163,12 +163,27 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 		auto res = ray_cast(ray);
 		if (res.is_intersecting)
 		{
-			if (!FIRST_CLICK_LEFT)
+			if(_scene_opt._particle_mode)
 			{
-				auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
-				_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
-				_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
-				_objects[res.ID]->_dirty = true;
+				_particle_objects[res.ID]->_dirty = true;
+				_particle_objects[res.ID]->_inst_id = static_cast<int>(res.particleID);
+				_selected_particle = static_cast<int>(res.particleID);
+				if (!FIRST_CLICK_LEFT)
+				{
+					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
+					auto particle = _particle_objects[res.ID]->_poses[res.particleID];
+					particle.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
+					particle.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+				}
+			} else
+			{
+				if (!FIRST_CLICK_LEFT)
+				{
+					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
+					_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
+					_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+					_objects[res.ID]->_dirty = true;
+				}
 			}
 			PRE_MOUSE_POS = {u_x, u_y};
 			FIRST_CLICK_LEFT = false;
@@ -186,10 +201,10 @@ void Kasumi::Scene3D::INSPECT()
 	if (_objects.empty())
 		return;
 
-	for (auto &pair: _objects)
-	{
-		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
-	}
+//	for (auto &pair: _objects)
+//		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
+//	for (auto &pair: _particle_objects)
+//		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
 	if (!_objects.contains(_selected))
 		_selected = static_cast<int>(_objects.rbegin()->first);
 	_objects[_selected]->INSPECT();
