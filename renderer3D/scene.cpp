@@ -77,6 +77,7 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); }
 	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); }
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); }
+	if (key == GLFW_KEY_P && action == GLFW_PRESS) { _scene_opt._particle_mode = !_scene_opt._particle_mode; }
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
 		_scene_opt._ray_enable = true;
@@ -98,12 +99,19 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
-	for (auto &o: _objects)
+	if (!_scene_opt._particle_mode)
 	{
-		if (is<ObjectMesh3D>(o.second.get()))
+		for (auto &o: _objects)
 		{
-			auto mesh_obj = as<ObjectMesh3D>(o.second.get());
-			auto hit = mesh_obj->ray_cast(ray);
+			auto hit = o.second->ray_cast(ray);
+			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
+				res = hit;
+		}
+	} else
+	{
+		for (auto &o: _particle_objects)
+		{
+			auto hit = o.second->ray_cast(ray);
 			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
 				res = hit;
 		}
@@ -159,6 +167,7 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 void Kasumi::Scene3D::INSPECT()
 {
 	ImGui::Text("Scene Info");
+	ImGui::Text("Select Mode: %s", _scene_opt._particle_mode ? "Particle" : "Object");
 
 	if (_objects.empty())
 		return;

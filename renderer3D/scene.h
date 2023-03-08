@@ -39,6 +39,7 @@ private:
 		ObjectPoints3DPtr _ray_hit; // scene ray hit point
 		HinaPE::Geom::SurfaceRayIntersection3 _ray_hit_info;
 		bool _ray_enable = false;
+		bool _particle_mode = false;
 
 		// support for line/point debugging
 		bool _line_enable = false;
