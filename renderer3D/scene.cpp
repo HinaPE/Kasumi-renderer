@@ -133,7 +133,7 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 	return res;
 }
 
-// @formatter:off
+// @formatter:on
 static bool MOUSE_LEFT = false;
 static bool MOUSE_MID = false;
 static bool MOUSE_RIGHT = false;
@@ -144,12 +144,44 @@ static mVector2 PRE_MOUSE_POS = mVector2::Zero();
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 {
 	Kasumi::Camera::MainCamera->mouse_button(button, action, mods);
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) { MOUSE_LEFT = true; }
- 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) { MOUSE_LEFT = false; FIRST_CLICK_LEFT = true; }
- 	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) { MOUSE_MID = true; }
- 	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) { MOUSE_MID = false; FIRST_CLICK_MID = true; }
- 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) { MOUSE_RIGHT = true; }
- 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) { MOUSE_RIGHT = false; FIRST_CLICK_RIGHT = true; }
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		MOUSE_LEFT = true;
+		auto x_pos = Platform::GetCursorPos().first;
+		auto y_pos = Platform::GetCursorPos().second;
+
+		real u_x = x_pos / 1024.0 * 2 - 1;
+		real u_y = 1 - y_pos / 768.0 * 2;
+		auto ray = Camera::MainCamera->get_ray({u_x, u_y});
+		auto res = ray_cast(ray);
+		if (res.is_intersecting)
+		{
+			if (_scene_opt._particle_mode)
+			{
+				_particle_objects[res.ID]->_dirty = true;
+				_particle_objects[res.ID]->_inst_id = static_cast<int>(res.particleID);
+				_selected_particle = static_cast<int>(res.particleID);
+			}
+			_selected = static_cast<int>(res.ID);
+		}
+	}
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+	{
+		MOUSE_LEFT = false;
+		FIRST_CLICK_LEFT = true;
+	}
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) { MOUSE_MID = true; }
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
+	{
+		MOUSE_MID = false;
+		FIRST_CLICK_MID = true;
+	}
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) { MOUSE_RIGHT = true; }
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+	{
+		MOUSE_RIGHT = false;
+		FIRST_CLICK_RIGHT = true;
+	}
 }
 void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
@@ -163,21 +195,15 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 		auto res = ray_cast(ray);
 		if (res.is_intersecting)
 		{
-			if(_scene_opt._particle_mode)
+			if (!FIRST_CLICK_LEFT)
 			{
-				_particle_objects[res.ID]->_dirty = true;
-				_particle_objects[res.ID]->_inst_id = static_cast<int>(res.particleID);
-				_selected_particle = static_cast<int>(res.particleID);
-				if (!FIRST_CLICK_LEFT)
+				if (_scene_opt._particle_mode)
 				{
 					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
 					auto particle = _particle_objects[res.ID]->_poses[res.particleID];
 					particle.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
 					particle.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
-				}
-			} else
-			{
-				if (!FIRST_CLICK_LEFT)
+				} else
 				{
 					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
 					_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);

@@ -15,6 +15,7 @@ public:
 	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
 	std::function<void(const Kasumi::Scene3DPtr &)> _init;
 	std::function<void(real)> _step;
+	std::function<void()> _debugger;
 
 protected:
 	void prepare() final
@@ -32,6 +33,7 @@ protected:
 	void update(double dt) final
 	{
 		if (_step) HINA_TRACK(if(_running) _step(dt), "Step");
+		if(_debugger) _debugger();
 		HINA_TRACK(_scene->draw(), "Rendering");
 	}
 	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); }
