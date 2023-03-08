@@ -23,6 +23,16 @@ void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object)
 	_particle_objects[object->ID] = object;
 	_selected = static_cast<int>(object->ID);
 }
+void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DInstancedPtr &object)
+{
+	_line_objects[object->ID] = object;
+	_selected = static_cast<int>(object->ID);
+}
+void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DPtr &object)
+{
+	_point_objects[object->ID] = object;
+	_selected = static_cast<int>(object->ID);
+}
 void Kasumi::Scene3D::remove(unsigned int id)
 {
 	auto it = _objects.find(id);
@@ -34,6 +44,10 @@ void Kasumi::Scene3D::draw()
 	for (auto &pair: _objects)
 		pair.second->render();
 	for (auto &pair: _particle_objects)
+		pair.second->render();
+	for (auto &pair: _line_objects)
+		pair.second->render();
+	for (auto &pair: _point_objects)
 		pair.second->render();
 
 	if (_scene_opt._ray_enable)
@@ -107,7 +121,7 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 			if (hit.is_intersecting && (!res.is_intersecting || hit.distance < res.distance))
 				res = hit;
 		}
-	} else
+	} else // TODO: error here, don't use
 	{
 		for (auto &o: _particle_objects)
 		{
