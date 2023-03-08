@@ -149,8 +149,8 @@ void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 		auto x_pos = Platform::GetCursorPos().first;
 		auto y_pos = Platform::GetCursorPos().second;
 
-		real u_x = x_pos / 1024.0 * 2 - 1;
-		real u_y = 1 - y_pos / 768.0 * 2;
+		real u_x = x_pos / Camera::MainCamera->_opt.width * 2 - 1;
+		real u_y = 1 - y_pos / Camera::MainCamera->_opt.height * 2;
 		auto ray = Camera::MainCamera->get_ray({u_x, u_y});
 		auto res = ray_cast(ray);
 		if (res.is_intersecting)
@@ -188,8 +188,8 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 	Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos);
 	if (MOUSE_LEFT)
 	{
-		real u_x = x_pos / 1024.0 * 2 - 1;
-		real u_y = 1 - y_pos / 768.0 * 2;
+		real u_x = x_pos / Camera::MainCamera->_opt.width * 2 - 1;
+		real u_y = 1 - y_pos / Camera::MainCamera->_opt.height * 2;
 		auto ray = Camera::MainCamera->get_ray({u_x, u_y});
 		auto res = ray_cast(ray);
 		if (res.is_intersecting)
