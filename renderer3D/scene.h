@@ -35,7 +35,7 @@ private:
 	int _selected = 0;
 	int _selected_particle = 0;
 
-private:
+public:
 	// scene query
 	struct SceneOpt
 	{
@@ -58,6 +58,7 @@ private:
 	friend class Renderer3D;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
 
+protected:
 	void key(int key, int scancode, int action, int mods);
 	void mouse_button(int button, int action, int mods);
 	void mouse_scroll(double x_offset, double y_offset);
