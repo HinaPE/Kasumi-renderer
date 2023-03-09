@@ -13,32 +13,13 @@ Kasumi::Scene3D::Scene3D()
 	// debug point
 	_scene_opt.debug_point_obj = std::make_shared<ObjectPoints3D>();
 }
-void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object)
-{
-	_objects[object->ID] = object;
-	_selected = static_cast<int>(object->ID);
-}
-void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object)
-{
-	_particle_objects[object->ID] = object;
-	_selected = static_cast<int>(object->ID);
-}
-void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DInstancedPtr &object)
-{
-	_line_objects[object->ID] = object;
-	_selected = static_cast<int>(object->ID);
-}
-void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DPtr &object)
-{
-	_point_objects[object->ID] = object;
-	_selected = static_cast<int>(object->ID);
-}
-void Kasumi::Scene3D::remove(unsigned int id)
-{
-	auto it = _objects.find(id);
-	if (it != _objects.end())
-		_objects.erase(it);
-}
+// @formatter:off
+void Kasumi::Scene3D::add(const Kasumi::ObjectMesh3DPtr &object) 			{ _objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object) 				{ _particle_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DInstancedPtr &object) 	{ _line_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DPtr &object) 			{ _point_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::remove(unsigned int id) 								{ auto it = _objects.find(id); if (it != _objects.end()) _objects.erase(it); }
+// @formatter:on
 void Kasumi::Scene3D::draw()
 {
 	for (auto &pair: _objects)
@@ -82,9 +63,8 @@ void Kasumi::Scene3D::read_scene(const std::string &path)
 	std::string err;
 	auto scene = json11::Json::parse(src, err, json11::JsonParse::STANDARD);
 }
-void Kasumi::Scene3D::export_scene(const std::string &path)
-{
-}
+void Kasumi::Scene3D::export_scene(const std::string &path) {}
+
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
 	Kasumi::Camera::MainCamera->key(key, scancode, action, mods);
@@ -110,6 +90,7 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 		_scene_opt._ray_hit->clear();
 	}
 }
+
 auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
@@ -219,11 +200,15 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 
 void Kasumi::Scene3D::INSPECT()
 {
-	ImGui::Text("Scene Info");
-	ImGui::Text("Select Mode: %s", _scene_opt._particle_mode ? "Particle" : "Object");
+	ImGui::Text("SCENE INSPECTOR");
 
-	if (_objects.empty())
+	if (_objects.empty() && _particle_objects.empty())
+	{
+		ImGui::Text("No Object Now");
 		return;
+	}
+
+	ImGui::Text("Select Mode: %s", _scene_opt._particle_mode ? "Particle" : "Object");
 
 	for (auto &pair: _objects)
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
@@ -234,8 +219,6 @@ void Kasumi::Scene3D::INSPECT()
 		_objects[_selected]->INSPECT();
 	else if (_particle_objects.contains(_selected))
 		_particle_objects[_selected]->INSPECT();
-
-	ImGui::Separator();
 
 
 	// Debug Info Area
@@ -277,6 +260,7 @@ void Kasumi::Scene3D::INSPECT()
 		}
 	}
 }
+
 void Kasumi::Scene3D::VALID_CHECK() const
 {
 	for (auto &pair: _objects)
