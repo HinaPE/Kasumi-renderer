@@ -2,6 +2,15 @@
 #include "scene.h"
 #include "json/json11.hpp"
 
+static bool MOUSE_LEFT = false;
+static bool MOUSE_MID = false;
+static bool MOUSE_RIGHT = false;
+static bool FIRST_CLICK_LEFT = true;
+static bool FIRST_CLICK_MID = true;
+static bool FIRST_CLICK_RIGHT = true;
+static bool MOVE_MODE = false;
+static mVector2 PRE_MOUSE_POS = mVector2::Zero();
+
 Kasumi::Scene3D::Scene3D()
 {
 	_scene_opt._ray = std::make_shared<ObjectLines3D>();
@@ -111,15 +120,10 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 		_scene_opt._ray->clear();
 		_scene_opt._ray_hit->clear();
 	}
+	if (key == GLFW_KEY_M && action == GLFW_PRESS) { MOVE_MODE = true; }
+	if (key == GLFW_KEY_M && action == GLFW_RELEASE) { MOVE_MODE = false; }
 }
 
-static bool MOUSE_LEFT = false;
-static bool MOUSE_MID = false;
-static bool MOUSE_RIGHT = false;
-static bool FIRST_CLICK_LEFT = true;
-static bool FIRST_CLICK_MID = true;
-static bool FIRST_CLICK_RIGHT = true;
-static mVector2 PRE_MOUSE_POS = mVector2::Zero();
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
@@ -164,31 +168,34 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 {
 	if (MOUSE_LEFT)
 	{
-		real u_x = x_pos / Camera::MainCamera->_opt.width * 2 - 1;
-		real u_y = 1 - y_pos / Camera::MainCamera->_opt.height * 2;
-		auto ray = Camera::MainCamera->get_ray({u_x, u_y});
-		auto res = ray_cast(ray);
-		if (res.is_intersecting)
+		if (MOVE_MODE)
 		{
-			if (!FIRST_CLICK_LEFT)
+			real u_x = x_pos / Camera::MainCamera->_opt.width * 2 - 1;
+			real u_y = 1 - y_pos / Camera::MainCamera->_opt.height * 2;
+			auto ray = Camera::MainCamera->get_ray({u_x, u_y});
+			auto res = ray_cast(ray);
+			if (res.is_intersecting)
 			{
-				if (_scene_opt._particle_mode)
+				if (!FIRST_CLICK_LEFT)
 				{
-					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
-					auto particle = _particle_objects[res.ID]->POSES[res.particleID];
-					particle.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
-					particle.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
-				} else
-				{
-					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
-					_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
-					_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
-					_objects[res.ID]->_dirty = true;
+					if (_scene_opt._particle_mode)
+					{
+						auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
+						auto particle = _particle_objects[res.ID]->POSES[res.particleID];
+						particle.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
+						particle.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+					} else
+					{
+						auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
+						_objects[res.ID]->POSE.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
+						_objects[res.ID]->POSE.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
+						_objects[res.ID]->_dirty = true;
+					}
 				}
+				PRE_MOUSE_POS = {u_x, u_y};
+				FIRST_CLICK_LEFT = false;
+				_selected = static_cast<int>(res.ID);
 			}
-			PRE_MOUSE_POS = {u_x, u_y};
-			FIRST_CLICK_LEFT = false;
-			_selected = static_cast<int>(res.ID);
 		}
 	}
 }
