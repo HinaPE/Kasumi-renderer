@@ -65,32 +65,6 @@ void Kasumi::Scene3D::read_scene(const std::string &path)
 }
 void Kasumi::Scene3D::export_scene(const std::string &path) {}
 
-void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
-{
-	Kasumi::Camera::MainCamera->key(key, scancode, action, mods);
-	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); }
-	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); }
-	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); }
-	if (key == GLFW_KEY_P && action == GLFW_PRESS) { _scene_opt._particle_mode = !_scene_opt._particle_mode; }
-	if (key == GLFW_KEY_R && action == GLFW_PRESS)
-	{
-		_scene_opt._ray_enable = true;
-		auto ray = Kasumi::Camera::MainCamera->get_ray(mVector2::Zero());
-		_scene_opt._ray_hit_info = ray_cast(ray);
-		if (_scene_opt._ray_hit_info.is_intersecting)
-		{
-			_scene_opt._ray->add(Kasumi::Camera::MainCamera->_opt.position, _scene_opt._ray_hit_info.point);
-			_scene_opt._ray_hit->add(_scene_opt._ray_hit_info.point);
-		}
-	}
-	if (key == GLFW_KEY_R && action == GLFW_RELEASE)
-	{
-		_scene_opt._ray_enable = false;
-		_scene_opt._ray->clear();
-		_scene_opt._ray_hit->clear();
-	}
-}
-
 auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
 {
 	HinaPE::Geom::SurfaceRayIntersection3 res;
@@ -114,6 +88,31 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 	return res;
 }
 
+void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); }
+	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); }
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); }
+	if (key == GLFW_KEY_P && action == GLFW_PRESS) { _scene_opt._particle_mode = !_scene_opt._particle_mode; }
+	if (key == GLFW_KEY_R && action == GLFW_PRESS)
+	{
+		_scene_opt._ray_enable = true;
+		auto ray = Kasumi::Camera::MainCamera->get_ray(mVector2::Zero());
+		_scene_opt._ray_hit_info = ray_cast(ray);
+		if (_scene_opt._ray_hit_info.is_intersecting)
+		{
+			_scene_opt._ray->add(Kasumi::Camera::MainCamera->_opt.position, _scene_opt._ray_hit_info.point);
+			_scene_opt._ray_hit->add(_scene_opt._ray_hit_info.point);
+		}
+	}
+	if (key == GLFW_KEY_R && action == GLFW_RELEASE)
+	{
+		_scene_opt._ray_enable = false;
+		_scene_opt._ray->clear();
+		_scene_opt._ray_hit->clear();
+	}
+}
+
 static bool MOUSE_LEFT = false;
 static bool MOUSE_MID = false;
 static bool MOUSE_RIGHT = false;
@@ -123,7 +122,6 @@ static bool FIRST_CLICK_RIGHT = true;
 static mVector2 PRE_MOUSE_POS = mVector2::Zero();
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 {
-	Kasumi::Camera::MainCamera->mouse_button(button, action, mods);
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
 		MOUSE_LEFT = true;
@@ -162,10 +160,8 @@ void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 		FIRST_CLICK_RIGHT = true;
 	}
 }
-void Kasumi::Scene3D::mouse_scroll(double x_offset, double y_offset) { Kasumi::Camera::MainCamera->mouse_scroll(x_offset, y_offset); }
 void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 {
-	Kasumi::Camera::MainCamera->mouse_cursor(x_pos, y_pos);
 	if (MOUSE_LEFT)
 	{
 		real u_x = x_pos / Camera::MainCamera->_opt.width * 2 - 1;

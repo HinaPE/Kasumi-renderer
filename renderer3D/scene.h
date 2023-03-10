@@ -61,7 +61,6 @@ public:
 protected:
 	void key(int key, int scancode, int action, int mods);
 	void mouse_button(int button, int action, int mods);
-	void mouse_scroll(double x_offset, double y_offset);
 	void mouse_cursor(double x_pos, double y_pos);
 	void INSPECT() final;
 	void VALID_CHECK() const final;
