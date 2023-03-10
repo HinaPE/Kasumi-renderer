@@ -138,7 +138,6 @@ void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
 		{
 			if (_scene_opt._particle_mode)
 			{
-				_particle_objects[res.ID]->_dirty = true;
 				_particle_objects[res.ID]->_inst_id = static_cast<int>(res.particleID);
 				_selected_particle = static_cast<int>(res.particleID);
 			}
@@ -180,7 +179,7 @@ void Kasumi::Scene3D::mouse_cursor(double x_pos, double y_pos)
 				if (_scene_opt._particle_mode)
 				{
 					auto delta = mVector2{u_x, u_y} - PRE_MOUSE_POS;
-					auto particle = _particle_objects[res.ID]->_poses[res.particleID];
+					auto particle = _particle_objects[res.ID]->POSES[res.particleID];
 					particle.position += Camera::MainCamera->_right() * delta.x() * static_cast<real>(6.5);
 					particle.position += Camera::MainCamera->_up() * delta.y() * static_cast<real>(6.5);
 				} else
@@ -220,6 +219,10 @@ void Kasumi::Scene3D::INSPECT()
 	else if (_particle_objects.contains(_selected))
 		_particle_objects[_selected]->INSPECT();
 
+	for (auto &pair: _objects)
+		pair.second->UPDATE();
+	for (auto &pair: _particle_objects)
+		pair.second->UPDATE();
 
 	// Debug Info Area
 //	ImGui::BulletText("Debug Info");
