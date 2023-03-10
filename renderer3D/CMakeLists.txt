@@ -6,7 +6,8 @@ if (NOT TARGET Kasumi_Backends)
 endif ()
 
 file(GLOB_RECURSE src
-        scene.h scene.cpp
+        scene.cpp scene.h
+        renderer3D.cpp renderer3D.h
         )
 add_library(Kasumi_Render3D ${src})
 set_target_properties(Kasumi_Render3D PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
