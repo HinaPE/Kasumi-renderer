@@ -17,6 +17,7 @@ class Scene3D final : public INSPECTOR, public VALID_CHECKER
 public:
 	void add(const ObjectMesh3DPtr &object);
 	void add(const ObjectParticles3DPtr &object);
+	void add(const ObjectLines3DPtr &object);
 	void add(const ObjectLines3DInstancedPtr &object);
 	void add(const ObjectPoints3DPtr &object);
 	void remove(unsigned int id);
@@ -28,7 +29,8 @@ public:
 private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	std::map<unsigned int, ObjectParticles3DPtr> _particle_objects;
-	std::map<unsigned int, ObjectLines3DInstancedPtr> _line_objects;
+	std::map<unsigned int, ObjectLines3DPtr> _line_objects;
+	std::map<unsigned int, ObjectLines3DInstancedPtr> _line_instance_objects;
 	std::map<unsigned int, ObjectPoints3DPtr> _point_objects;
 	ObjectParticles3DPtr _particles;
 	ObjectGrid3DPtr _grid;
