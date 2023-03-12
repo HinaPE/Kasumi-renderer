@@ -19,6 +19,7 @@ public:
 	std::function<void(const Kasumi::Scene3DPtr &)> _init;
 	std::function<void(real)> _step;
 	std::function<void()> _debugger;
+	std::function<void(int key, int scancode, int action, int mods)> _key;
 
 protected:
 	void prepare() final
@@ -39,7 +40,7 @@ protected:
 		if(_debugger) _debugger();
 		HINA_TRACK(_scene->draw(), "Rendering");
 	}
-	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); }
+	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); if(_key) _key(key, scancode, action, mods);}
 	void mouse_button(int button, int action, int mods) override 	{ _scene->mouse_button(button, action, mods); }
 	void mouse_cursor(double x_pos, double y_pos) override 			{ _scene->mouse_cursor(x_pos, y_pos); }
 

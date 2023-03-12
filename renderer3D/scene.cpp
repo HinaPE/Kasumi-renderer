@@ -100,8 +100,8 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); for (auto &pair: _particle_objects) pair.second->_switch_wireframe(); }
-	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); for (auto &pair: _particle_objects) pair.second->_switch_wireframe(); }
-	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); for (auto &pair: _particle_objects) pair.second->_switch_wireframe(); }
+	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); for (auto &pair: _particle_objects) pair.second->_switch_surface(); }
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); for (auto &pair: _particle_objects) pair.second->_switch_bbox(); }
 	if (key == GLFW_KEY_P && action == GLFW_PRESS) { _scene_opt._particle_mode = !_scene_opt._particle_mode; }
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
