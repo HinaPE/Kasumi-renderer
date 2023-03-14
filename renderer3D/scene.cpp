@@ -28,6 +28,7 @@ void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object) 				{ _particle_ob
 void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DPtr &object) 			{ _line_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DInstancedPtr &object) 	{ _line_instance_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DPtr &object) 			{ _point_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::add(const Kasumi::ObjectGrid3DPtr &object) 			{ _grid_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::remove(unsigned int id) 								{ auto it = _objects.find(id); if (it != _objects.end()) _objects.erase(it); }
 // @formatter:on
 void Kasumi::Scene3D::draw()
@@ -41,6 +42,8 @@ void Kasumi::Scene3D::draw()
 	for (auto &pair: _line_instance_objects)
 		pair.second->render();
 	for (auto &pair: _point_objects)
+		pair.second->render();
+	for (auto &pair: _grid_objects)
 		pair.second->render();
 
 	if (_scene_opt._ray_enable)
