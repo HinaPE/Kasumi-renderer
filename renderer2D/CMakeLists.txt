@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.24)
 project(Kasumi_Render2D VERSION 2.0.0 DESCRIPTION "Kasumi Renderer 2D" LANGUAGES CXX)
 
 if (NOT TARGET Kasumi_Backends)
