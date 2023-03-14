@@ -5,7 +5,7 @@ if (NOT TARGET Kasumi_Backends)
     add_subdirectory(../backends Kasumi_Backends)
 endif ()
 
-add_library(Kasumi_Render3D)
+add_library(Kasumi_Render3D STATIC)
 target_sources(Kasumi_Render3D
         PRIVATE
         scene.cpp
