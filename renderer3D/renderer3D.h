@@ -13,8 +13,6 @@ public:
 	static Renderer3D DEFAULT_RENDERER; // Default Instance of Renderer3D
 
 public:
-	void add_obj(const ObjectMesh3DPtr &obj) { _scene->add(obj); }
-	void remove_obj(unsigned int id) { _scene->remove(id); }
 	Renderer3D() : _scene(std::make_shared<Kasumi::Scene3D>()) {}
 	std::function<void(const Kasumi::Scene3DPtr &)> _init;
 	std::function<void(real)> _step;

@@ -62,6 +62,7 @@ public:
 		bool inside = false;
 	} _scene_opt;
 	friend class Renderer3D;
+	friend class VolumeRenderer;
 	auto ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3;
 
 protected:
