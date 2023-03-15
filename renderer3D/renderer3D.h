@@ -24,19 +24,15 @@ protected:
 	{
 		ObjectLines3D::Init();
 		ObjectPoints3D::Init();
-//		_scene->_scene_opt._line_enable = true;
-//		_scene->_scene_opt._point_enable = true;
-
 		if (_init) _init(_scene);
-
 		inspect(_scene.get());
 		_scene->VALID_CHECK();
 	}
 	void update(double dt) final
 	{
-		if (_step) HINA_TRACK(if(_running) _step(dt), "Step");
+		if (_step) HINA_TRACK(if(_running) _step(dt), "Step")
 		if(_debugger) _debugger();
-		HINA_TRACK(_scene->draw(), "Rendering");
+		HINA_TRACK(_scene->draw(), "Rendering")
 	}
 	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); if(_key) _key(key, scancode, action, mods);}
 	void mouse_button(int button, int action, int mods) override 	{ _scene->mouse_button(button, action, mods); }

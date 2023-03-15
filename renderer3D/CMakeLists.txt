@@ -11,7 +11,6 @@ target_sources(Kasumi_Render3D
         PRIVATE
         scene.cpp
         renderer3D.cpp
-        volume_renderer.cpp
 
         PUBLIC
         FILE_SET HEADERS
@@ -19,7 +18,6 @@ target_sources(Kasumi_Render3D
         FILES
         scene.h
         renderer3D.h
-        volume_renderer.h
         )
 set_target_properties(Kasumi_Render3D PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
 target_include_directories(Kasumi_Render3D PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
