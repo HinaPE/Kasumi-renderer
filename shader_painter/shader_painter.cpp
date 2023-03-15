@@ -1,7 +1,7 @@
 #include "glad/glad.h"
 #include "shader_painter.h"
 
-Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() {}
+Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { clean_mode(); }
 
 void Kasumi::ShaderPainter::load_shader(const std::string &pixel_shader) { _shaders.push_back(std::make_shared<Shader>(std::string(BackendsShaderDir) + "painter_vertex.glsl", pixel_shader)); }
 
