@@ -4,3 +4,4 @@ project(Kasumi VERSION 2.0.0 DESCRIPTION "Kasumi: Illumine the Endless Night." L
 add_subdirectory(backends)
 add_subdirectory(renderer2D)
 add_subdirectory(renderer3D)
+add_subdirectory(shader_painter)
