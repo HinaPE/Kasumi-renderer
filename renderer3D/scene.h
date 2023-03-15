@@ -20,6 +20,7 @@ public:
 	void add(const ObjectLines3DPtr &object);
 	void add(const ObjectLines3DInstancedPtr &object);
 	void add(const ObjectPoints3DPtr &object);
+	void add(const ObjectPoints3DInstancedPtr &object);
 	void add(const ObjectGrid3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
@@ -30,10 +31,11 @@ public:
 private:
 	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 	std::map<unsigned int, ObjectParticles3DPtr> _particle_objects;
+	std::map<unsigned int, ObjectGrid3DPtr> _grid_objects;
 	std::map<unsigned int, ObjectLines3DPtr> _line_objects;
 	std::map<unsigned int, ObjectLines3DInstancedPtr> _line_instance_objects;
 	std::map<unsigned int, ObjectPoints3DPtr> _point_objects;
-	std::map<unsigned int, ObjectGrid3DPtr> _grid_objects;
+	std::map<unsigned int, ObjectPoints3DInstancedPtr> _point_instance_objects;
 	ObjectParticles3DPtr _particles;
 	ObjectGrid3DPtr _grid;
 	int _selected = 0;

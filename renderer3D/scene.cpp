@@ -28,6 +28,7 @@ void Kasumi::Scene3D::add(const ObjectParticles3DPtr &object) 				{ _particle_ob
 void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DPtr &object) 			{ _line_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::add(const Kasumi::ObjectLines3DInstancedPtr &object) 	{ _line_instance_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DPtr &object) 			{ _point_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
+void Kasumi::Scene3D::add(const Kasumi::ObjectPoints3DInstancedPtr &object) { _point_instance_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::add(const Kasumi::ObjectGrid3DPtr &object) 			{ _grid_objects[object->ID] = object; _selected = static_cast<int>(object->ID); }
 void Kasumi::Scene3D::remove(unsigned int id) 								{ auto it = _objects.find(id); if (it != _objects.end()) _objects.erase(it); }
 // @formatter:on
@@ -37,13 +38,15 @@ void Kasumi::Scene3D::draw()
 		pair.second->render();
 	for (auto &pair: _particle_objects)
 		pair.second->render();
+	for (auto &pair: _grid_objects)
+		pair.second->render();
 	for (auto &pair: _line_objects)
 		pair.second->render();
 	for (auto &pair: _line_instance_objects)
 		pair.second->render();
 	for (auto &pair: _point_objects)
 		pair.second->render();
-	for (auto &pair: _grid_objects)
+	for (auto &pair: _point_instance_objects)
 		pair.second->render();
 
 	if (_scene_opt._ray_enable)
@@ -222,15 +225,22 @@ void Kasumi::Scene3D::INSPECT()
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
 	for (auto &pair: _particle_objects)
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
+	for (auto &pair: _point_instance_objects)
+		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
 
+	
 	if (_objects.contains(_selected))
 		_objects[_selected]->INSPECT();
 	else if (_particle_objects.contains(_selected))
 		_particle_objects[_selected]->INSPECT();
+	else if (_point_instance_objects.contains(_selected))
+		_point_instance_objects[_selected]->INSPECT();
 
 	for (auto &pair: _objects)
 		pair.second->UPDATE();
 	for (auto &pair: _particle_objects)
+		pair.second->UPDATE();
+	for (auto &pair: _point_instance_objects)
 		pair.second->UPDATE();
 
 	// Debug Info Area
