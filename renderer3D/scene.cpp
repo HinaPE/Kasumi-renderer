@@ -211,7 +211,7 @@ void Kasumi::Scene3D::INSPECT()
 {
 	ImGui::Text("SCENE INSPECTOR");
 
-	if (_objects.empty() && _particle_objects.empty())
+	if (_objects.empty() && _particle_objects.empty() && _point_instance_objects.empty() && _grid_objects.empty())
 	{
 		ImGui::Text("No Object Now");
 		return;
