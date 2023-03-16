@@ -29,7 +29,7 @@ target_link_libraries(Kasumi_ShaderPainter_App PUBLIC Kasumi_ShaderPainter)
 
 # INSTALL TARGETS
 INSTALL(
-        TARGETS Kasumi_ShaderPainter_App
+        TARGETS Kasumi_ShaderPainter
         CONFIGURATIONS Release
         FILE_SET HEADERS
         RUNTIME DESTINATION bin
