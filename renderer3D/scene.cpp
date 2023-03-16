@@ -15,8 +15,6 @@ Kasumi::Scene3D::Scene3D()
 {
 	_scene_opt._ray = std::make_shared<ObjectLines3D>();
 	_scene_opt._ray_hit = std::make_shared<ObjectPoints3D>();
-	_particles = std::make_shared<ObjectParticles3D>();
-	_grid = std::make_shared<ObjectGrid3D>();
 //	read_scene();
 
 	// debug point
@@ -241,6 +239,8 @@ void Kasumi::Scene3D::INSPECT()
 	for (auto &pair: _particle_objects)
 		pair.second->UPDATE();
 	for (auto &pair: _point_instance_objects)
+		pair.second->UPDATE();
+	for (auto &pair: _grid_objects)
 		pair.second->UPDATE();
 
 	// Debug Info Area

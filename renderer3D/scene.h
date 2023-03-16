@@ -36,8 +36,6 @@ private:
 	std::map<unsigned int, ObjectLines3DInstancedPtr> _line_instance_objects;
 	std::map<unsigned int, ObjectPoints3DPtr> _point_objects;
 	std::map<unsigned int, ObjectPoints3DInstancedPtr> _point_instance_objects;
-	ObjectParticles3DPtr _particles;
-	ObjectGrid3DPtr _grid;
 	int _selected = 0;
 	int _selected_particle = 0;
 
