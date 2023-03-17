@@ -7,8 +7,8 @@ if (NOT TARGET Kasumi_Backends)
 endif ()
 
 add_library(Kasumi_Render2D)
-file(GLOB headers scene.h objects/*.h)
-file(GLOB sources scene.cpp objects/*.cpp)
+file(GLOB headers renderer2D.h scene.h objects/*.h)
+file(GLOB sources renderer2D.cpp scene.cpp objects/*.cpp)
 target_sources(Kasumi_Render2D
         PRIVATE
         ${sources}
