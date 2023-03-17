@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(Kasumi_ShaderPainter VERSION 2.0.0 DESCRIPTION "Kasumi Renderer 3D" LANGUAGES CXX)
+project(Kasumi_ShaderPainter VERSION 2.0.0 DESCRIPTION "Kasumi Shader Painter" LANGUAGES CXX)
 
 if (NOT TARGET Kasumi_Backends)
     message(FATAL_ERROR "Kasumi_Backends is not found")

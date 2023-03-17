@@ -1,6 +1,9 @@
 #ifndef HINAPE_SHADER_PAINTER_H
 #define HINAPE_SHADER_PAINTER_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "backends/api.h"
 
 namespace Kasumi

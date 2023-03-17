@@ -1,6 +1,9 @@
 #ifndef HINAPE_RENDERER3D_H
 #define HINAPE_RENDERER3D_H
 
+// Copyright (c) 2023 Xayah Hina
+// MPL-2.0 license
+
 #include "GLFW/glfw3.h"
 #include "scene.h"
 
