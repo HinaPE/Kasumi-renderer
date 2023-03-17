@@ -6,11 +6,19 @@ if (NOT TARGET Kasumi_Backends)
     return()
 endif ()
 
-file(GLOB_RECURSE src
-        objects/*.h objects/*.cpp
-        scene.h scene.cpp
+add_library(Kasumi_Render2D)
+file(GLOB headers scene.h objects/*.h)
+file(GLOB sources scene.cpp objects/*.cpp)
+target_sources(Kasumi_Render2D
+        PRIVATE
+        ${sources}
+
+        PUBLIC
+        FILE_SET HEADERS
+        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../
+        FILES
+        ${headers}
         )
-add_library(Kasumi_Render2D ${src})
 set_target_properties(Kasumi_Render2D PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
 target_include_directories(Kasumi_Render2D PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(Kasumi_Render2D PUBLIC Kasumi_Backends)

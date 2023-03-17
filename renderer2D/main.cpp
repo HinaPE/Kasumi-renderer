@@ -3,44 +3,19 @@
 
 class App2D : public Kasumi::App
 {
+public:
+	App2D() { clean_mode(); dark_mode(); }
+
 protected:
 	void prepare() final
 	{
 		_scene = std::make_shared<Kasumi::Scene2D>();
-
-		{
-			auto lines = std::make_shared<Kasumi::Lines2DObject>();
-			lines->add({-0.9, 0}, {0.9, 0});
-			lines->add({0, -0.9}, {0, 0.9});
-			_scene->add(lines);
-		}
-
-		{
-			auto points = std::make_shared<Kasumi::Points2DObject>();
-			points->add({0, 0}, HinaPE::Color::MIKU);
-			_scene->add(points);
-		}
-
-		{
-			auto triangle = std::make_shared<Kasumi::Triangle2DObject>();
-			triangle->_opt.p1 = {-0.5, -0.5};
-			triangle->_opt.p2 = {0.5, -0.5};
-			triangle->_opt.p3 = {0, 0.5};
-			triangle->_opt.color = HinaPE::Color::RED;
-			triangle->_opt.dirty = true;
-			_scene->add(triangle);
-		}
-
-		{
-			auto circle = std::make_shared<Kasumi::Circles2DObject>();
-			circle->_opt.position = {0, 0};
-			circle->_opt.radius = 0.5;
-			circle->_opt.dirty = true;
-			_scene->add(circle);
-		}
-
-		inspect(_scene.get());
-		_scene->VALID_CHECK();
+		auto rectangle = std::make_shared<Kasumi::Rectangle2DObject>();
+		auto circle = std::make_shared<Kasumi::Circle2DObject>();
+		rectangle->POSE.position = mVector2(-200, 0);
+		circle->POSE.position = mVector2(200, 0);
+		_scene->add(circle);
+		_scene->add(rectangle);
 	}
 	void update(double dt) final
 	{

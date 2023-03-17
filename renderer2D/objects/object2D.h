@@ -8,20 +8,27 @@
 
 namespace Kasumi
 {
-class Object2D : public INSPECTOR
+class Object2D : public Pose2DBase, public IDBase, public NameBase
 {
 public:
-	static unsigned int ID_GLOBAL;
-	const unsigned int ID;
-	struct Opt
-	{
-		bool dirty = true;
-		Pose2D pose;
-	} _opt;
-	Object2D() : ID(ID_GLOBAL++) {}
-	virtual void _rebuild_() { _opt.dirty = false; }
+	virtual void set_color(const mVector3 &color) final;
+	virtual void render() final;
+	const ShaderPtr _shader;
+	Object2D();
 
-	void INSPECT() override;
+	struct Vertex
+	{
+		mVector2 position;
+		mVector3 color = HinaPE::Color::MIKU;;
+	};
+
+protected:
+	virtual void _update();
+
+	unsigned int _vao, _vbo, _ebo;
+	std::vector<Vertex> _vertices;
+	std::vector<unsigned int> _indices;
+	bool _dirty = true;
 };
 using Object2DPtr = std::shared_ptr<Object2D>;
 } // namespace Kasumi
