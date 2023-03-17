@@ -2,6 +2,12 @@
 Kasumi::Rectangle2DObject::Rectangle2DObject()
 {
 	NAME = "Rectangle";
+	resize(_width, _height);
+}
+void Kasumi::Rectangle2DObject::resize(real width, real height)
+{
+	_width = width;
+	_height = height;
 
 	_vertices.clear();
 	_indices.clear();

@@ -14,6 +14,7 @@ public:
 	real _width = 200;
 	real _height = 200;
 	Rectangle2DObject();
+	void resize(real width, real height);
 };
 using Rectangle2DObjectPtr = std::shared_ptr<Rectangle2DObject>;
 } // namespace Kasumi

@@ -6,6 +6,7 @@
 
 #include "objects/circle.h"
 #include "objects/rectangle.h"
+#include "objects/curve.h"
 
 namespace Kasumi
 {

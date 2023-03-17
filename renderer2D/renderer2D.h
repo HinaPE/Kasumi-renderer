@@ -7,21 +7,23 @@
 #include "backends/api.h"
 #include "scene.h"
 
-class Renderer2D : public Kasumi::App
+// @formatter:off
+namespace Kasumi
+{
+class Renderer2D : public App
 {
 public:
-	Renderer2D() { clean_mode(); dark_mode(); }
+	Renderer2D() { clean_mode(); _scene = std::make_shared<Kasumi::Scene2D>(); }
+	std::function<void(const Kasumi::Scene2DPtr &)> _init;
+	std::function<void(real)> _step;
+	std::function<void()> _debugger;
+	std::function<void(int key, int scancode, int action, int mods)> _key;
 
 protected:
 	void prepare() final
 	{
-		_scene = std::make_shared<Kasumi::Scene2D>();
-		auto rectangle = std::make_shared<Kasumi::Rectangle2DObject>();
-		auto circle = std::make_shared<Kasumi::Circle2DObject>();
-		rectangle->POSE.position = mVector2(-200, 0);
-		circle->POSE.position = mVector2(200, 0);
-		_scene->add(circle);
-		_scene->add(rectangle);
+		if(_init)
+			_init(_scene);
 	}
 	void update(double dt) final
 	{
@@ -31,5 +33,6 @@ protected:
 private:
 	Kasumi::Scene2DPtr _scene;
 };
+} // namespace Kasumi
 
 #endif //HINAPE_RENDERER2D_H

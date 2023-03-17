@@ -38,7 +38,12 @@ void Kasumi::Object2D::render()
 		_update();
 
 	glBindVertexArray(_vao);
-	glDrawElements(GL_TRIANGLES, (GLsizei) _indices.size(), GL_UNSIGNED_INT, nullptr);
+	if (_type == ObjectType::Triangle)
+		glDrawElements(GL_TRIANGLES, (GLsizei) _indices.size(), GL_UNSIGNED_INT, nullptr);
+	else if (_type == ObjectType::Line)
+		glDrawElements(GL_LINES, (GLsizei) _indices.size(), GL_UNSIGNED_INT, nullptr);
+	else if (_type == ObjectType::Point)
+		glDrawElements(GL_POINTS, (GLsizei) _indices.size(), GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 }
 void Kasumi::Object2D::set_color(const mVector3 &color)

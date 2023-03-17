@@ -8,6 +8,12 @@
 
 namespace Kasumi
 {
+enum class ObjectType
+{
+	Triangle,
+	Line,
+	Point
+};
 class Object2D : public Pose2DBase, public IDBase, public NameBase
 {
 public:
@@ -28,8 +34,10 @@ protected:
 	unsigned int _vao, _vbo, _ebo;
 	std::vector<Vertex> _vertices;
 	std::vector<unsigned int> _indices;
+	ObjectType _type = ObjectType::Triangle;
 	bool _dirty = true;
 };
+
 using Object2DPtr = std::shared_ptr<Object2D>;
 } // namespace Kasumi
 
