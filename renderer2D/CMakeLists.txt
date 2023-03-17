@@ -6,7 +6,7 @@ if (NOT TARGET Kasumi_Backends)
     return()
 endif ()
 
-add_library(Kasumi_Render2D)
+add_library(Kasumi_Render2D STATIC)
 file(GLOB headers renderer2D.h scene.h objects/*.h)
 file(GLOB sources renderer2D.cpp scene.cpp objects/*.cpp)
 target_sources(Kasumi_Render2D
