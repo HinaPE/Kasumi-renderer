@@ -26,6 +26,11 @@ add_executable(Kasumi_ShaderPainter_App main.cpp)
 set_target_properties(Kasumi_ShaderPainter_App PROPERTIES CXX_STANDARD 20 CXX_EXTENSIONS ON)
 target_include_directories(Kasumi_ShaderPainter_App PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../)
 target_link_libraries(Kasumi_ShaderPainter_App PUBLIC Kasumi_ShaderPainter)
+target_compile_definitions(
+        Kasumi_ShaderPainter_App
+        PUBLIC
+        PainterShaderDir="${CMAKE_CURRENT_SOURCE_DIR}/shaders/"
+)
 
 # INSTALL TARGETS
 INSTALL(

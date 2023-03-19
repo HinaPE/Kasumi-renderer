@@ -38,7 +38,11 @@ void Kasumi::ShaderPainter::prepare()
 		if (_shaders.empty()) return;
 		for (auto &shader: _shaders)
 		{
+#ifdef __APPLE__
+			static mVector2 screen(2 * _opt.width, 2 * _opt.height);
+#else
 			static mVector2 screen(_opt.width, _opt.height);
+#endif
 			static std::chrono::steady_clock::time_point _starting_point = std::chrono::steady_clock::now();
 			float time = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
 			shader->use();
