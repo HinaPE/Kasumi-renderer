@@ -23,7 +23,7 @@ struct Frame
 		real v = (static_cast<real>(y) + 0.5f) / static_cast<real>(_rows);
 		real x_ = u * _width - _width / 2.0f;
 		real y_ = v * _height - _height / 2.0f;
-		return {_view_point, mVector3(x_, y_, -1.0f)};
+		return {_view_point, mVector3(x_, y_, -0.2f)};
 	}
 	void fill_each_ray(const std::function<mVector3(const mRay3 &)> &func)
 	{
@@ -62,6 +62,7 @@ public:
 
 private:
 	std::shared_ptr<Frame> _frame;
+	HinaPE::Geom::Surface3Ptr _surface;
 };
 } // namespace Kasumi
 
