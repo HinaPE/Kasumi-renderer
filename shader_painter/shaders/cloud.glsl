@@ -31,13 +31,13 @@ bool intersect(Ray ray, Sphere sphere, out float t0, out float t1)
     return true;
 }
 
+// uniform field
 vec3 background_color = vec3(0.572, 0.772, 0.921);
-
 vec2 sphere_center = vec2(0.5, 0.5);
-float sphere_radius = 0.2;
-
-float sigma_a = 0.1;
+uniform float sphere_radius;
+uniform float sigma_a;
 vec3 scatter = vec3(0.8, 0.1, 0.5);
+// uniform field
 
 void main()
 {
@@ -50,7 +50,7 @@ void main()
 
     Sphere sphere;
     sphere.center = vec3(0, 0, -5);
-    sphere.radius = 5;
+    sphere.radius = sphere_radius;
 
     float t0, t1;
     if (intersect(ray, sphere, t0, t1))

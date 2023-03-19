@@ -8,11 +8,12 @@
 
 namespace Kasumi
 {
-class ShaderPainter final : public App
+class ShaderPainter : public App
 {
 public:
 	ShaderPainter();
 	void load_shader(const std::string &pixel_shader);
+	Kasumi::ShaderPtr _shader;
 
 protected:
 	void prepare() final;
@@ -20,7 +21,6 @@ protected:
 
 private:
 	Kasumi::FramebufferPtr _drawing_board;
-	std::vector<Kasumi::ShaderPtr> _shaders;
 	unsigned int _vao{0};
 };
 } // namespace Kasumi

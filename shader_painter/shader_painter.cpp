@@ -1,9 +1,9 @@
 #include "glad/glad.h"
 #include "shader_painter.h"
 
-Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { clean_mode(); }
+Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { close_benchmark(); }
 
-void Kasumi::ShaderPainter::load_shader(const std::string &pixel_shader) { _shaders.push_back(std::make_shared<Shader>(std::string(BackendsShaderDir) + "painter_vertex.glsl", pixel_shader)); }
+void Kasumi::ShaderPainter::load_shader(const std::string &pixel_shader) { _shader = std::make_shared<Shader>(std::string(BackendsShaderDir) + "painter_vertex.glsl", pixel_shader); }
 
 void Kasumi::ShaderPainter::prepare()
 {
@@ -35,20 +35,17 @@ void Kasumi::ShaderPainter::prepare()
 
 	_drawing_board->render_callback = [&]() // render the scene to the drawing board
 	{
-		if (_shaders.empty()) return;
-		for (auto &shader: _shaders)
-		{
+		if (_shader == nullptr) return;
 #ifdef __APPLE__
-			static mVector2 screen(2 * _opt.width, 2 * _opt.height);
+		static mVector2 screen(2 * _opt.width, 2 * _opt.height);
 #else
-			static mVector2 screen(_opt.width, _opt.height);
+		static mVector2 screen(_opt.width, _opt.height);
 #endif
-			static std::chrono::steady_clock::time_point _starting_point = std::chrono::steady_clock::now();
-			float time = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
-			shader->use();
-			shader->uniform("iResolution", screen);
-			shader->uniform("iTime", time);
-		}
+		static std::chrono::steady_clock::time_point _starting_point = std::chrono::steady_clock::now();
+		float time = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
+		_shader->use();
+		_shader->uniform("iResolution", screen);
+		_shader->uniform("iTime", time);
 		glBindVertexArray(_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	};
