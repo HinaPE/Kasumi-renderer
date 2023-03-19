@@ -32,7 +32,7 @@ struct Frame
 			int x = i % _cols;
 			int y = i / _cols;
 			(*this)(x, y) = func(ray(x, y));
-		}, HinaPE::Util::ExecutionPolicy::Serial);
+		});
 	}
 	void write_to_file(const std::string &filename) const
 	{
