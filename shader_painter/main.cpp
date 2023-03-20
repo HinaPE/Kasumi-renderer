@@ -2,6 +2,9 @@
 
 #include "imgui.h"
 
+#include <cmrc/cmrc.hpp>
+CMRC_DECLARE(Kasumi_ShaderPainter);
+
 class CloudInspector : public Kasumi::INSPECTOR
 {
 public:
@@ -25,7 +28,10 @@ protected:
 auto main() -> int
 {
 	Kasumi::ShaderPainter painter;
-	painter.load_shader(std::string(PainterShaderDir) + "cloud.glsl");
+	auto fs = cmrc::Kasumi_ShaderPainter::get_filesystem();
+	auto cloud = fs.open("shaders/cloud.glsl").begin();
+
+	painter.load_shader(cloud);
 	CloudInspector inspector(painter._shader);
 	painter.inspect(&inspector);
 	painter.launch();

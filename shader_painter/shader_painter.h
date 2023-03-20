@@ -12,7 +12,6 @@ class ShaderPainter : public App
 {
 public:
 	ShaderPainter();
-	void load_shader(const std::string &pixel_shader);
 	void load_shader(const char* pixel_shader_src);
 	Kasumi::ShaderPtr _shader;
 

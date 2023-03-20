@@ -31,6 +31,17 @@ target_compile_definitions(
         PUBLIC
         PainterShaderDir="${CMAKE_CURRENT_SOURCE_DIR}/shaders/"
 )
+include(../CMakeRC.cmake)
+cmrc_add_resource_library(
+        Kasumi_ShaderPainter_App_Rc
+        NAMESPACE Kasumi_ShaderPainter
+        shaders/cloud.glsl
+)
+target_link_libraries(
+        Kasumi_ShaderPainter_App
+        PUBLIC
+        Kasumi_ShaderPainter_App_Rc
+)
 
 # INSTALL TARGETS
 INSTALL(

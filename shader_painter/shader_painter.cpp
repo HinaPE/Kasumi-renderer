@@ -3,8 +3,6 @@
 
 Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { close_benchmark(); }
 
-void Kasumi::ShaderPainter::load_shader(const std::string &pixel_shader) { _shader = std::make_shared<Shader>(std::string(BackendsShaderDir) + "painter_vertex.glsl", pixel_shader); }
-
 void Kasumi::ShaderPainter::load_shader(const char *pixel_shader_src)
 {
 	static std::string painter_vertex_src = R"(
