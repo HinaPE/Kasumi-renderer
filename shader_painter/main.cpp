@@ -10,11 +10,11 @@ public:
 protected:
 	void INSPECT() final
 	{
-		static float sigma_a = 1;
+		static float sigma_a = 0.198;
 		ImGui::SliderFloat("sigma_a", &sigma_a, 0.0f, 1.0f);
 		_shader->uniform("sigma_a", sigma_a);
 
-		static float sphere_radius = 3;
+		static float sphere_radius = 8.286;
 		ImGui::SliderFloat("sphere_radius", &sphere_radius, 0.1f, 10.0f);
 		_shader->uniform("sphere_radius", sphere_radius);
 	}
