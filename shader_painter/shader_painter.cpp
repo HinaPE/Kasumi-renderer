@@ -1,7 +1,7 @@
 #include "glad/glad.h"
 #include "shader_painter.h"
 
-Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { close_benchmark(); }
+Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App(), _vao(0) { close_benchmark(); }
 
 void Kasumi::ShaderPainter::load_shader(const char *pixel_shader_src)
 {

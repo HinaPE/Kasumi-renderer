@@ -21,7 +21,7 @@ protected:
 
 private:
 	Kasumi::FramebufferPtr _drawing_board;
-	unsigned int _vao{0};
+	unsigned int _vao;
 };
 } // namespace Kasumi
 
