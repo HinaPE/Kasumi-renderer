@@ -24,8 +24,8 @@ public:
 	void add(const ObjectGrid3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
-	void read_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json"); // NOT IMPLEMENTED
-	void export_scene(const std::string &path = std::string(BackendsSceneDir) + "default.json"); // NOT IMPLEMENTED
+	void read_scene(const std::string &path = "default.json"); // NOT IMPLEMENTED
+	void export_scene(const std::string &path = "default.json"); // NOT IMPLEMENTED
 	Scene3D();
 
 private:
