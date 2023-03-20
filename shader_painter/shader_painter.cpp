@@ -5,6 +5,24 @@ Kasumi::ShaderPainter::ShaderPainter() : Kasumi::App() { close_benchmark(); }
 
 void Kasumi::ShaderPainter::load_shader(const std::string &pixel_shader) { _shader = std::make_shared<Shader>(std::string(BackendsShaderDir) + "painter_vertex.glsl", pixel_shader); }
 
+void Kasumi::ShaderPainter::load_shader(const char *pixel_shader_src)
+{
+	static std::string painter_vertex_src = R"(
+#version 330 core
+layout (location = 0) in vec2 aPos;
+layout (location = 1) in vec2 aTexCoords;
+
+out vec2 TexCoords;
+
+void main()
+{
+    gl_Position = vec4(aPos.x, aPos.y, 0.0, 1.0);
+    TexCoords = aTexCoords;
+}
+)";
+	_shader = std::make_shared<Shader>(painter_vertex_src.c_str(), pixel_shader_src);
+}
+
 void Kasumi::ShaderPainter::prepare()
 {
 	_drawing_board = std::make_shared<Kasumi::Framebuffer>(_opt.width, _opt.height);
@@ -52,4 +70,3 @@ void Kasumi::ShaderPainter::prepare()
 }
 
 void Kasumi::ShaderPainter::update(double dt) { _drawing_board->render(); }
-
