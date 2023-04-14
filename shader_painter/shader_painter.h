@@ -18,6 +18,7 @@ public:
 protected:
 	void prepare() final;
 	void update(double dt) final;
+	void key(int key, int scancode, int action, int mods) final;
 
 private:
 	Kasumi::FramebufferPtr _drawing_board;
