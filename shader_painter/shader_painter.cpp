@@ -68,14 +68,3 @@ void Kasumi::ShaderPainter::prepare()
 }
 
 void Kasumi::ShaderPainter::update(double dt) { _drawing_board->render(); }
-
-#include "GLFW/glfw3.h"
-void Kasumi::ShaderPainter::key(int key, int scancode, int action, int mods)
-{
-	App::key(key, scancode, action, mods);
-
-	if (key == GLFW_KEY_O && action == GLFW_PRESS)
-	{
-		_platform->save_image("shader_painter.png");
-	}
-}
