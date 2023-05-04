@@ -5,6 +5,7 @@
 // MPL-2.0 license
 
 #include "backends/api.h"
+#include "backends/objects/sphere.h"
 
 namespace Kasumi
 {
@@ -12,6 +13,10 @@ class DeferredRenderer3D : public App
 {
 public:
 	static DeferredRenderer3D DEFAULT_RENDERER; // Default Instance of DeferredRenderer3D
+
+public:
+	// temporary methods
+	void add_object(const ObjectMesh3DPtr &object);
 
 protected:
 	void prepare() final;
@@ -21,6 +26,9 @@ protected:
 	void mouse_button(int button, int action, int mods) final;
 	void mouse_scroll(double x_offset, double y_offset) final;
 	void mouse_cursor(double x_pos, double y_pos) final;
+
+private:
+	std::map<unsigned int, ObjectMesh3DPtr> _objects;
 };
 } // namespace Kasumi
 

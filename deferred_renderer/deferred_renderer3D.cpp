@@ -1,4 +1,6 @@
 #include "deferred_renderer3D.h"
+
+void Kasumi::DeferredRenderer3D::add_object(const Kasumi::ObjectMesh3DPtr &object) { _objects[object->ID] = object; }
 void Kasumi::DeferredRenderer3D::prepare()
 {
 	App::prepare();
