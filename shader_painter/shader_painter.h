@@ -16,10 +16,9 @@ public:
 	Kasumi::ShaderPtr _shader;
 
 protected:
-	void prepare() final;
-	void update(double dt) final;
+	void prepare() override;
+	void update(double dt) override;
 
-private:
 	Kasumi::FramebufferPtr _drawing_board;
 	unsigned int _vao;
 };

@@ -8,14 +8,14 @@ void Kasumi::ShaderPainter::load_shader(const char *pixel_shader_src)
 	static std::string painter_vertex_src = R"(
 #version 330 core
 layout (location = 0) in vec2 aPos;
-layout (location = 1) in vec2 aTexCoords;
+layout (location = 1) in vec2 aTexCoord;
 
-out vec2 TexCoords;
+out vec2 TexCoord;
 
 void main()
 {
     gl_Position = vec4(aPos.x, aPos.y, 0.0, 1.0);
-    TexCoords = aTexCoords;
+    TexCoord = aTexCoord;
 }
 )";
 	_shader = std::make_shared<Shader>(painter_vertex_src.c_str(), pixel_shader_src);
@@ -26,13 +26,13 @@ void Kasumi::ShaderPainter::prepare()
 	_drawing_board = std::make_shared<Kasumi::Framebuffer>(_opt.width, _opt.height);
 	// draw a rectangle to fill the screen
 	std::array<float, 24> screen_vertices = {
-			-1.0, -1.0, 0.0, 0.0,
-			-1.0, 1.0, 0.0, 1.0,
-			1.0, -1.0, 1.0, 0.0,
+			-1.0, -1.0, 0.0, 1.0,
+			-1.0, 1.0, 0.0, 0.0,
+			1.0, -1.0, 1.0, 1.0,
 
-			1.0, -1.0, 1.0, 0.0,
-			-1.0, 1.0, 0.0, 1.0,
-			1.0, 1.0, 1.0, 1.0
+			1.0, -1.0, 1.0, 1.0,
+			-1.0, 1.0, 0.0, 0.0,
+			1.0, 1.0, 1.0, 0.0
 	};
 	glGenVertexArrays(1, &_vao);
 	glBindVertexArray(_vao);
@@ -53,9 +53,9 @@ void Kasumi::ShaderPainter::prepare()
 	{
 		if (_shader == nullptr) return;
 #ifdef __APPLE__
-		static mVector2 screen(2 * _opt.width, 2 * _opt.height);
+		mVector2 screen(2 * _opt.width, 2 * _opt.height);
 #else
-		static mVector2 screen(_opt.width, _opt.height);
+		mVector2 screen(_opt.width, _opt.height);
 #endif
 		static std::chrono::steady_clock::time_point _starting_point = std::chrono::steady_clock::now();
 		float time = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - _starting_point).count()) / 1000000.f;
