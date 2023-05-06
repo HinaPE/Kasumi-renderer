@@ -19,7 +19,7 @@ As a cross-platform project, [Clion](https://www.jetbrains.com/clion/) is highly
 ### Prerequisites
 
 - C++ 20
-- cmake > 3.16
+- Cmake > 3.24
 
 First recursively clone this repo and all submodules.
 
