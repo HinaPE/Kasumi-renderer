@@ -8,6 +8,7 @@
 #include "backends/objects/sphere.h"
 #include "backends/objects/plane.h"
 #include "backends/objects/cup.h"
+#include "backends/objects/bunny.h"
 #include "backends/api.h"
 
 namespace Kasumi
