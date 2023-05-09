@@ -99,9 +99,9 @@ void Kasumi::Scene3D::read_scene(const std::string &path)
 				Camera::MainCamera->_opt.position = mVector3(x, y, z);
 			} else if (tmp == "rotation")
 			{
-				real x, y, z;
-				ss >> x >> y >> z;
-				Camera::MainCamera->_opt.rotation = mVector3(x, y, z);
+				real x, y, z, w;
+				ss >> x >> y >> z >> w;
+				Camera::MainCamera->_opt.rotation = mQuaternion(w, x, y, z);
 			} else if (tmp == "look_at")
 			{
 				real x, y, z;
@@ -128,7 +128,7 @@ void Kasumi::Scene3D::export_scene(const std::string &path)
 	auto radius = Camera::MainCamera->_opt.radius;
 
 	file << "position" << " " << position.x() << " " << position.y() << " " << position.z() << std::endl;
-	file << "rotation" << " " << rotation.x() << " " << rotation.y() << " " << rotation.z() << std::endl;
+	file << "rotation" << " " << rotation.x() << " " << rotation.y() << " " << rotation.z() << rotation.w() << std::endl;
 	file << "look_at" << " " << look_at.x() << " " << look_at.y() << " " << look_at.z() << std::endl;
 	file << "radius" << " " << radius << std::endl;
 

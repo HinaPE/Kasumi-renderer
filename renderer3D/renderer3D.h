@@ -42,6 +42,7 @@ protected:
 	void key(int key, int scancode, int action, int mods) override 	{ _scene->key(key, scancode, action, mods); _debug_key(key, scancode, action, mods); if(_key) _key(key, scancode, action, mods);}
 	void mouse_button(int button, int action, int mods) override 	{ _scene->mouse_button(button, action, mods); }
 	void mouse_cursor(double x_pos, double y_pos) override 			{ _scene->mouse_cursor(x_pos, y_pos); }
+	void ui_menu() override;
 
 protected:
 	Kasumi::Scene3DPtr _scene;
