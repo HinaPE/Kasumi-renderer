@@ -13,9 +13,10 @@ static mVector2 PRE_MOUSE_POS = mVector2::Zero();
 
 Kasumi::Scene3D::Scene3D()
 {
+	read_scene();
+
 	_scene_opt._ray = std::make_shared<ObjectLines3D>();
 	_scene_opt._ray_hit = std::make_shared<ObjectPoints3D>();
-//	read_scene();
 
 	// debug point
 	_scene_opt.debug_point_obj = std::make_shared<ObjectPoints3D>();
@@ -69,17 +70,70 @@ void Kasumi::Scene3D::draw()
 }
 void Kasumi::Scene3D::read_scene(const std::string &path)
 {
-	std::stringstream ss;
+//	std::stringstream ss;
+//	{
+//		std::ifstream file(path);
+//		ss << file.rdbuf();
+//		file.close();
+//	}
+//	std::string src = ss.str();
+//	std::string err;
+//	auto scene = json11::Json::parse(src, err, json11::JsonParse::STANDARD);
+
+	if (!std::filesystem::exists(path))
+		return;
+
+	std::ifstream file(path);
+	std::string line;
+	while (std::getline(file, line))
 	{
-		std::ifstream file(path);
-		ss << file.rdbuf();
-		file.close();
+		std::stringstream ss;
+		ss << line;
+		std::string tmp;
+		while (ss >> tmp)
+		{
+			if (tmp == "position")
+			{
+				real x, y, z;
+				ss >> x >> y >> z;
+				Camera::MainCamera->_opt.position = mVector3(x, y, z);
+			} else if (tmp == "rotation")
+			{
+				real x, y, z;
+				ss >> x >> y >> z;
+				Camera::MainCamera->_opt.rotation = mVector3(x, y, z);
+			} else if (tmp == "look_at")
+			{
+				real x, y, z;
+				ss >> x >> y >> z;
+				Camera::MainCamera->_opt.look_at = mVector3(x, y, z);
+			} else if (tmp == "radius")
+			{
+				real radius;
+				ss >> radius;
+				Camera::MainCamera->_opt.radius = radius;
+			}
+		}
+		Camera::MainCamera->_rebuild_();
 	}
-	std::string src = ss.str();
-	std::string err;
-	auto scene = json11::Json::parse(src, err, json11::JsonParse::STANDARD);
 }
-void Kasumi::Scene3D::export_scene(const std::string &path) {}
+
+void Kasumi::Scene3D::export_scene(const std::string &path)
+{
+	std::ofstream file(path);
+
+	auto position = Camera::MainCamera->_opt.position;
+	auto rotation = Camera::MainCamera->_opt.rotation;
+	auto look_at = Camera::MainCamera->_opt.look_at;
+	auto radius = Camera::MainCamera->_opt.radius;
+
+	file << "position" << " " << position.x() << " " << position.y() << " " << position.z() << std::endl;
+	file << "rotation" << " " << rotation.x() << " " << rotation.y() << " " << rotation.z() << std::endl;
+	file << "look_at" << " " << look_at.x() << " " << look_at.y() << " " << look_at.z() << std::endl;
+	file << "radius" << " " << radius << std::endl;
+
+	file.close();
+}
 
 auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayIntersection3
 {
@@ -106,9 +160,21 @@ auto Kasumi::Scene3D::ray_cast(const mRay3 &ray) -> HinaPE::Geom::SurfaceRayInte
 
 void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_W && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_wireframe(); for (auto &pair: _particle_objects) pair.second->_switch_wireframe(); }
-	if (key == GLFW_KEY_B && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_bbox(); for (auto &pair: _particle_objects) pair.second->_switch_surface(); }
-	if (key == GLFW_KEY_S && action == GLFW_PRESS) { for (auto &pair: _objects) pair.second->_switch_surface(); for (auto &pair: _particle_objects) pair.second->_switch_bbox(); }
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects) pair.second->_switch_wireframe();
+		for (auto &pair: _particle_objects) pair.second->_switch_wireframe();
+	}
+	if (key == GLFW_KEY_B && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects) pair.second->_switch_bbox();
+		for (auto &pair: _particle_objects) pair.second->_switch_surface();
+	}
+	if (key == GLFW_KEY_S && mods == GLFW_MOD_SHIFT && action == GLFW_PRESS)
+	{
+		for (auto &pair: _objects) pair.second->_switch_surface();
+		for (auto &pair: _particle_objects) pair.second->_switch_bbox();
+	}
 	if (key == GLFW_KEY_P && action == GLFW_PRESS) { _scene_opt._particle_mode = !_scene_opt._particle_mode; }
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
@@ -129,6 +195,8 @@ void Kasumi::Scene3D::key(int key, int scancode, int action, int mods)
 	}
 	if (key == GLFW_KEY_M && action == GLFW_PRESS) { MOVE_MODE = true; }
 	if (key == GLFW_KEY_M && action == GLFW_RELEASE) { MOVE_MODE = false; }
+	if(key == GLFW_KEY_S && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS)
+		export_scene();
 }
 
 void Kasumi::Scene3D::mouse_button(int button, int action, int mods)
@@ -226,7 +294,7 @@ void Kasumi::Scene3D::INSPECT()
 	for (auto &pair: _point_instance_objects)
 		ImGui::RadioButton((pair.second->NAME + ": " + std::to_string(pair.first)).c_str(), &_selected, static_cast<int>(pair.first));
 
-	
+
 	if (_objects.contains(_selected))
 		_objects[_selected]->INSPECT();
 	else if (_particle_objects.contains(_selected))

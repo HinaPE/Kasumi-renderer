@@ -25,8 +25,8 @@ public:
 	void add(const ObjectGrid3DPtr &object);
 	void remove(unsigned int id);
 	void draw();
-	void read_scene(const std::string &path = "default.json"); // NOT IMPLEMENTED
-	void export_scene(const std::string &path = "default.json"); // NOT IMPLEMENTED
+	void read_scene(const std::string &path = "scene.json"); // NOT FULLY IMPLEMENTED (Camera Only)
+	void export_scene(const std::string &path = "scene.json"); // NOT FULLY IMPLEMENTED (Camera Only)
 	Scene3D();
 
 private:
