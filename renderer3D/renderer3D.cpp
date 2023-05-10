@@ -6,7 +6,7 @@ Kasumi::Renderer3D Kasumi::Renderer3D::DEFAULT_RENDERER = Kasumi::Renderer3D();
 
 void Kasumi::Renderer3D::ui_menu()
 {
-	if (ImGui::BeginMenu("Scene"))
+	if (ImGui::BeginMenu("Renderer3D"))
 	{
 		if (ImGui::MenuItem("Open Scene"))
 		{
