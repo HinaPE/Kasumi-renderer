@@ -2,6 +2,6 @@
 
 auto main() -> int
 {
-	std::make_shared<Kasumi::Renderer3D>()->launch();
+	Kasumi::Renderer3D::DEFAULT_RENDERER.launch();
 	return 0;
 }
