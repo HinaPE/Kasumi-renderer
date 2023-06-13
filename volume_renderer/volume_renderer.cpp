@@ -4,8 +4,8 @@ Kasumi::VolumeRenderer::VolumeRenderer()
 {
 	_frame = std::make_shared<Frame>(0.1, 0.1, 1024, 1024);
 	_surface = std::make_shared<HinaPE::Geom::Sphere3>();
-	as<HinaPE::Geom::Sphere3>(_surface.get())->_center = mVector3(0, 0, -15);
-	as<HinaPE::Geom::Sphere3>(_surface.get())->_radius = 1;
+	dynamic_cast<HinaPE::Geom::Sphere3 *>(_surface.get())->_center = mVector3(0, 0, -15);
+	dynamic_cast<HinaPE::Geom::Sphere3 *>(_surface.get())->_radius = 1;
 }
 
 void Kasumi::VolumeRenderer::render()
